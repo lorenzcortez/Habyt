@@ -1,0 +1,26 @@
+<aura:component controller="ContractAgreementController" implements="forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:attribute name="pathStep" type="Integer" />
+    <aura:attribute name="contract" type="Contract" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="contractUrl" type="String" />
+    <aura:attribute name="ContentDistId" type="String" />
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+        <aura:if isTrue="{!v.showSpinner}">       
+            <lightning:spinner alternativeText="Loading" size="small" />
+        </aura:if>
+
+       <div class="slds-grid slds-wrap slds-grid_align-center">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="iframe-container">
+                    <iframe src="{!v.contractUrl}"></iframe>
+                </div>
+            </div>
+            <div class="slds-col">
+                <lightning:button variant="brand" label="Agree" onclick="{! c.doAgree }" class="slds-var-m-top_medium"/>
+            </div>
+        </div>
+
+</aura:component>

@@ -1,0 +1,17 @@
+.THIS .eversignFrame {
+    height:840px;
+    width:100%;
+}
+
+
+@media (max-width: 1025px) {
+    .THIS .eversignFrame {
+        height:840px;
+    }
+}
+
+@media (max-width: 426px) {
+    .THIS .eversignFrame {
+        height:400px;
+    }
+}

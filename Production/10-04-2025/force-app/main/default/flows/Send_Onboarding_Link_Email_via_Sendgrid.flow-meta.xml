@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email_via_Sendgrid</name>
+        <label>Send Email via Sendgrid</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContent</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <elementReference>FromEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <elementReference>FromName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <elementReference>FromEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <elementReference>SendgridID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Updated merged fields</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaStartDateOccupancy</name>
+        <dataType>String</dataType>
+        <expression>TEXT(MONTH({!Opportunity.Start_Date_of_Occupancy__c}))&amp;&apos;/&apos;&amp;TEXT(DAY({!Opportunity.Start_Date_of_Occupancy__c}))&amp;&apos;/&apos;&amp;TEXT(YEAR({!Opportunity.Start_Date_of_Occupancy__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>FromEmail</name>
+        <dataType>String</dataType>
+        <expression>if({!Opportunity.BrandRef__r.Name} = &apos;common&apos;, &apos;leasing@common.com&apos;, if({!Opportunity.BrandRef__r.Name} = &apos;noah&apos;, &apos;leasing@noahapartments.com&apos;, if({!Opportunity.BrandRef__r.Name} = &apos;mily&apos;, &apos;leasing@milyliving.com&apos;, &apos;leasing@common.com&apos;)))</expression>
+    </formulas>
+    <formulas>
+        <name>FromName</name>
+        <dataType>String</dataType>
+        <expression>if({!Opportunity.BrandRef__r.Name} = &apos;common&apos;, &apos;Common Leasing&apos;, if({!Opportunity.BrandRef__r.Name} = &apos;noah&apos;, &apos;Noah Leasing&apos;, if({!Opportunity.BrandRef__r.Name} = &apos;mily&apos;, &apos;Mily Leasing&apos;, &apos;Common Leasing&apos;)))</expression>
+    </formulas>
+    <formulas>
+        <name>MoveInFee</name>
+        <dataType>Currency</dataType>
+        <expression>{!Opportunity.Home_Committed__r.Move_In_Fee__c}</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Send Onboarding Link Email via Sendgrid {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Onboarding Link Email via Sendgrid</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Email_via_Sendgrid</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>DynamicContent</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Account_First_Name__c&quot; : &quot;{!Opportunity.Account_First_Name__c}&quot;,
+&quot;First_Name&quot; : &quot;{!Opportunity.Account_First_Name__c}&quot;,
+&quot;Start_Date_of_Occupancy__c&quot; : &quot;{!FormulaStartDateOccupancy}&quot;,
+&quot;Home_Marketing_Name__c&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;Suite_Name__c&quot; : &quot;{!Opportunity.Suite_Name__c}&quot;,
+&quot;Suite_Address__c&quot; : &quot;{!Opportunity.ApartmentRef__r.Suite_Address_Entrance__c}&quot;,
+&quot;Term_length__c&quot; : &quot;{!Opportunity.Term_length__c}&quot;,
+&quot;Term_Length&quot; : &quot;{!Opportunity.Term_length__c}&quot;,
+&quot;End_Date_of_Occupancy__c&quot; : &quot;{!Opportunity.End_Date_of_Occupancy__c}&quot;,
+&quot;Monthly_Fee_del__c&quot; : &quot;{!Opportunity.Monthly_Fee_del__c}&quot;,
+&quot;Onboarding_Link__c&quot; : &quot;{!Opportunity.Onboarding_Link__c}&quot;,
+&quot;Room_Name__c&quot; : &quot;{!Opportunity.Room_Name__c}&quot;,
+&quot;Lease_Assignment_Text__c&quot; : &quot;{!Opportunity.Lease_Assignment_Text__c}&quot;,
+&quot;Obligo_Security_Deposit__c&quot; : &quot;{!Opportunity.Obligo_Security_Deposit__c}&quot;,
+&quot;Move_In_Fee__c&quot; : &quot;{!MoveInFee}&quot;,
+&quot;Renters_Insurance_Link__c&quot; : &quot;{!Opportunity.Renters_Insurance_Link__c}&quot;,
+&quot;Prorated_First_Month__c&quot; : &quot;{!Opportunity.Prorated_First_Month__c}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!Opportunity.Room_Selected__r.Security_Deposit_New__c}&quot;
+}</text>
+    </textTemplates>
+    <variables>
+        <name>OppID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Opportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>SendgridID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

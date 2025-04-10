@@ -1,0 +1,46 @@
+.custom-title {
+    text-transform:uppercase;
+    color:#999;
+    font-weight:800;
+    font-size:0.7rem;
+}
+.date-available {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    color: #333;
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+    padding: .25rem;
+    width: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.date-available__month,
+.date-available__now {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.date-available__day {
+    font-size: 1.5rem;
+ }
+ .no-bottom-border {
+    border-bottom: none;
+}
+.sqft-label {
+    color: #999;
+    font-size: .95em;
+    margin-left: .25rem;
+}
+.line {
+    display: block;
+    width: 100%;
+    border-top: 0.2px solid rgba(221, 229, 252, 1);
+    margin-top: 5px;
+    margin-bottom: 2px;
+  }

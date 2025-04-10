@@ -1,0 +1,92 @@
+<template>
+    <div class="create-invoice__wrapper slds-p-around_large">
+        <template if:false={showSpinner}>
+            <div class="invoice-form__content slds-p-bottom_small">
+                <div class="title slds-p-bottom_small">Create Internal Invoice</div>
+                <div class="form__wrapper">
+                <div class="contract-number__wrapper">
+                    <lightning-input type="text" label="Contract Number" onchange={changeContract} value={contractNumber}></lightning-input>
+                </div>
+                <div class="invoice-type__wrapper slds-p-top_x-small">
+                        <lightning-combobox
+                            required="true"
+                            name="invoice-type"
+                            label="Invoice Type"
+                            value={invoiceTypeValue}
+                            placeholder="Select invoice type"
+                            options={invoiceTypeOptions}
+                            onchange={invoiceTypeChange} ></lightning-combobox>
+                </div>
+                <template if:true={isInvoiceType}>
+                    <div class="month-and-year__wrapper slds-p-top_x-small">
+                        <lightning-combobox
+                                required="true"
+                                name="billing-month"
+                                label="Billing Month"
+                                value={billingMonthValue}
+                                options={billingMonthOptions}
+                                onchange={billingMonthChange} ></lightning-combobox>
+                        <lightning-input class="validate-year" label="Billing Year" onchange={billingYearChange} required="true" value={billingYearValue}></lightning-input>
+                    </div>
+                </template>
+                <!--<div class="billing-type__wrapper">
+                        <div class="slds-form-element slds-p-top_x-small" role="radiogroup">
+                            <legend class="slds-form-element__legend slds-form-element__label">Billing Type</legend>
+                            <div class="slds-form-element__control" style="display: flex;">
+                                <span class="slds-radio slds-p-right_medium">
+                                    <input onclick={onBillingType} value="Bill Automatically (Now)" type="radio" id="billautomatically" name="default" checked="" />
+                                    <label class="slds-radio__label" for="billautomatically">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Bill Automatically (Now)</span>
+                                    </label>
+                                </span>
+                                <span class="slds-radio">
+                                    <input onclick={onBillingType} value="Send Invoice with Due Date" type="radio" id="sendInvoiceWithDueDate" name="default" />
+                                    <label class="slds-radio__label" for="sendInvoiceWithDueDate">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Send Invoice with Due Date</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <template if:true={isSendInvoicewithDueDate}>
+                            <div class="due-date__wrapper slds-p-top_x-small">
+                                <lightning-input class="validate-duedate" required="true" type="date" date-style="short" onchange={changeDueDate} name="duedate" label="Due date" ></lightning-input>
+                            </div>
+                        </template>
+                </div>-->
+                <div class="line-items__wrapper slds-p-top_small">
+                        <div class="line-items__title">Line Items</div>
+                        <div class="item__wrapper">
+                            <template if:false={showLineItems}>
+                                <template for:each={lineItems} for:item="item">
+                                    <div key={item.key}  class="item__content">
+                                        <div class="item slds-p-top_small">
+                                            <lightning-input step="0.01" value={item.amount} class="validate-item" required="true" data-identifier={item.key} type="number" onchange={changeAmount} placeholder="Amount" variant="label-hidden" name="amount" label="Amount" ></lightning-input>
+                                            <lightning-input value={item.description} class="validate-item" required="true" data-identifier={item.key} type="text" onchange={changeDescription} placeholder="Description" variant="label-hidden" name="description" label="Description" ></lightning-input>
+                                        </div>
+                                        <div class="icon__wrapper">
+                                            <template if:false={item.isFirst}>
+                                                <lightning-icon size="x-small" data-identifier={item.key} class="delete--icon slds-p-top_small" onclick={onDelete} icon-name="utility:delete" alternative-text="Delete!" title="Delete"></lightning-icon>
+                                            </template>
+                                        </div>
+                                        
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                </div>
+                </div>
+            </div>
+            <div class="invoice-form__footer">
+                <button class="slds-button slds-button_brand slds-m-left_x-small" type="button" onclick={handleAddLineItem}>Add Line Item</button>
+                <button class="slds-button slds-button_brand slds-m-left_x-small" type="button" onclick={handleCreateInvoice}>Create Invoice</button>
+            </div>
+        </template>
+        <template if:true={showSpinner}>
+            <div class="spinner__wrapper">
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+        </template>
+    </div>
+</template>

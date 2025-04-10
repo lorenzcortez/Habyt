@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <choices>
+        <name>ApplianceWasBroken</name>
+        <choiceText>An appliance was broken/damaged.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>An appliance was broken/damaged.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>BedRoomWatNotClean</name>
+        <choiceText>{!BedroomnotclearnCommonandKin}</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>BedroomnotclearnCommonandKin</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>CouldNotAccessHomeSuite</name>
+        <choiceText>I couldn&apos;t access my home/suite.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I couldn&apos;t access my home/suite.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>DidNotReceiveAllInformation</name>
+        <choiceText>I didn&apos;t receive all the information I needed prior to moving in.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I didn&apos;t receive all the information. I needed prior to moving in.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ExpectationsWereNotSet</name>
+        <choiceText>My expectations were not properly set by the Leasing team.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>My expectations were not properly set by the Leasing team.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>FurnitureBroken</name>
+        <choiceText>A piece of furniture was broken/damaged.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A piece of furniture was broken/damaged.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>IssueInSharedSpace</name>
+        <choiceText>{!IssueinSharedSpaceCommonandKin}</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>IssueinSharedSpaceCommonandKin</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>MissingSomethingNeeded</name>
+        <choiceText>I was missing something that I needed, such as a key.</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I was missing something that I needed, such as a key.</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Other</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other (see next question)</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Bad_Move_In_Experience</name>
+        <label>Move In CSAT?</label>
+        <locationX>561</locationX>
+        <locationY>512</locationY>
+        <defaultConnector>
+            <targetReference>Update_Survey_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes21</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSAT Move-In</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Move_In_Additional_Questions</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IF_CSAT_for_Member_Support_Case_7_Days_Past</name>
+        <label>IF CSAT for Member Support Case - 7 Days Past</label>
+        <locationX>682</locationX>
+        <locationY>152</locationY>
+        <defaultConnector>
+            <targetReference>Feedback_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSAT - Member Support Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Feedback.Case__r.RecordType.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CSS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FeedbackCreatedSince</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>7.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Survey_Closed_Screen</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Survey_Already_Completed</name>
+        <label>Survey Already Completed?</label>
+        <locationX>352</locationX>
+        <locationY>370</locationY>
+        <defaultConnector>
+            <targetReference>Bad_Move_In_Experience</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Already_Responded</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Survey_Template</name>
+        <label>Survey Template?</label>
+        <locationX>1249</locationX>
+        <locationY>371</locationY>
+        <defaultConnector>
+            <targetReference>Update_Feedback</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Others</defaultConnectorLabel>
+        <rules>
+            <name>Event_CSAT_1_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Event - CSAT (1-5)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Feedback2</targetReference>
+            </connector>
+            <label>Event - CSAT (1-5)</label>
+        </rules>
+        <rules>
+            <name>CSAT_Move_In</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSAT Move-In</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Feedback3</targetReference>
+            </connector>
+            <label>CSAT - Move-In</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Template_Survey_Type_Evaluation</name>
+        <label>Template Survey Type Evaluation</label>
+        <locationX>168</locationX>
+        <locationY>517</locationY>
+        <defaultConnector>
+            <targetReference>Survey_Already_Completed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Others</defaultConnectorLabel>
+        <rules>
+            <name>NPS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NPS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NPS_Survey_Feedback</targetReference>
+            </connector>
+            <label>NPS</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Type_And_Score_Evaluation</name>
+        <label>Type And Score Evaluation</label>
+        <locationX>1967</locationX>
+        <locationY>373</locationY>
+        <defaultConnector>
+            <targetReference>thankYouScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Leasing_Admin_NPS_10</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NPS - Leasing Admin</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Score__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>10.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Google_Review_Screen</targetReference>
+            </connector>
+            <label>Leasing Admin NPS (10)</label>
+        </rules>
+        <rules>
+            <name>Tour_NPS_10</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NPS - Tour</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Score__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>10.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Google_Review_Screen</targetReference>
+            </connector>
+            <label>Tour NPS (10)</label>
+        </rules>
+        <rules>
+            <name>Move_in_CSAT_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSAT Move-In</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Score__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>5.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Feedback.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Google_Review_Screen</targetReference>
+            </connector>
+            <label>Move-in CSAT (5)</label>
+        </rules>
+        <rules>
+            <name>Member_Support_CSAT_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CSAT - Member Support Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Score__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Feedback.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Google_Review_Screen_CSAT_Review</targetReference>
+            </connector>
+            <label>Member Support CSAT (1)</label>
+        </rules>
+        <rules>
+            <name>Event_CSAT_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Survey_Template__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Event - CSAT (1-5)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Feedback_Record.Score__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>5.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Google_Review_Screen</targetReference>
+            </connector>
+            <label>Event CSAT (5)</label>
+        </rules>
+    </decisions>
+    <description>Leasing Admin NPS, Tour NPS, Move-in CSAT, Member Support CSAT and Event CSAT surveys</description>
+    <formulas>
+        <name>AdditionalQuestionFormattedFormula</name>
+        <dataType>String</dataType>
+        <expression>IF (  ISBLANK({!select_on_or_more_options}) , 
+&quot;N/A&quot;,
+ &quot;&amp;bull; &quot; + SUBSTITUTE( {!select_on_or_more_options} , &quot;;&quot;,&quot;&lt;br&gt;&amp;bull;&quot; )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>BedroomnotclearnCommonandKin</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+TEXT({!Feedback.Brand__c}) == &quot;kin&quot;, 
+&quot;My unit was not clean.&quot;, 
+&quot;My bedroom was not clean.&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>FeedbackCreatedSince</name>
+        <dataType>Number</dataType>
+        <expression>Today() -  DATEVALUE({!Feedback.CreatedDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>GoogleReviewURL</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK( {!Feedback.Opportunity__r.Home_Committed__r.Google_Review_Link__c} ),
+&quot;https://www.google.com/search?q=common+living&amp;rlz=1C5GCEM_enUS900US902&amp;oq=common+living&amp;aqs=chrome..69i57j0l3j69i61j69i60l3.1278j0j4&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x89c25901ef21bf97:0x240d77582c0c5edb,1,,,&quot;,
+{!Feedback.Opportunity__r.Home_Committed__r.Google_Review_Link__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IssueinSharedSpaceCommonandKin</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+TEXT({!Feedback.Brand__c}) == &quot;kin&quot;, 
+&quot;There was an issue in the shared space in my building.&quot;, 
+&quot;There was an issue in the shared space of my suite/building.&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>SliderMaxRange</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!Feedback.Survey_Template__c},
+&quot;CSAT&quot;, 5,
+&quot;NPS&quot;, 10,
+10)</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Survey Feedback {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>Survey Feedback</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Feedback</name>
+        <label>Feedback</label>
+        <locationX>176</locationX>
+        <locationY>368</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Template_Survey_Type_Evaluation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Feedback__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Update_values</name>
+        <label>Get Update values</label>
+        <locationX>982</locationX>
+        <locationY>307</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Survey_Template</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Feedback__c</object>
+        <outputReference>Feedback</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Brand__c</queriedFields>
+        <queriedFields>Score__c</queriedFields>
+        <queriedFields>Survey_Template__c</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Comments__c</queriedFields>
+        <queriedFields>Account__c</queriedFields>
+        <queriedFields>Email_Survey__c</queriedFields>
+        <queriedFields>SMS_Survey__c</queriedFields>
+        <queriedFields>Opportunity__c</queriedFields>
+        <queriedFields>Completion_DateTime__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Updated_Feedback_Record</name>
+        <label>Get Updated Feedback Record</label>
+        <locationX>1820</locationX>
+        <locationY>372</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Type_And_Score_Evaluation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Feedback__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Feedback</name>
+        <label>Update Feedback</label>
+        <locationX>1255</locationX>
+        <locationY>187</locationY>
+        <connector>
+            <targetReference>Get_Updated_Feedback_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Comments__c</field>
+            <value>
+                <elementReference>Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Completion_DateTime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Feedback__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Feedback2</name>
+        <label>Update Feedback2</label>
+        <locationX>1256</locationX>
+        <locationY>711</locationY>
+        <connector>
+            <targetReference>Get_Updated_Feedback_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Comments__c</field>
+            <value>
+                <elementReference>Answer1Answer2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Completion_DateTime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Feedback__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Feedback3</name>
+        <label>Update Feedback</label>
+        <locationX>1483</locationX>
+        <locationY>371</locationY>
+        <connector>
+            <targetReference>Get_Updated_Feedback_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Comments__c</field>
+            <value>
+                <elementReference>MoveInSurveyResponse</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Completion_DateTime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Feedback__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Survey_Status</name>
+        <label>Update Survey Status</label>
+        <locationX>571</locationX>
+        <locationY>318</locationY>
+        <connector>
+            <targetReference>IF_CSAT_for_Member_Support_Case_7_Days_Past</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Started</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Feedback__c</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Already_Responded</name>
+        <label>Already Responded</label>
+        <locationX>360</locationX>
+        <locationY>599</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Already_Responded_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;You&apos;ve already responded to this survey! Your answers are copied below. &lt;/b&gt;&lt;b style=&quot;font-size: 18px; color: rgb(62, 62, 60);&quot;&gt;For any additional comments or questions, please &lt;/b&gt;&lt;a href=&quot;https://app.common.com/support/contactsupport&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;click here&lt;/b&gt;&lt;/a&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt; to submit a new request.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Score: {!Feedback.Score__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Comments: {!Feedback.Comments__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Feedback_screen</name>
+        <label>Feedback</label>
+        <locationX>818</locationX>
+        <locationY>307</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Update_values</targetReference>
+        </connector>
+        <fields>
+            <name>AutoUpdateFeedbackScorefromURL</name>
+            <extensionName>c:updateScoreOnFeedback</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Feedback.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Comments</name>
+            <fieldText>Do you want to provide any additional comments?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>What_kind_of_events_would_you_like_to_see_in_the_future</name>
+            <fieldText>What kind of events would you like to see in the future?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Feedback.Survey_Template__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Event - CSAT (1-5)</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Google_Review_Screen</name>
+        <label>Google Review Screen</label>
+        <locationX>2238</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>details</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Thank you for your feedback! If you&apos;d like to share your experience with Common, you can leave us a review&amp;nbsp;&lt;/span&gt;&lt;a href=&quot;{!GoogleReviewURL}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(62, 62, 60); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;b&gt;&lt;u&gt;here&lt;/u&gt;&lt;/b&gt;&lt;/a&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Google_Review_Screen_CSAT_Review</name>
+        <label>Google Review Screen CSAT Review</label>
+        <locationX>2347</locationX>
+        <locationY>385</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>GoogleReviewText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Thank you for your positive feedback! Would you be willing to share your experience with future members through an &lt;/span&gt;&lt;a href=&quot;https://service.reputation.com/r?metrics=%7B%22lC%22%3A%2220%22%2C%22requestReviewId%22%3A%22c6de4ee7-ceef-4f0a-9aac-c2094a2a13c2%22%7D&amp;amp;u=https%3A%2F%2Fmaps.google.com%2Fmaps%3Fcid%3D2597863780642479835&amp;amp;tk=1b2aaa81657&amp;amp;p=ChIJl78h7wFZwokR214MLFh3DSQ&amp;amp;sid=GOOGLE_PLACES&amp;amp;n=y&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;&lt;u&gt;online review&lt;/u&gt;&lt;/a&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;? It will only take 30 seconds, and we’d really appreciate it.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Move_In_Additional_Questions</name>
+        <label>Move-In Additional Questions</label>
+        <locationX>852</locationX>
+        <locationY>507</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Survey_Template</targetReference>
+        </connector>
+        <fields>
+            <name>AutoUpdateFeedbackScorefromURL2</name>
+            <extensionName>c:updateScoreOnFeedback</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Feedback.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>thanksForFeedbackDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Thanks for your feedback! As we&apos;re always looking to improve our move-in experience, please let us know if any of the following applied to you.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>select_on_or_more_options</name>
+            <choiceReferences>DidNotReceiveAllInformation</choiceReferences>
+            <choiceReferences>CouldNotAccessHomeSuite</choiceReferences>
+            <choiceReferences>BedRoomWatNotClean</choiceReferences>
+            <choiceReferences>FurnitureBroken</choiceReferences>
+            <choiceReferences>MissingSomethingNeeded</choiceReferences>
+            <choiceReferences>ApplianceWasBroken</choiceReferences>
+            <choiceReferences>IssueInSharedSpace</choiceReferences>
+            <choiceReferences>ExpectationsWereNotSet</choiceReferences>
+            <choiceReferences>Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Select all that apply:</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>If_you_selected_other_please_elaborate</name>
+            <fieldText>Are there any additional details about your move-in that you would like to share?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Survey_Closed_Screen</name>
+        <label>Survey Closed Screen</label>
+        <locationX>454</locationX>
+        <locationY>50</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ClosedText</name>
+            <fieldText>&lt;p&gt;This survey remains open for 7 days after it is sent. It has now expired. Please submit another &lt;a href=&quot;https://app.common.com/support/s/contactsupport&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;request&lt;/a&gt; to Member Support if you still need assistance. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>thankYouScreen</name>
+        <label>thankYouScreen</label>
+        <locationX>2213</locationX>
+        <locationY>265</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>thankYouDisplayText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Thanks, we really appreciate your feedback.&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>211</locationY>
+        <connector>
+            <targetReference>Feedback</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <subflows>
+        <name>NPS_Survey_Feedback</name>
+        <label>NPS Survey Feedback</label>
+        <locationX>176</locationX>
+        <locationY>713</locationY>
+        <flowName>NPS_Survey_Feedback</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>Feedback.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>Answer1Answer2</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Do you want to provide any additional comments?
+{!Comments}
+
+What kind of events would you like to see in the future?
+{!What_kind_of_events_would_you_like_to_see_in_the_future}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>MoveInSurveyResponse</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{!AdditionalQuestionFormattedFormula}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Are there any additional details about your move-in that you would like to share?&lt;/p&gt;&lt;p&gt;{!If_you_selected_other_please_elaborate}&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

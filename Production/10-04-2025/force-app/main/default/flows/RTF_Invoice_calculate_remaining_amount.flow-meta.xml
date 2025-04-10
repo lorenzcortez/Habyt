@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Amount_Remaining</name>
+        <label>Set Amount Remaining</label>
+        <locationX>857</locationX>
+        <locationY>479</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.AmountRemaining__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AmountRemainingAuto</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Amount_Remaining</name>
+        <label>Check Amount Remaining</label>
+        <locationX>989</locationX>
+        <locationY>359</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Amount_Remaining_changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AmountRemainingAuto</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.AmountRemaining__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Amount_Remaining</targetReference>
+            </connector>
+            <label>Amount Remaining changed</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>AmountRemainingAuto</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!$Record.Amount_Due__c}) || {!$Record.IsVoided__c} = true,0,{!$Record.Amount_Due__c}) - IF(ISBLANK({!$Record.Amount_Paid__c}), 0 , {!$Record.Amount_Paid__c}) + IF(ISBLANK({!$Record.AmountDisputed__c}),0,{!$Record.AmountDisputed__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>RTF - Invoice calculate remaining amount {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF - Invoice calculate remaining amount</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>863</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_Amount_Remaining</targetReference>
+        </connector>
+        <object>Invoice__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

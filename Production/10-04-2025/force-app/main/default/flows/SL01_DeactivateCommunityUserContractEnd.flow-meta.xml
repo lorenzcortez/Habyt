@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Add the record to the collection of records to be udpated.</description>
+        <name>Add_Record_To_Collection_to_be_Updated</name>
+        <label>Add Record To Collection to be Updated</label>
+        <locationX>270</locationX>
+        <locationY>684</locationY>
+        <assignmentItems>
+            <assignToReference>CollectionOfUsersToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Deactivate User</description>
+        <name>Assign_new_value</name>
+        <label>Assign new value</label>
+        <locationX>270</locationX>
+        <locationY>576</locationY>
+        <assignmentItems>
+            <assignToReference>Loop.IsActive</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Record_To_Collection_to_be_Updated</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check if we have found a user - if yes, continue, if no, exit.</description>
+        <name>User_Found</name>
+        <label>User Found?</label>
+        <locationX>380</locationX>
+        <locationY>360</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_Found2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Community_User</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Loop</targetReference>
+            </connector>
+            <label>User Found?</label>
+        </rules>
+    </decisions>
+    <description>Flow that deactivates Community Users when a Contract has ended 30 days ago.</description>
+    <environments>Default</environments>
+    <interviewLabel>SL01_DeactivateCommunityUserContractEnd {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SL01_DeactivateCommunityUserContractEnd</label>
+    <loops>
+        <description>Loop over all users from Get Users variable</description>
+        <name>Loop</name>
+        <label>Loop</label>
+        <locationX>182</locationX>
+        <locationY>468</locationY>
+        <collectionReference>Get_Community_User</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_new_value</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Users</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetch the Community User that is related to the Person Account on the Contract.</description>
+        <name>Get_Community_User</name>
+        <label>Get Community User</label>
+        <locationX>380</locationX>
+        <locationY>252</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>User_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account.PersonContact.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Contracts that were queried in the beginning of the flow.</description>
+        <name>Update_Contracts</name>
+        <label>Update Contracts</label>
+        <locationX>50</locationX>
+        <locationY>1092</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>IsUserDeactivatedTrig__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Contract</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>From Loop Collections</description>
+        <name>Update_Users</name>
+        <label>Update Users</label>
+        <locationX>182</locationX>
+        <locationY>876</locationY>
+        <connector>
+            <targetReference>Pause_to_Avoid_Cross_DML</targetReference>
+        </connector>
+        <inputReference>CollectionOfUsersToUpdate</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Community_User</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsDeactivateUserAuto__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Terminated</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsUserDeactivatedTrig__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0121i000000YGYZAA4</stringValue>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2021-06-14</startDate>
+            <startTime>21:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>CollectionOfUsersToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>User</objectType>
+    </variables>
+    <waits>
+        <description>We cannot have an update of a setup object and a non setup object in the same DML. Hence, Pause.</description>
+        <name>Pause_to_Avoid_Cross_DML</name>
+        <label>Pause to Avoid Cross DML</label>
+        <locationX>182</locationX>
+        <locationY>984</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Pause_before_Contract_DML</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Update_Contracts</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Pause before Contract DML</label>
+        </waitEvents>
+    </waits>
+</Flow>

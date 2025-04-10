@@ -1,0 +1,26 @@
+.THIS .warning .slds-accordion__summary-action {
+    color: orange;
+}
+
+.THIS .error .slds-accordion__summary-action {
+    color: red;
+}
+
+.THIS .warnList h3 > a {
+    color: rgb(8, 7, 7);
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.THIS .liBtn button{
+    line-height: unset !important;
+}
+
+/*.THIS .warning span:before {
+    content: "\0126A0";
+}
+
+.THIS .error span:before {
+    content: "\01F6AB";
+}
+*/

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Product_as_Description</name>
+        <label>Set Product as Description</label>
+        <locationX>1289</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Product2.Name</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Recurring_Discount_Description</name>
+        <label>Set Recurring Discount Description</label>
+        <locationX>1098</locationX>
+        <locationY>509</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DiscountRecurringDescriptionAuto</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Rent_Description</name>
+        <label>Set Rent Description</label>
+        <locationX>919</locationX>
+        <locationY>329</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RentProductDescriptionAuto</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Product</name>
+        <label>Check Product</label>
+        <locationX>1088</locationX>
+        <locationY>327</locationY>
+        <defaultConnector>
+            <targetReference>Set_Product_as_Description</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Rent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product2.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Rent_Description</targetReference>
+            </connector>
+            <label>Is Rent</label>
+        </rules>
+        <rules>
+            <name>Is_Recurring_Discount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product2.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recurring Item</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.UnitPrice</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Recurring_Discount_Description</targetReference>
+            </connector>
+            <label>Is Recurring Discount</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>DiscountRecurringDescriptionAuto</name>
+        <dataType>String</dataType>
+        <expression>&quot;Discount - Recurring&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>RentProductDescriptionAuto</name>
+        <dataType>String</dataType>
+        <expression>&quot;Rent - &quot; + {!$Record.RoomRef__r.Name}</expression>
+    </formulas>
+    <interviewLabel>RTF - Opportunity Product Description {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF - Opportunity Product Description</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>970</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_Product</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Description</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

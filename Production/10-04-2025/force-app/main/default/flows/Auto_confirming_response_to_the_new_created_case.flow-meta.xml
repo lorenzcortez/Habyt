@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Sending_Email_0</name>
+        <label>Sending Email</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Case.auto_Response_Email_To_New_Created_Case</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.auto_Response_Email_To_New_Created_Case</nameSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>checking_for_contact_email</name>
+        <label>checking for contact email</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>contract_email_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sending_Email_0</targetReference>
+            </connector>
+            <label>contract email not null</label>
+        </rules>
+    </decisions>
+    <description>An automatic confirmation email is send to newly created cases.</description>
+    <environments>Default</environments>
+    <interviewLabel>Auto response to the new case created {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Auto confirming response to the new created case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>checking_for_contact_email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Send_Conformation_Email__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <description>This email is sent to the newly created Case.</description>
+        <name>autoResponseEmailToNewCreatedCase</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi there,
+Thank you for getting in touch!
+We have received your inquiry and our team is working on it.
+We are currently receiving a high number of requests and therefore our response time is longer than usual. We will get back in touch as soon as possible.
+Thank you for your patience and your continued support!
+Your Member Services Team
+_____________________________________
+If you are in immediate danger, please contact the emergency number(s) below:
+
+Germany | Police: 110 | Fire Department: 112
+Netherlands | Police, Ambulance and Fire Department: 112
+Portugal | Police and Fire Department: 112
+Italy | Police: 112 | Fire Department: 115 | General Emergency: 113
+Spain | Police: 091 | Fire Department: 112</text>
+    </textTemplates>
+</Flow>

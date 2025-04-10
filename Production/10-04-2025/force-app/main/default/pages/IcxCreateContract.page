@@ -1,0 +1,30 @@
+<apex:page standardController="Opportunity" extensions="IcxEverSignInterface">
+    <apex:outputText style="display:none;" value="{!Opportunity.Name}"  />
+    <script type='text/javascript' src='/canvas/sdk/js/publisher.js' />
+    <iframe frameborder="0" height="500px" id="preview" name="preview" src="/apex/ContractPDF?Id={!Opportunity.Id}&namePrefix={!Opportunity.Name}" title="Content" width="100%" />
+    <script type='text/javascript'>
+    Sfdc.canvas.publisher.subscribe({name: "publisher.showPanel",
+        onData:function(e) {
+            Sfdc.canvas.publisher.publish({name:"publisher.setValidForSubmit", payload:"true"});
+        }   
+    })
+    
+    Sfdc.canvas.publisher.subscribe({
+        name: "publisher.post", 
+        onData: function(e) {
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.IcxEverSignInterface.save}',
+                "{!Opportunity.Id}",
+                function(res, evt) {
+                    Sfdc.canvas.publisher.publish({
+                        name: "publisher.close",
+                        payload: {
+                            refresh: "true"
+                        }
+                    });
+                }
+            );
+        }
+    });
+    </script>
+</apex:page>

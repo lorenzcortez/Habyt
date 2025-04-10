@@ -1,0 +1,55 @@
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.subtitle {
+    text-transform: capitalize;
+}
+
+.smallest {
+    font-size: 0.7rem;
+}
+
+.smaller {
+    font-size: 0.8rem;
+}
+
+.booknow-box {
+    background-color: rgb(245,245,245);
+    border-radius: 2px;
+}
+
+.booknow-box .title {
+    font-weight: normal;
+}
+
+.booknow-button {    
+    color: white;
+    background-color: var(--lwc-dxpGBrand);
+    border-radius: 41.4938% / 200%;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.slds-button {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.slds-button svg {
+    transform: rotate(180deg);
+}
+
+.slds-button.active svg {
+    transform: rotate(0deg);
+}
+
+.slds-button svg path {
+    stroke: var(--lwc-dxpGBrand);
+}

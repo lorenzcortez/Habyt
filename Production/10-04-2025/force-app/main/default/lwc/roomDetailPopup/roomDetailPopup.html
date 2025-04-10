@@ -1,0 +1,1028 @@
+<template>
+    <div class="slds-grid slds-gutters slds-wrap">
+        <div class="slds-col slds-size_1-of-7">
+            <div class="date-available">
+                <template if:false={IsBeaconDateInPast}>
+                    <div class="date-available__day">
+                        <lightning-formatted-date-time value={popupRoom.AvailableDateTrig__c} day="2-digit"
+                            time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                    <div class="date-available__month">
+                        <lightning-formatted-date-time value={popupRoom.AvailableDateTrig__c} month="short"
+                            time-zone="UTC">
+                        </lightning-formatted-date-time>
+                    </div>
+                </template>
+                <template if:true={IsBeaconDateInPast}>
+                    <div class="date-available__now">Now</div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Property</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-text value={popupHome.Name} linkify></lightning-formatted-text>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Suite</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-text value={popupSuite.Name} linkify></lightning-formatted-text>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title"># Beds in Suite</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-number value={popupSuite.Bedroom__c}></lightning-formatted-number>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title"># Baths in Suite</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-number value={popupSuite.Bathrooms__c}></lightning-formatted-number>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Room</label>
+                <div class="slds-form-element__control">
+                    {popupRoom.Name},
+                    <span class="sqft-label">{popupRoom.Square_Footage__c}sqft</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="line"></span>
+
+    <div class="slds-grid slds-gutters slds-wrap">
+
+        <div class="slds-col slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Security Deposit</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-text value={popupRoom.Security_Deposit_New__c}></lightning-formatted-text>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">2 Day Hold Amount</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-number format-style="currency" class="price" currency-code="USD"
+                        value={popupHome.X2_Day_Total_Hold_Amount__c} maximum-fraction-digits="0">
+                    </lightning-formatted-number>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Application Fee</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-number value={popupHome.Application_Fee__c} format-style="currency"
+                        currency-code={popupHome.CurrencyIsoCode} maximum-fraction-digits="0">
+                    </lightning-formatted-number>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_2-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Current Concession</label>
+                <div style="font-size: 11px !important;" class="slds-form-element__control">
+                    <lightning-formatted-rich-text value={concessionDetails}></lightning-formatted-rich-text>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size_2-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Concession Details</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-text value={popupRoom.Concession_Details__c} linkify>
+                    </lightning-formatted-text>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <span class="line"></span>
+
+    <div class="slds-grid slds-gutters slds-wrap">
+
+        <div class="slds-col slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">12M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={TwelveMonthPrice}>
+                        <lightning-formatted-number value={TwelveMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={TwelveMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">9M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={NineMonthPrice}>
+                        <lightning-formatted-number value={NineMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={NineMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">6M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={SixMonthPrice}>
+                        <lightning-formatted-number value={SixMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={SixMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">3M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={ThreeMonthPrice}>
+                        <lightning-formatted-number value={ThreeMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={ThreeMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_3-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Address</label>
+                <div class="slds-form-element__control">
+                    {popupHome.PropertyAddress__c}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <span class="line"></span>
+    <div class="slds-grid slds-gutters slds-wrap">
+        
+        <div class="slds-col slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">12M Net Effective Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={TwelveMonthNetPrice}>
+                        <lightning-formatted-number value={TwelveMonthNetPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={TwelveMonthNetPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">9M Net Effective Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={NineMonthNetPrice}>
+                        <lightning-formatted-number value={NineMonthNetPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={NineMonthNetPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">6M Net Effective Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={SixMonthNetPrice}>
+                        <lightning-formatted-number value={SixMonthNetPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={SixMonthNetPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">3M Net Effective Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={ThreeMonthNetPrice}>
+                        <lightning-formatted-number value={ThreeMonthNetPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={ThreeMonthNetPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-size_1-of-7">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <label class="slds-form-element__label custom-title">Floor</label>
+                <div class="slds-form-element__control">
+                    <lightning-formatted-number value={popupRoom.Floor__c}>
+                    </lightning-formatted-number>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <span class="line"></span>
+
+    <div class="slds-grid slds-gutters slds-wrap">
+        <div class="slds-col slds-size_1-of-5">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <div class="slds-form-element__control">
+                    <lightning-button variant="base" label="View Room" title="View Room" 
+                    onclick={navigateToViewRoomPage} class="slds-button"
+                    icon-name="utility:record_lookup"></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_1-of-5">
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                <!--<label class="slds-form-element__label custom-title">Application Link</label>-->
+                <div class="slds-form-element__control">
+                    <lightning-button variant="base" label="Application Link" title="Application Link"
+                        id="copy-app-link-btn" data-id="copy-app-link-btn" class="slds-button"
+                        icon-name="utility:copy_to_clipboard" onclick={copyUrlToClipboard}
+                        data-url={popupRoom.Application_Link__c}></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <template if:true={popupSuite.Matterport__c}>
+            <div class="slds-col slds-size_1-of-5">
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                    <!--<label class="slds-form-element__label custom-title">Matterport</label>-->
+                    <div class="slds-form-element__control">
+                        <lightning-button variant="base" label="Matterport" title="Matterport"
+                            id="copy-matterport-link-btn" data-id="copy-matterport-link-btn" class="slds-button"
+                            icon-name="utility:copy_to_clipboard" onclick={copyUrlToClipboard}
+                            data-url={popupSuite.Matterport__c}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={popupHome.Leasing_Plan__c}>
+            <div class="slds-col slds-size_1-of-5">
+                <div class="sldsd-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                    <!--<label class="slds-form-element__label custom-title">Leasing Plan</label>-->
+                    <div class="slds-form-element__control">
+                        <lightning-button variant="base" label="Leasing Plan" title="Leasing Plan"
+                            id="copy-leasing-plan-link-btn" data-id="copy-leasing-plan-link-btn" class="slds-button"
+                            icon-name="utility:copy_to_clipboard" onclick={copyUrlToClipboard}
+                            data-url={popupHome.Leasing_Plan__c}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={popupHome.Community_Space_Notes__c}>
+            <div class="slds-col slds-size_1-of-5">
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                    <!-- <label class="slds-form-element__label custom-title">Community Space Matterport</label> -->
+                    <div class="slds-form-element__control">
+                        <lightning-button variant="base" label="Community Space Matterport"
+                            title="Community Space Matterport" id="copy-comm-space-matterport-link-btn"
+                            data-id="copy-comm-space-matterport-link-btn" class="slds-button"
+                            onclick={copyUrlToClipboard} icon-name="utility:copy_to_clipboard"
+                            data-url={popupHome.Community_Space_Notes__c}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+    <span class="line"></span>
+
+    <lightning-accordion allow-multiple-sections-open>
+
+        <lightning-accordion-section name="Home" label="Home info">
+
+            <template if:true={popupHome.NeighbourhoodRef__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Neighborhood</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.NeighbourhoodRef__r.Name}>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Layout_Description__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Layout Description</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Layout_Description__c} linkify>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Home_Type__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Agreement Type</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Home_Type__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Total_Suites__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Total Suites / Units</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Total_Suites__c}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Community_Space_Notes__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Community Space Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Community_Space_Notes__c}>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Sales_Home_Notes__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Sales Home Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Sales_Home_Notes__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Pet_Restrictions__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Pet Restrictions</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Pet_Restrictions__c} linkify>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Laundry_Location__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Laundry Location</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Laundry_Location__c} linkify>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Laundry_Type__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Laundry Type</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Laundry_Type__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Coliving_Bedrooms__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Coliving Bedrooms</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Coliving_Bedrooms__c}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Latest_Allowed_Move_In_Date__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Latest Allowed Move In Date</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-date-time value={popupHome.Latest_Allowed_Move_In_Date__c}>
+                        </lightning-formatted-date-time>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Transfer_Restrictions__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Transfer Restrictions</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Transfer_Restrictions__c} linkify>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <!--
+            <template if:true={popupHome.PTE_Notice_Time_Period__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">PTE Notice Time Period</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.PTE_Notice_Time_Period__c} linkify>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            -->
+            <template if:true={popupHome.Permit_Street_Parking__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Permit Street Parking</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Permit_Street_Parking__c}
+                            checked={popupHome.Permit_Street_Parking__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Courtyard__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Courtyard</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Courtyard__c} checked={popupHome.Courtyard__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Dog_Park__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Dog Park</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Dog_Park__c} checked={popupHome.Dog_Park__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Playground__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Playground</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Playground__c}
+                            checked={popupHome.Playground__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Picnic_Area__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Picnic Area</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Picnic_Area__c}
+                            checked={popupHome.Picnic_Area__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+
+            <template if:true={popupHome.Allows_Section_8__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Allows Section 8</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Allows_Section_8__c}
+                            checked={popupHome.Allows_Section_8__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.BBQ__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">BBQ</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.BBQ__c} checked={popupHome.BBQ__c} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Pet_Fee__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Pet Fee</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Pet_Fee__c} format-style="currency"
+                            currency-code={popupHome.CurrencyIsoCode}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Max_of_Pets__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Max # of Pets</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Max_of_Pets__c} format-style="currency"
+                            currency-code={popupHome.CurrencyIsoCode}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Pet_Rent__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Pet Rent</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Pet_Rent__c} format-style="currency"
+                            currency-code={popupHome.CurrencyIsoCode}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Pet_Deposit__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Pet Deposit</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Pet_Deposit__c} format-style="currency"
+                            currency-code={popupHome.CurrencyIsoCode}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Parking_Type__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Parking Type</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Parking_Type__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Move_In_Fee__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Move In Fee</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupHome.Move_In_Fee__c} format-style="currency"
+                            currency-code={popupHome.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Amenities" label="Amenities">
+            <template if:true={popupHome.Elevator__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Elevator</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Elevator__c} checked={popupHome.Elevator__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.ADA_Compliant__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">ADA Compliant</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.ADA_Compliant__c}
+                            checked={popupHome.ADA_Compliant__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Wellness_Studio__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Wellness Studio</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Wellness_Studio__c}
+                            checked={popupHome.Wellness_Studio__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Rooftop__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Rooftop</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Rooftop__c}
+                            checked={popupHome.Rooftop__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Lounge__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Lounge</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Lounge__c} checked={popupHome.Lounge__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Wet_Bar__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Wet Bar</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Wet_Bar__c} checked={popupHome.Wet_Bar__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Backyard__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Backyard</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Backyard__c} checked={popupHome.Backyard__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Study_Room__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Study Room</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Study_Room__c}
+                            checked={popupHome.Study_Room__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Workspace__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Workspace</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Workspace__c} checked={popupHome.Workspace__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Game_Room__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Game Room</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Game_Room__c} checked={popupHome.Game_Room__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Gym__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Gym</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Gym__c} checked={popupHome.Gym__c} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Kitchen__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Kitchen</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Kitchen__c} checked={popupHome.Kitchen__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Movie_Room__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Movie Room</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Movie_Room__c}
+                            checked={popupHome.Movie_Room__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Dedicated_Bathroom__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Dedicated Bathroom</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Dedicated_Bathroom__c}
+                            checked={popupRoom.Dedicated_Bathroom__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Loft__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Loft</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Loft__c} checked={popupRoom.Loft__c} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Skylight__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Skylight</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Skylight__c} checked={popupRoom.Skylight__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Dressing_Gallery__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Dressing Gallery</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Dressing_Gallery__c}
+                            checked={popupRoom.Dressing_Gallery__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Balcony__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Balcony</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Balcony__c} checked={popupRoom.Balcony__c}
+                            disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Corner_Unit__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Corner Unit</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Corner_Unit__c}
+                            checked={popupRoom.Corner_Unit__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Kitchenette__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Kitchenette</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupRoom.Kitchenette__c}
+                            checked={popupRoom.Kitchenette__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupSuite.Max_Tenant_Count__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Max Tenant Count</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-number value={popupSuite.Max_Tenant_Count__c}></lightning-formatted-number>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupSuite.ESA_in_Suite__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">ESA in Suite</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupSuite.ESA_in_Suite__c}
+                            checked={popupSuite.ESA_in_Suite__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupSuite.Current_Lease_End_Date__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Current Lease End Date</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-date-time value={popupSuite.Current_Lease_End_Date__c}>
+                        </lightning-formatted-date-time>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Bike_Storage__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Bike Storage</label>
+                    <div class="slds-form-element__control">
+                        <lightning-input type="checkbox" value={popupHome.Bike_Storage__c}
+                            checked={popupHome.Bike_Storage__c} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Bike_Storage_Type__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Bike Storage Description</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Bike_Storage_Type__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Selling" label="Selling points">
+
+            <template if:true={popupSuite.Comments_Notes__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Sales Suite Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupSuite.Comments_Notes__c}>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupRoom.Comments_Notes__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Sales Room Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupRoom.Comments_Notes__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.View__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">View</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupRoom.View__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupRoom.Closet__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Closet</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupRoom.Closet__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            
+
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Fees" label="Fees and lease terms">
+
+            
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                <label class="slds-form-element__label custom-title">12M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={TwelveMonthPrice}>
+                        <lightning-formatted-number value={TwelveMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={TwelveMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+            
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                <label class="slds-form-element__label custom-title">9M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={NineMonthPrice}>
+                        <lightning-formatted-number value={NineMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={NineMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+                
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                <label class="slds-form-element__label custom-title">6M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={SixMonthPrice}>
+                        <lightning-formatted-number value={SixMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={SixMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+                
+            <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                <label class="slds-form-element__label custom-title">3M Rent</label>
+                <div class="slds-form-element__control">
+                    <template if:true={ThreeMonthPrice}>
+                        <lightning-formatted-number value={ThreeMonthPrice} format-style="currency"
+                            currency-code={popupRoom.CurrencyIsoCode}>
+                        </lightning-formatted-number>
+                    </template>
+                    <template if:false={ThreeMonthPrice}>
+                        N/A
+                    </template>
+                </div>
+            </div>
+
+            <template if:true={popupHome.Term_Restrictions__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Term Restrictions</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Term_Restrictions__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Allowable_term_lengths__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Allowable term lengths</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Allowable_term_lengths__c}>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Income_Requirements__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Income Requirements</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Income_Requirements__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Guarantor_Requirements__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Guarantor Requirements</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Guarantor_Requirements__c}>
+                        </lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+            <template if:true={popupHome.Storage_Cost__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Storage Cost</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Storage_Cost__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={concessionDetails}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title"><b>Current Concession</b></label>
+                    <div class="slds-form-element__control">
+                        <div>
+                            <lightning-formatted-rich-text value={concessionDetails}></lightning-formatted-rich-text>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Utility_Information__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Utility Information</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Utility_Information__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={popupHome.Cost_of_Parking__c}>
+                <div class="slds-form-element slds-form-element_readonly slds-hint-parent">
+                    <label class="slds-form-element__label custom-title">Cost of Parking</label>
+                    <div class="slds-form-element__control">
+                        <lightning-formatted-text value={popupHome.Cost_of_Parking__c}></lightning-formatted-text>
+                    </div>
+                </div>
+            </template>
+
+            
+        </lightning-accordion-section>
+
+
+    </lightning-accordion>
+
+</template>

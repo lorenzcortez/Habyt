@@ -1,0 +1,25 @@
+<template>
+    <lightning-quick-action-panel>
+        <template if:true={showSpinner}>
+            <div style="min-height: 40vh;" class="slds-is-relative">
+                <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-align_absolute-center slds-text-body_regular">
+                {error}
+            </div>
+    
+            <template if:true={stackTrace}>
+                <div class="slds-align_absolute-center slds-text-body_regular">
+                    Here is the stack trace of the error to give to your administrator: {stackTrace}
+                </div>
+            </template>
+
+            <div slot="footer">
+                <lightning-button variant="neutral" label="Close" onclick={closeQuickAction}></lightning-button>
+              </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

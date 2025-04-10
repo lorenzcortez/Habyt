@@ -1,0 +1,50 @@
+<aura:component controller="IcxStripeInterface" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="recordId" type="String" />
+    
+    <aura:attribute name="Contract" type="String" />
+    
+    <aura:attribute name="currency" type="String" />
+    <aura:attribute name="Account" type="Account" />
+    <aura:attribute name="sourceType" type="String" />
+    <aura:attribute name="error" type="String" />
+    <aura:attribute name="status" type="List" />
+    <aura:attribute name="progress" type="Integer" />
+    <aura:attribute name="reuseExistingSource" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <h2>Change Payment Method</h2>
+    <lightning:tabset >
+        <lightning:tab label="SEPA Direct Debit" id="sepa" onactive="{!c.initSepa}">
+            <ui:inputText label="Accont Owner Name" aura:id="name" required="true"/>
+            <ui:inputText label="IBAN" aura:id="IBAN" required="true"/>
+        </lightning:tab>
+        
+        <lightning:tab label="Credit card" id="cc"  onactive="{!c.initCard}">
+            <ui:inputText label="Number" aura:id="number" required="true"/>
+            <fieldset class="slds-form--compound">
+                <legend class="slds-form-element__label slds-text-title--caps">Expiration</legend>
+                <div class="slds-form-element__group">
+                    <div class="slds-form-element__row">
+                        <div class="slds-form-element slds-size--1-of-2">
+                            <ui:inputText label="Month" aura:id="exp_month" required="true"/>
+                        </div>
+                        <div class="slds-form-element slds-size--1-of-2">
+                            <ui:inputText label="Year" aura:id="exp_year" required="true"/>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <ui:inputText label="CVC" aura:id="cvc" required="true"/>
+        </lightning:tab>
+        
+    </lightning:tabset>
+    <div class="slds-clearfix">
+        <lightning:button class="slds-float_right" variant="brand" label="Confirm" title="Confirm" onclick="{! c.addSource }" />
+    </div>
+    
+    <ui:message title="Error" severity="error" closable="false" aura:id="message">
+        <b>Details: {!v.error}</b>        
+    </ui:message>
+    
+</aura:component>

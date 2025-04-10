@@ -1,0 +1,121 @@
+.custom-box {
+    text-align: left;
+    background-color: #f4f6f9;
+    margin: 5px;
+    border: 1px solid #d8dde6;
+}
+
+.custom-title {
+    text-transform:uppercase;
+    color:#999;
+    font-weight:800;
+    font-size:0.7rem;
+}
+
+.date-available {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    color: #333;
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+    padding: .25rem;
+    width: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.date-available__month,
+.date-available__now {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.date-available__day {
+    font-size: 1.5rem;
+ }
+
+ .no-bottom-border {
+     border-bottom: none;
+ }
+
+ .slds-form-element__control {
+     font-weight: bold;
+ }
+
+ .sqft-label {
+    color: #999;
+    font-size: .95em;
+    margin-left: .25rem;
+}
+
+.slds-model__content,
+.main-container,
+.main-col,
+.tag-col
+{
+    height: 100%;
+}
+
+.info-header {
+    height: 130px;
+}
+.extra-info {
+    height: calc(100% - 130px);
+}
+.main-col,
+.tag-col,
+.extra-info {
+    overflow-y: scroll;
+}
+
+.extra-info .slds-col {
+    margin-top: 8px;
+}
+
+.tag-container + .tag-container {
+    margin-top: 8px;
+}
+
+.tag {
+    margin: 8px;
+    padding: 4px 8px;
+    background:  rgb(97, 134, 45);
+    border-radius: 3px;
+    color: #fff;
+    font-size: .75em;
+    text-align: center;
+}
+
+.bluetag {
+    margin: 8px;
+    padding: 4px 8px;
+    background: #456ddb;
+    border-radius: 3px;
+    color: #fff;
+    font-size: .75em;
+    text-align: center;
+}
+
+.skedEditOpportunityModalIframe {
+    border: none;
+    transition: opacity .2s linear, background-color .2s linear;
+    background-image: url(/resource/skedCommonBookingGrid_Assets/slds/images/spinners/slds_spinner_brand.gif);
+    background-color: rgba(43,40,38,.6);
+    background-size: 64px;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 7001;
+}

@@ -1,0 +1,155 @@
+<aura:component controller="ChecklistItemController" implements="lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name="ChecklistItems" type="Sub_Task__c[]" />
+    <aura:attribute name="UploadedFiles" type="ContentDocument[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadcheckList}"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute  name= "TaskId" type="string" access="global" />
+    <aura:handler event="force:refreshView" action="{!c.loadcheckList}" />
+    
+    <!--contacts table part-->
+    <ui:scrollerWrapper class="slds-scrollable_y">
+        
+        <h3 class="slds-section__title">
+            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                <span class="slds-truncate" title="Open Tasks"><b>Open Tasks</b></span>
+            </button>
+        </h3>
+        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-no-row-hover">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Subject">Subject</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Description">Description</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Due Date">Due Date</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Assigned To">Assigned To</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Assigned To">Access System</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <div class="slds-page-header"><p style="font-size: 16px;font-weight: bold;">Open Tasks</p></div> -->
+                <aura:iteration items="{!v.ChecklistItems}" var="item">
+                    <aura:if isTrue="{!!item.Is_Completed__c}">
+                        <tr>
+                            <td scope="row" class="slds-cell-wrap">
+                                <!-- <div class="slds-truncate slds-cell-wrap" title="{!item.Id}">{!item.Name}</div>  -->
+                                <div class="slds-truncate slds-cell-wrap" title="{!item.Id}"><a href="javascript:void(0)" id="{!item.Id}" data-recId="{!item.Id}" onclick="{!c.NavigateToSubTask}">{!item.Name}</a></div>
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Description">{!item.Description__c}</div> 
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <!-- <div class="slds-truncate slds-cell-wrap" title="Due Date">{!item.Due_Date__c}</div>-->
+                                <ui:outputDate value="{!item.Due_Date__c}" format="MM-DD-YY"/>
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Assigned To">{!item.Owner.Name}</div> 
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Access System">{!item.Key_System__r.Name}</div> 
+                            </td>
+                            
+                            <td scope="row" class="slds-text-align_left slds-cell-wrap">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <button type="button" class="slds-button slds-button_brand" onclick="{!c.OnCompletedButtonClick}" id="{!item.Id}">Mark Completed</button>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+        <h3 class="slds-section__title">
+            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                <span class="slds-truncate" title="Completed Tasks"><b>Completed Tasks</b></span>
+            </button>
+        </h3>
+        
+        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-no-row-hover">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Subject">Subject</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Description">Description</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Due Date">Due Date</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Assigned To">Assigned To</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Assigned To">Access System</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <p style="font-size: 16px;font-weight: bold;">Completed Tasks</p> -->
+                <aura:iteration items="{!v.ChecklistItems}" var="item">
+                    <aura:if isTrue="{!item.Is_Completed__c}">
+                        <tr>
+                            <td scope="row" class="slds-cell-wrap">
+                                <!-- <div class="slds-truncate slds-cell-wrap" title="{!item.Id}">{!item.Name}</div> -->
+                                <div class="slds-truncate slds-cell-wrap" title="{!item.Id}"><a href="javascript:void(0)" id="{!item.Id}" data-recId="{!item.Id}" onclick="{!c.NavigateToSubTask}">{!item.Name}</a></div>
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Description">{!item.Description__c}</div> 
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <!-- <div class="slds-truncate slds-cell-wrap" title="Due Date">{!item.Due_Date__c}</div>  -->
+                                <ui:outputDate value="{!item.Due_Date__c}" format="MM-DD-YY"/>
+                            </td>
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Assigned To">{!item.Owner.Name}</div> 
+                            </td>
+                            
+                            
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="Access System">{!item.Key_System__r.Name}</div> 
+                            </td>
+                            
+                            
+                            <td scope="row" class="slds-text-align_left slds-cell-wrap">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <button type="button" class="slds-button slds-button_neutral" onclick="{!c.OnOpenButtonClick}" id="{!item.Id}">Re-open</button>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </ui:scrollerWrapper>
+    
+    
+</aura:component>

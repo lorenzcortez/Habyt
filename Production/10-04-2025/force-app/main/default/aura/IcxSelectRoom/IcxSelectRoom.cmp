@@ -1,0 +1,135 @@
+<aura:component controller="IcxOppInterface" implements="force:hasRecordId,flexipage:availableForAllPageTypes" >
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="month" type="Integer"/>
+    <aura:attribute name="roomsAvailable" type="List" />
+    <aura:attribute name="roomId" type="Id" />
+    <aura:attribute name="roomPropId" type="Id" />
+    <aura:attribute name="contractId" type="Id" />x
+    <aura:attribute name="showRoomInfo" type="Boolean" default="false"/>
+    <aura:attribute name="showOpps" type="Boolean" default="false"/>
+    <aura:attribute name="MessageOpp" type="String" />
+    <aura:attribute name="Opps" type="List" />
+    <aura:attribute name="NoRoomMessage" type="String" default="Choose a date and criteria to see the available rooms"/>
+    <aura:attribute name="fields" type="String[]" default="['Start_Date__c','Country__c','City__c']" />
+    <aura:handler name="change" value="{!v.roomId}" action="{!c.roomChange}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="workspace" type="Object" />
+    
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      layoutType="FULL"
+                      />
+    
+    <!-- Display Lightning Data Service errors, if any -->
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="recordError">
+            {!v.recordError}</div>
+    </aura:if>
+    
+    <!-- Filter -->
+    
+    <div class="slds-grid ">
+        <!--
+        <div class="slds-col">
+            <lightning:input type="date" name="" label="Start Date" required="true" value="{!v.startDate}" />
+        </div>
+        <div class="slds-col">
+            <lightning:input type="number" name="" label="Months" required="true" value="{!v.month}"/>
+        </div>
+        <div class="slds-col">
+            <lightning:button class="slds-m-top_large" label="Search for Rooms" title="Search for Rooms" onclick="{! c.searchForRooms }"/>
+        </div>
+     -->
+        
+        
+        <div class="slds-col">
+            <lightning:recordForm recordId="{!v.recordId}" objectApiName="Opportunity" fields="{!v.fields}" mode="view" columns="3" onsuccess="{!c.handleSuccess}" />
+            <lightning:icon onclick="{!c.reloadInfo}" class="reload-box slds-float_right" iconName="utility:loop" alternativeText="Reload!"  size="x-small"/>
+        </div>
+    </div>
+    <!-- Rooms Available -->
+    <aura:if isTrue="{!or(v.simpleRecord.Start_Date__c == null, v.simpleRecord.City__c == null, v.simpleRecord.Country__c == null)}">
+        Please specify a Start Date, Country and City <br/>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!and(v.showRoomInfo == false , not(or(v.simpleRecord.Start_Date__c == null, v.simpleRecord.City__c == null, v.simpleRecord.Country__c == null)))}">
+                <div class="slds-m-top_large">
+                    <aura:if isTrue="{!not(empty(v.roomsAvailable))}">
+                        <aura:iteration items="{!v.roomsAvailable}" var="item">
+                            
+                            <div class="slds-box RoomItem" onclick="{!c.showRoom}" data-row-room="{!item.room.Id}" data-row-prop="{!item.room.Property__c}" data-row-contract="{!item.ContractId}">
+                                <p>{!item.room.Name} - {!item.room.Property__r.City__c} - {!item.room.Property__r.Area__c} 
+                                    <lightning:icon class="slds-float_right" iconName="{! 'utility:'+item.Status}" alternativeText="{!item.Status}" variant="{!item.Status}" size="small"/></p>
+                            </div>
+                        </aura:iteration>
+                        
+                        <aura:set attribute="else">
+                            {!v.NoRoomMessage}
+                        </aura:set>
+                    </aura:if>
+                </div>
+                
+                <aura:set attribute="else">
+                    <!-- Room Info -->
+                    <div class="slds-m-top_large">
+                        <lightning:recordViewForm recordId="{!v.roomId}" objectApiName="Room__c">
+                            <div class="slds-grid slds-grid_align-space slds-box">
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+                                    <aura:if isTrue="{!v.contractId != 'null'}">
+                                        <lightning:recordViewForm recordId="{!v.contractId}" objectApiName="Contract">
+                                            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                                                <span class="slds-assistive-text">error</span>
+                                                <h2>This property has a contract until  <lightning:outputField fieldName="EndDate" variant="label-hidden"/>
+                                                </h2>
+                                            </div>
+                                        </lightning:recordViewForm>
+                                    </aura:if>
+                                    <lightning:outputField fieldName="Name" />
+                                    <lightning:outputField fieldName="Price__c" />
+                                    <lightning:outputField fieldName="HA__c" />
+                                    <lightning:outputField fieldName="Number_of_windows__c" />
+                                    
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+                                    <lightning:outputField fieldName="Property__c" />
+                                    
+                                    <lightning:recordViewForm recordId="{!v.roomPropId}" objectApiName="Property__c">
+                                        
+                                        <lightning:outputField fieldName="Street__c" />
+                                        <lightning:outputField fieldName="Area__c" />
+                                        <lightning:outputField fieldName="City__c" />
+                                        <lightning:outputField fieldName="Country__c" />
+                                        
+                                    </lightning:recordViewForm>
+                                </div>
+                            </div>
+                            
+                        </lightning:recordViewForm>
+                        
+                        <aura:if isTrue="{!v.showOpps}">
+                            <div class="slds-box">
+                                {!v.MessageOpp}
+                                 
+                                <aura:iteration items="{!v.Opps}" var="item">
+                                    <p class="opp-item" data-row-id="{!item.Id}" onclick="{!c.oppSelected}">{!item.Name}</p>
+                                </aura:iteration>
+                            </div>
+                           
+                        </aura:if>
+                        
+                        <lightning:button class="slds-m-top_medium" label="Back" title="Back" onclick="{! c.showList }"/>
+                        <lightning:button class="slds-m-top_medium slds-float_right slds-button_brand" label="Select" title="Select this room" onclick="{! c.selectThisRoom }" disabled="{!v.contractId != 'null'}"/>
+                    </div>
+                </aura:set>
+            </aura:if>
+            
+        </aura:set>
+    </aura:if>
+</aura:component>

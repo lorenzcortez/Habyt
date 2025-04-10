@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow will invoke sub flows for sending different emails based on SC.</description>
+    <environments>Default</environments>
+    <interviewLabel>Implementation Team - Emails Scheduled Job {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Implementation Team - Emails Scheduled Job</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>51</locationX>
+        <locationY>49</locationY>
+        <connector>
+            <targetReference>Implementation_Team_home_s_expected_open_date_approaches</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2020-10-21</startDate>
+            <startTime>20:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <subflows>
+        <name>Home_Open_Date_Reminder</name>
+        <label>Home Open Date Reminder</label>
+        <locationX>1064</locationX>
+        <locationY>116</locationY>
+        <flowName>Construction_Home_Open_Date_Reminder</flowName>
+    </subflows>
+    <subflows>
+        <description>Flow: https://common.my.salesforce.com/3003u000000c5v1AAA</description>
+        <name>Implementation_Team_home_s_expected_open_date_approaches</name>
+        <label>Implementation Team - home&apos;s expected open date approaches</label>
+        <locationX>877</locationX>
+        <locationY>116</locationY>
+        <connector>
+            <targetReference>Home_Open_Date_Reminder</targetReference>
+        </connector>
+        <flowName>Implementation_Team_home_s_expected_open_date_approaches</flowName>
+    </subflows>
+</Flow>

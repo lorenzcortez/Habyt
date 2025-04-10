@@ -1,0 +1,37 @@
+<template>
+    <div class="update-metadata__wrapper slds-p-around_large">
+        <template if:false={showSpinner}>
+            <div class="invoice-form__content slds-p-bottom_small">
+                <div class="header slds-p-bottom_large">
+                    <div class="title">Update Billing Metadata</div>
+                    <div class="info slds-p-top_xx-small">Modify or delete the Billing Month and Billing Year fields.</div>
+                </div>
+                <div class="form__wrapper">
+                    <div class="billing-month__wrapper">
+                        <lightning-combobox
+                            class="label"
+                            name="billing-month"
+                            label="Billing Month"
+                            value={billingMonthValue}
+                            options={billingMonthOptions}
+                            onchange={billingMonthChange} ></lightning-combobox>
+                        <div class="info slds-p-top_xx-small">Select the billing month or choose "None" to delete the field.</div>
+                    </div>
+                    <div class="billing-year__wrapper">
+                        <lightning-input class="label slds-p-top_medium" label="Billing Year" onchange={billingYearChange} value={billingYearValue}></lightning-input>
+                        <!-- <div class="info slds-p-top_xx-small">Select the billing year or choose "None" to delete the field.</div> -->
+                        <div class="info slds-p-top_xx-small">Add billing year or leave it blank to delete the field.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-form__footer">
+                <button class="slds-button slds-button_brand slds-m-left_x-small" type="button" onclick={handleUpdateMetadata}>Update Metadata</button>
+            </div>
+        </template>
+        <template if:true={showSpinner}>
+            <div class="spinner__wrapper">
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,15 @@
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.smaller {
+    font-size: .8rem;
+}
+
+.book-button {
+    font-size: 1rem;
+    color: var(--lwc-dxpGBrand);
+    text-transform: uppercase;
+    font-weight: bold;
+}

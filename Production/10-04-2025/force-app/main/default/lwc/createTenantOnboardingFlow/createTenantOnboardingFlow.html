@@ -1,0 +1,71 @@
+<template>
+    <article class="slds-card">
+        <template if:true={isLoading}>
+            <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+        </template>
+
+        <div class="slds-card__header slds-grid" style="border-bottom: 1px solid gray;">
+           <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                <h2 class="slds-card__header-title slds-p-around_medium" style="display: block; font-size: 24px;"><span>Generate Tenant Onboarding Flow</span></h2>
+                <div class="slds-p-bottom_medium" style="text-align: center;">Learn more about the tenant onboarding flow <a target="_blank" href="https://www.notion.so/habyt/1a5f3b8e12138079aa68fe37e1229329?v=1a5f3b8e12138197a7d4000c79a7f66b">here</a></div>
+                </div>
+           </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner slds-p-horizontal_xx-large slds-p-vertical_x-small" style="margin: 0;">   
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small slds-m-small">
+                    <label class="">Rent Contract Number</label>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input variant="label-hidden" value={dataInput.contractNumber} name="contractNumber" onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small slds-m-small">
+                    <label class="">Membership Contract Number</label>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input variant="label-hidden" value={dataInput.memberContractNumber} name="memberContractNumber" onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small slds-m-small">
+                    <label class="">Flow Variant</label>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <!-- <lightning-input variant="label-hidden" name="flowVariant" value={dataInput.flowVariant}></lightning-input> -->
+                    <lightning-combobox
+                        disabled
+                        name="flowVariant"
+                        variant="label-hidden" 
+                        value={dataInput.flowVariant}
+                        options={flowVariantOptions}
+                        placeholder="No Option Selected"
+                        onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-size_1-of-1">
+                    <div class="slds-size_1-of-1 slds-p-around_small" style="font-size: large; border-top: 1px solid gray;">
+                        Tenant Onboarding Steps
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <template if:true={dataInput.stepsData}>
+                            <template for:each={dataInput.stepsData} for:item="record">
+                                <div key={record.row} class="slds-size_1-of-1 slds-p-around_xx-small" style="display:flex">
+                                    <div  class="slds-col slds-size_1-of-12 slds-p-left_medium">
+                                        <lightning-input variant="label-hidden" type="checkbox" checked={record.value} data-row={record.row} name={record.apiName} onchange={handleChange}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_11-of-12">                                            
+                                        <label>{record.fieldName}</label>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="slds-card__footer slds-p-around_small" style="margin: 0;">
+            <button class="slds-button slds-button_neutral slds-m-left_x-small" type="button" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand slds-m-left_x-small" type="button" onclick={generateFlow}>Generate Flow</button>
+        </footer>
+    </article>
+</template>

@@ -1,0 +1,74 @@
+<aura:component controller="LightningSelfRegisterController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="UserIsLog" type="Boolean" default="false"/>
+    <aura:attribute name="UserExist" type="Boolean" default="false"/>
+    <aura:attribute name="accountId" type="String" required="false" default="0019E00000xZ60vQAC" description="accountId for creating the user. If not specified, it will create a PersonAccount if possible for B2C scenario. Or otherwise if it's in a community, the community's self-registration accountId will be used."/>
+    <!--
+    <aura:attribute name="regConfirmUrl" type="String" required="true"/> 
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    -->
+    
+    <aura:attribute name="prefillFirstname" type="string" />
+    <aura:attribute name="prefillLastname" type="string" />
+    <aura:attribute name="prefillEmail" type="string" />
+    
+    <aura:attribute name="Contract" type="Contract" />
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="firstnameLabel" type="String" required="false" default="First Name"/>
+    <aura:attribute name="lastnameLabel" type="String" required="false" default="Last Name"/>
+    <aura:attribute name="emailLabel" type="String" required="false" default="Email"/>
+    <aura:attribute name="passwordLabel" type="String" required="false" default="Create Password"/>
+    <aura:attribute name="confirmPasswordLabel" type="String" required="false" default="Confirm Password"/>    
+    <aura:attribute name="submitButtonLabel" type="String" required="false" default="Go to Log in"/>
+    <!--
+    <aura:attribute name="includePasswordField" type="Boolean" required="false" default="true" description="Whether to include password"/>  
+    <aura:attribute name="extraFieldsFieldSet" type="String" required="false" description="A field set name whose fields are desired for user registration"/>  -->
+    <aura:attribute name="extraFields" type="list" required="false" description="A field set name whose fields are desired for user registration"/>
+       <aura:attribute name="error" type="String" />
+      <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- <aura:attribute name="expid" type="String" required="false" description="The branding experience ID" /> -->  
+    
+    <ui:message title="Error" severity="error" closable="false" aura:id="message">
+        <b>Details: {!v.error}</b>        
+    </ui:message>
+    
+    <div class="slds-grid">       
+            <div style="margin:0 auto" class="slds-col slds-size_8-of-12">
+                <div class="slds-box slds-box_x-small slds-m-around_x-small">
+                    <aura:renderIf isTrue="{!v.showError}">
+                        <div id="error">
+                            <ui:outputRichText value="{!v.errorMessage}"/>
+                        </div>
+                    </aura:renderIf>
+                    <div class="slds-form">
+                            <p>Thank you for completing your contract! Please log in by clicking the button below to access your profile.</p>               
+                        <div class="slds-clearfix">
+                            <div style="position:relative;">
+                                <aura:if isTrue="{!v.showSpinner}">
+                                    
+                                    <lightning:spinner alternativeText="Loading" size="small" />
+                                </aura:if>
+                                
+                                <lightning:button label="{!v.submitButtonLabel}"
+                                                  class="slds-m-top--medium loginBtn"
+                                                  variant="brand"
+                                                  onclick="{!c.handleSelfRegister}"
+                                                  disabled="{!v.showSpinner}"/>
+                                
+                            </div>
+                        </div>
+                        
+                       
+                       
+                       
+                       
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+    
+</aura:component>

@@ -1,0 +1,16 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+	<!-- When the component renders, call the init handler. -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="validate" type="Aura.Action" description="Custom validation function to run when the flow is navigated to the next screen. The function must evaluate the component and return values for isValid and errorMessage."/>
+    <aura:registerEvent name="appEvent" type="selfService:caseCreateFieldChange"/>
+    <aura:attribute  name= "Subject" type="string" access="global" />
+	<aura:handler name="change" value="{!v.subject}" action="{!c.itemsChange}"/>
+	<lightning:messages />
+
+    <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Case">
+    	<lightning:input label="Subject" maxlength="255" fieldName="Subject" onchange="{!c.itemsChange}" required="true" />	
+    </lightning:recordEditForm>
+    
+    
+    
+</aura:component>

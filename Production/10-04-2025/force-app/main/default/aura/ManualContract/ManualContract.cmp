@@ -1,0 +1,24 @@
+<aura:component controller="ContractGeneratorController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+
+    
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        
+        .modal-container { width: 200px !important; }
+    </aura:html>
+    
+    <div class="slds-p-around_small slds-align_absolute-center">
+        <lightning:button class="slds-m-top_small" variant="brand" label="Confirm" onclick="{! c.confirm }" />
+        <lightning:button class="slds-m-top_small" variant="destructive" label="Cancel" onclick="{! c.cancel }" />
+    </div>
+</aura:component>

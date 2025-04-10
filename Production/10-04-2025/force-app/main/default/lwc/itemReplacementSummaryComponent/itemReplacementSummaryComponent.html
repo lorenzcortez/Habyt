@@ -1,0 +1,159 @@
+<template>
+    <lightning-card  title="Item Replacement Summary">
+        
+
+          <lightning-tabset>
+            <lightning-tab label="SUMMARY">
+              <div>
+                <article class="slds-tile slds-media">
+                  <div class="slds-media__figure">
+                    <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                      <img alt="" src="/_slds/icons/standard-sprite/svg/symbols.svg#account" title={AccountName} />
+                    </span>
+                  </div>
+                  
+                  <div class="slds-media__body">
+                    <h3 class="slds-tile__title slds-truncate" title={AccountName}>
+                      <a href="javascript:void(0);">{AccountName}</a>
+                    </h3>
+                    
+                    <div class="slds-grid slds-wrap">
+                      <div class="slds-col slds-size_1-of-2">
+                        <span>Suite:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-2">
+                        <span>{SuiteName}</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-2">
+                        <span>Home:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-2">
+                        <span>{HomeName}</span>
+                      </div>
+                    </div>
+                    <hr/>
+                    <div class="slds-grid slds-wrap">
+                      <div class="slds-col slds-size_4-of-4">
+                        <b>Home Budget -  do not exceed the home budget each month.</b>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Monthly Home Budget:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={homebugetmonthly} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Annual Home Budget:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={homebugetyearly} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Amount of Approved Orders This Month:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={approvedhomeorderAmountthismonth} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Amount of Approved Orders This Year:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={approvedhomeorderAmountthisyear} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>If you approve this order it will bring the HOMES spending THIS MONTH to:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={newmonthlyhomeorderamount} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>If you approve this order it will bring the HOMES spending THIS YEAR to:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={newyearlyhomeorderamount} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                    </div>
+                    <hr/>
+                    <div class="slds-grid slds-wrap">
+                      <div class="slds-col slds-size_4-of-4">
+                        <b>Suite Budget - this is just an FYI</b>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Amount of Approved Orders This Month:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={approvedsuiteorderAmountthismonth} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>Total Amount of Approved Orders This Year:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={approvedsuiteorderAmountthisyear} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>If you approve this order it will bring the SUITES spending THIS MONTH to:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={newmonthlysuiteorderamount} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                      <div class="slds-col slds-size_3-of-4">
+                        <span>If you approve this order it will bring the SUITES spending THIS YEAR to:</span>
+                      </div>
+                      <div class="slds-col slds-size_1-of-4">
+                        <span><lightning-formatted-number value={newyearlysuiteorderamount} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </lightning-tab>
+            
+            <lightning-tab label="SUITES' PENDING ORDERS">
+              <div class="slds-scrollable--x">
+                <table class="slds-table slds-table--bordered">
+                  <thead>
+                    <tr class="slds-text-heading--label">
+                      <th scope="col">
+                        <span class="slds-truncate">Order Number</span>
+                      </th>
+                      <th scope="col">
+                        <span class="slds-truncate">Start Date</span>
+                      </th>
+                      <th scope="col">
+                        <span class="slds-truncate">Account</span>
+                      </th>
+                      <th scope="col">
+                        <span class="slds-truncate">Status</span>
+                      </th>
+                      <th scope="col">
+                        <span class="slds-truncate">Product</span>
+                      </th>
+                      <th scope="col">
+                        <span class="slds-truncate">Amount</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template for:each={OtherOrderList} for:item="d">
+                      <tr class="slds-hint-parent" key={d.AccountURL}>
+                        <td data-label="OrderNumber"><a href={d.OrderURL} class="slds-truncate">{d.OrderName}</a></td>
+                        <td data-label="StartDate">
+                          <span class="slds-truncate">{d.StartDate}</span>
+                        </td>
+                        <td data-label="account"><a href={d.AccountURL} class="slds-truncate">{d.AccountName}</a></td>
+                        <td data-label="Status">{d.Status}</td>
+                        <td data-label="product"><a href={d.ProductURL} class="slds-truncate">{d.ProductName}</a></td>
+                        <td data-label="Amount"><lightning-formatted-number value={d.TotalAmount} format-style="currency" currency-code="USD" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number></td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </div>
+            </lightning-tab>
+            
+        </lightning-tabset>
+
+    </lightning-card>
+    
+  
+</template>

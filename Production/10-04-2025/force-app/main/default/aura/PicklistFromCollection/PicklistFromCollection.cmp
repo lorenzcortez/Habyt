@@ -1,0 +1,14 @@
+<aura:component implements = "Lightning:availableForFlowScreens" access = "global">
+	<aura:attribute name = 'PicklistFromCollection' type = "Product2[]" access = "global">
+    </aura:attribute>
+    
+    <aura:attribute name = "ProductID" type = "String" access = "global">
+    </aura:attribute>
+    
+    <lightning:select label = "Selected Product" value = "{!v.ProductID}">
+    	<aura:iteration items = "{!v.PicklistFromCollection}" var = "p">
+            <option value = "{!p.Id}">{!p.Name}</option>
+        </aura:iteration>
+    </lightning:select>
+    
+</aura:component>

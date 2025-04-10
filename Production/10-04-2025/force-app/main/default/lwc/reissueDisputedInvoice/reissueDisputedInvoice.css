@@ -1,0 +1,30 @@
+.reissue-dispute__wrapper {
+    position: relative;
+}
+
+.reissue-dispute__wrapper .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.reissue-form__footer {
+    text-align: right;
+}
+
+.reissue-form__footer .custom__button {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 3px 28px;
+    border: 1px solid #000000;
+}
+
+.reissue-form__footer .cancel__button {
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 3px 28px;
+    border: 1px solid #b9b2af;
+}
+
+.spinner__wrapper {
+    min-height: 280px;
+}

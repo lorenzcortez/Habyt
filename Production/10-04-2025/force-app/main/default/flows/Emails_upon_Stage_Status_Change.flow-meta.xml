@@ -1,0 +1,1460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This is triggering SendGrid to send an email.</description>
+        <name>COMMON_Qualified_Email_Alert</name>
+        <label>COMMON - Qualified Email Alert</label>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentQualifiedEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Common Admissions</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <elementReference>QualifiedSFTemplateIDFormula</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>COMMON_Qualified_Seattle_Email_Alert</name>
+        <label>COMMON - Qualified - Seattle Email Alert</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentQualifiedEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Common Admissions</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <elementReference>QualifiedSFTemplateIDFormula</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Common_Reschedule_Tour</name>
+        <label>Common - Reschedule Tour</label>
+        <locationX>2250</locationX>
+        <locationY>1190</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>RescheduleTourDynamicContentCommon</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Common Admissions</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-a1b8d5c83bb84cc69e97da68daae2b93</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <description>This is triggering SendGrid to send an email.</description>
+        <name>COMMON_Waitlist_Availability_Email</name>
+        <label>COMMON - Waitlist Availability Email</label>
+        <locationX>1370</locationX>
+        <locationY>782</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentWaitlist</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Common Admissions</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-52c510014d044e37aea71854d19b2661</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>KIN_FMD_Follow_Up_email</name>
+        <label>Mily - FMD Follow Up email</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentQualifiedFollowupMily</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@milyliving.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>{!Owner.FirstName} from Mily</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@milyliving.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToName</name>
+            <value>
+                <stringValue>{!Owner.FirstName} from Mily</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-4da994f1560a4178ba5bd8617c40d3c7</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Kin_Reschedule_Tour</name>
+        <label>Mily - Reschedule Tour</label>
+        <locationX>2338</locationX>
+        <locationY>890</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>RescheduleTourDynamicContentMily</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@milyliving.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>{!Owner.FirstName} from Mily</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@milyliving.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToName</name>
+            <value>
+                <stringValue>{!Owner.FirstName} from Mily</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-217c4d53e8ca485aa9f4cb51ffd82bae</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Marketing_Re_Engaged_Email</name>
+        <label>Marketing Re-Engaged Email</label>
+        <locationX>1634</locationX>
+        <locationY>782</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentMarketingEngaged</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Common Admissions</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-e3f21cdc20f94ff2ac37642b7114c171</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Noah_Reschedule_Tour</name>
+        <label>Noah - Reschedule Tour</label>
+        <locationX>2074</locationX>
+        <locationY>890</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>RescheduleTourDynamicContentNoah</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>rentals@noahapartments.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Noah Leasing</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ReplyToEmail</name>
+            <value>
+                <stringValue>rentals@noahapartments.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-1f153c3cb35f49069562034dac1802ea</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Brand_Type</name>
+        <label>Brand Type</label>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>KIN3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>kin</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>KIN_FMD_Follow_Up_email</targetReference>
+            </connector>
+            <label>Mily</label>
+        </rules>
+        <rules>
+            <name>Common3</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>COMMON_Qualified_Email_Alert</targetReference>
+            </connector>
+            <label>Common</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Brand_Type_for_Reschedule_Tour</name>
+        <label>Check Brand Type for Reschedule Tour</label>
+        <locationX>2250</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Common_Reschedule_Tour</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Commonrs</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Common_Reschedule_Tour</targetReference>
+            </connector>
+            <label>Common</label>
+        </rules>
+        <rules>
+            <name>NOAHRS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>noah</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Noah_Reschedule_Tour</targetReference>
+            </connector>
+            <label>NOAH</label>
+        </rules>
+        <rules>
+            <name>KinRS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>kin</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Kin_Reschedule_Tour</targetReference>
+            </connector>
+            <label>Mily</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>City_Evaluation</name>
+        <label>City Evaluation</label>
+        <locationX>578</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Brand_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Cities</defaultConnectorLabel>
+        <rules>
+            <name>Seattle_Common</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.City_Name_Formula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Seattle</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>noah</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>kin</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>COMMON_Qualified_Seattle_Email_Alert</targetReference>
+            </connector>
+            <label>Seattle - Common</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>This is looking at what the stage status is of the opportunity that invoked this flow. It then decides what email to send based on the opportunities stage status (or other criteria set below in this node).</description>
+        <name>Stage_Status</name>
+        <label>Stage Status</label>
+        <locationX>1414</locationX>
+        <locationY>674</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Unable_to_Speak</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unable to Speak</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Unable to Speak</label>
+        </rules>
+        <rules>
+            <name>Unresponsive</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unresponsive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Lost_All_Brands_Emails_PE</targetReference>
+            </connector>
+            <label>Unresponsive</label>
+        </rules>
+        <rules>
+            <name>Qualified_Follow_up</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FMD - Follow Up</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>City_Evaluation</targetReference>
+            </connector>
+            <label>Qualified Follow up</label>
+        </rules>
+        <rules>
+            <name>Availability</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Availability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>common</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opportunity.Brand__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>COMMON_Waitlist_Availability_Email</targetReference>
+            </connector>
+            <label>Availability</label>
+        </rules>
+        <rules>
+            <name>Marketing_Re_Engaged</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Marketing Re-Engaged</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Marketing_Re_Engaged_Email</targetReference>
+            </connector>
+            <label>Marketing Re-Engaged</label>
+        </rules>
+        <rules>
+            <name>Reschedule_Tour</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reschedule Tour</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Brand_Type_for_Reschedule_Tour</targetReference>
+            </connector>
+            <label>Reschedule Tour</label>
+        </rules>
+        <rules>
+            <name>Touch_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Opportunity.Stage_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unresponsive - Touch 1</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Touch 1</label>
+        </rules>
+    </decisions>
+    <description>This sends our unresponsive touch one emails (invoked by a process builder). The reason we moved this to a flow is because of our NOAH and KIN brands which should get different emails. This flow checks what brand it is and then sends the correct email.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>brandformula</name>
+        <dataType>String</dataType>
+        <expression>IF ( ISBLANK ( TEXT({!Opportunity.Brand__c}) ) , &quot;common&quot;,  TEXT({!Opportunity.Brand__c}) )</expression>
+    </formulas>
+    <formulas>
+        <name>DynamicFormEmail</name>
+        <dataType>String</dataType>
+        <expression>IF (
+TEXT({!Opportunity.Brand__c}) == &quot;noah&quot;, &quot;rentals@noahapartments.com&quot;
+,
+IF(
+TEXT({!Opportunity.Brand__c}) == &quot;kin&quot;, &quot;admissions@milyliving.com&quot;,
+&quot;admissions@common.com&quot;
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>DynamicFormName</name>
+        <dataType>String</dataType>
+        <expression>IF (
+TEXT({!Opportunity.Brand__c}) == &quot;noah&quot;, &quot;Noah Leasing &quot;,
+IF(
+TEXT({!Opportunity.Brand__c}) == &quot;kin&quot;, {!Owner.FirstName} +&quot; from Mily&quot;,
+&quot;Common Admissions&quot;
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>HomeDynamicMarketingNameformula</name>
+        <dataType>String</dataType>
+        <expression>IF ( 
+ISBLANK ( {!Opportunity.Home_Committed__c} ), 
+&quot;Common&quot;, 
+{!Opportunity.Home_Marketing_Name__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>HomeFound</name>
+        <dataType>Boolean</dataType>
+        <expression>IF ( ISBLANK ( {!Opportunity.Home_Committed__c} ) , False, True )</expression>
+    </formulas>
+    <formulas>
+        <name>PostTourTouchesSendgridFormulaCommon</name>
+        <dataType>String</dataType>
+        <expression>IF ( TEXT({!Opportunity.Stage_Status__c}) == &quot;Post Tour - Unresponsive Touch 1&quot;, &quot;d-c333166efe00499b8336f0b2f5884d37&quot; , &quot;d-22ea229699d34c458f1c5dd71be7a35f&quot; )</expression>
+    </formulas>
+    <formulas>
+        <name>PostTourTouchesSendgridFormulaMily</name>
+        <dataType>String</dataType>
+        <expression>IF ( TEXT({!Opportunity.Stage_Status__c}) == &quot;Post Tour - Unresponsive Touch 1&quot;, &quot;d-9c8c69a98bfb448c9d194e6fd9580c50&quot; , &quot;d-d7f39270178d4fc39dbd302c763aedcc&quot; )</expression>
+    </formulas>
+    <formulas>
+        <name>PostTourTouchesSendgridFormulaNoah</name>
+        <dataType>String</dataType>
+        <expression>IF ( TEXT({!Opportunity.Stage_Status__c}) == &quot;Post Tour - Unresponsive Touch 1&quot;, &quot;d-b570a68f3b9e43099b6cd91415c6d70b&quot; , &quot;d-381e1a6d7e114878ad562129f9717d7d&quot; )</expression>
+    </formulas>
+    <formulas>
+        <name>QualifiedSFTemplateIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF ({!Opportunity.City_Name_Formula__c} == &quot;Seattle&quot;, &quot;d-537eb6465ba94470860e26672cffea3c&quot;, &quot;d-3675d5d76863455a9d71234194b7618a&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>removes the line breaks in the formula</description>
+        <name>SelfScheduledTourLinkPrefixFormula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE( {!Opportunity.Self_Scheduled_Tour_Link_prefix__c},  &quot;&lt;br&gt;&quot;,  &quot;&quot; )</expression>
+    </formulas>
+    <formulas>
+        <name>TodayMinus7</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 7</expression>
+    </formulas>
+    <formulas>
+        <name>UnitType</name>
+        <dataType>String</dataType>
+        <expression>IF ( ISBLANK ({!Opportunity.Inventory_Mix__c}) , &quot;Coliving&quot; ,{!Opportunity.Inventory_Mix__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UnresponsiveClosedTemplate</name>
+        <dataType>String</dataType>
+        <expression>CASE({!Opportunity.Brand__c},
+&quot;common&quot;, &quot;d-4d96695c2794430280f70c8c2a511585&quot;,
+&quot;noah&quot;, &quot;d-9c4c17a12fe64572ad520f64bee30ae5&quot;,
+&quot;kin&quot;, &quot;d-448a450c68cc4ae389c7aed01de41fbf&quot;,
+&quot;d-4d96695c2794430280f70c8c2a511585&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>UnresposiveTouch1CommonTemplate</name>
+        <dataType>String</dataType>
+        <expression>CASE (
+{!Opportunity.Inventory_Mix__c},
+&quot;Traditional&quot; , &quot;d-da9c59b4d69048e1aafea76ce2de57a5&quot;,
+&quot;Mixed&quot; , &quot;d-a7f27fcabfcb4e38a2109e2659c65242&quot;,
+&quot;Coliving&quot; , &quot;d-948b015a70a74f4d82731ac3d1a9840a&quot;,
+&quot;d-948b015a70a74f4d82731ac3d1a9840a&quot;
+)</expression>
+    </formulas>
+    <interviewLabel>Emails upon Stage Status Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Automated emails based on stage/status with brand</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Closed_Lost_All_Brands_Emails_PE</name>
+        <label>Closed Lost All Brands Emails - PE</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <inputAssignments>
+            <field>Account_First_Name__c</field>
+            <value>
+                <elementReference>Account.Preferred_First_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Category_Brand__c</field>
+            <value>
+                <elementReference>brandformula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Category_Funnel__c</field>
+            <value>
+                <stringValue>top</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Category_Template_Id__c</field>
+            <value>
+                <elementReference>UnresponsiveClosedTemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Category_Unit_Type__c</field>
+            <value>
+                <stringValue>All</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Email__c</field>
+            <value>
+                <elementReference>DynamicFormEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Name__c</field>
+            <value>
+                <elementReference>DynamicFormName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity_ID__c</field>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Owner_First_Name__c</field>
+            <value>
+                <elementReference>Owner.FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SelfScheduledLinkPrefix__c</field>
+            <value>
+                <elementReference>SelfScheduledTourLinkPrefixFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SelfScheduledLink__c</field>
+            <value>
+                <elementReference>Opportunity.Home_Tours_Links_Dynamic__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SendGrid_Template_Id__c</field>
+            <value>
+                <elementReference>UnresponsiveClosedTemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>To_Email__c</field>
+            <value>
+                <elementReference>Opportunity.Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SendGrid_Email__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>This is getting the account from the opportunity &quot;Account&quot; field in the previous GET opportunity node.</description>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>1414</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Opportunity_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Opportunity.AccountId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>Account</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Preferred_First_Name__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days</name>
+        <label>Get Cancelled Tour Scheduled with in Last 7 Days</label>
+        <locationX>1414</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cancelled__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Tour_Scheduled_Date_Time__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>TodayMinus7</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Tour__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Completed_Tour_Held</name>
+        <label>Get Completed Tour Held</label>
+        <locationX>1414</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cancelled__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Tour_Scheduled_Date_Time__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Tour__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>The opportunity is passed into this flow from the process builder that invokes it.</description>
+        <name>Get_Opportunities</name>
+        <label>Get Opportunities</label>
+        <locationX>1414</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Completed_Tour_Held</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputReference>Opportunity</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Email__c</queriedFields>
+        <queriedFields>Stage_Status__c</queriedFields>
+        <queriedFields>Brand__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>City_Name__c</queriedFields>
+        <queriedFields>StageName</queriedFields>
+        <queriedFields>Home_Committed_Name_Formula__c</queriedFields>
+        <queriedFields>City_Name_Formula__c</queriedFields>
+        <queriedFields>Home_Marketing_Name__c</queriedFields>
+        <queriedFields>Preferred_Move_Date__c</queriedFields>
+        <queriedFields>Product_Type__c</queriedFields>
+        <queriedFields>Inventory_Mix__c</queriedFields>
+        <queriedFields>Home_Committed__c</queriedFields>
+        <queriedFields>Home_Tours_Links_Dynamic__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>This is getting the owner of the opportunity that started this flow.</description>
+        <name>Get_Opportunity_Owner</name>
+        <label>Get Opportunity Owner</label>
+        <locationX>1414</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Stage_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Opportunity.OwnerId</elementReference>
+            </value>
+        </filters>
+        <object>User</object>
+        <outputReference>Owner</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>FirstName</queriedFields>
+        <queriedFields>Email</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>1288</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Opportunities</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>DynamicContentClosedLost</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-4d96695c2794430280f70c8c2a511585&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentClosedLostMily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-448a450c68cc4ae389c7aed01de41fbf&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentClosedLostNoah</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;noah&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-9c4c17a12fe64572ad520f64bee30ae5&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentMarketingEngaged</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-e3f21cdc20f94ff2ac37642b7114c171&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentQualifiedEmail</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;{!QualifiedSFTemplateIDFormula}&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentQualifiedFollowupMily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-4da994f1560a4178ba5bd8617c40d3c7&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentUnabletoSpeak</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-ad9e73dcc5a647a49528317ab34cbcac&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentUnresponsivetouch1Noah</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;noah&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-f8a87d55582c495fba39456e980c2c69&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentWaitlist</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-52c510014d044e37aea71854d19b2661&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicCotentUnresponsiveTouch1Mily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Home_Tours_Links_Dynamic__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;PropertyHomeLink&quot; : &quot;{!Opportunity.Property_Home_Link__c}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-620c8edf252c45b09f12bdcbaf34783c&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PostTourDynamicContentCommon</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; :  &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Self_Scheduled_Tour_Link__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Completed_Tour_Held.Home__r.Marketing_Name__c}&quot;,
+&quot;TourRoomApplicationLink&quot; : &quot;{!Get_Completed_Tour_Held.Room__r.Application_Link__c}&quot;,
+&quot;TourSuiteMatterport&quot; : &quot;{!Get_Completed_Tour_Held.Suite__r.Matterport__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;{!PostTourTouchesSendgridFormulaCommon}&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PostTourDynamicContentMily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; :  &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Self_Scheduled_Tour_Link__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Completed_Tour_Held.Home__r.Marketing_Name__c}&quot;,
+&quot;TourRoomApplicationLink&quot; : &quot;{!Get_Completed_Tour_Held.Room__r.Application_Link__c}&quot;,
+&quot;TourSuiteMatterport&quot; : &quot;{!Get_Completed_Tour_Held.Suite__r.Matterport__c}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;{!PostTourTouchesSendgridFormulaMily}&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PostTourDynamicContentNoah</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; :  &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;SelfScheduledLinkPrefix&quot; : &quot;{!SelfScheduledTourLinkPrefixFormula}&quot;,
+&quot;SelfScheduledLink&quot; : &quot;{!Opportunity.Self_Scheduled_Tour_Link__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Completed_Tour_Held.Home__r.Marketing_Name__c}&quot;,
+&quot;TourRoomApplicationLink&quot; : &quot;{!Get_Completed_Tour_Held.Room__r.Application_Link__c}&quot;,
+&quot;TourSuiteMatterport&quot; : &quot;{!Get_Completed_Tour_Held.Suite__r.Matterport__c}&quot;,
+&quot;Category_Brand&quot; : &quot;noah&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;{!PostTourTouchesSendgridFormulaNoah}&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RescheduleTourDynamicContentCommon</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days.Home__r.Marketing_Name__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-a1b8d5c83bb84cc69e97da68daae2b93&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RescheduleTourDynamicContentMily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days.Home__r.Marketing_Name__c}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-217c4d53e8ca485aa9f4cb51ffd82bae&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RescheduleTourDynamicContentNoah</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; :  &quot;{!Owner.FirstName}&quot;,
+&quot;TourHomeMarketingName&quot; : &quot;{!Get_Cancelled_Tour_Scheduled_with_in_Last_7_Days.Home__r.Marketing_Name__c}&quot;,
+&quot;Category_Brand&quot; : &quot;noah&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-1f153c3cb35f49069562034dac1802ea&quot;,
+&quot;Category_Unit_Type&quot; : &quot;All&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>UnresponsiveTouch1DynamicTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;AccountFirstName&quot; : &quot;{!Account.Preferred_First_Name__c}&quot;,
+&quot;OpportunityOwnerFirstName&quot; : &quot;{!Owner.FirstName}&quot;,
+&quot;AccountCity&quot; : &quot;{!Opportunity.City_Name__c}&quot;,
+&quot;HomeMarketingName&quot; : &quot;{!Opportunity.Home_Marketing_Name__c}&quot;,
+&quot;PreferredMoveDate&quot; : &quot;{!Opportunity.Preferred_Move_Date__c}&quot;,
+&quot;OwnerId&quot; : &quot;{!Opportunity.OwnerId}&quot;,
+&quot;CommonLivingUserID&quot; : &quot;0056A000000xcInQAI&quot;,
+&quot;HomeDynamicMarketingName&quot; : &quot;{!HomeDynamicMarketingNameformula}&quot;,
+&quot;HomeRecordFound&quot; : &quot;{!HomeFound}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;{!UnresposiveTouch1CommonTemplate}&quot;,
+&quot;Category_Unit_Type&quot; : &quot;{!UnitType}&quot;
+}</text>
+    </textTemplates>
+    <variables>
+        <name>Account</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>Opportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>OpportunityID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Owner</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>User</objectType>
+    </variables>
+</Flow>

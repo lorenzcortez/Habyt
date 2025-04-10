@@ -1,0 +1,18 @@
+.THIS .slds-button {
+    background-color:darkgreen;
+    border-color: darkgreen;
+}
+
+.THIS .slds-button:focus{
+    box-shadow: 0 0 3px darkgreen;
+}
+
+.THIS .iframe-container {
+    height: 75vh;
+}
+
+.THIS iframe {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}

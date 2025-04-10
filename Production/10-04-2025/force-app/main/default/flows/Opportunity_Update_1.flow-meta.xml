@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>myRule_1</name>
+        <label>Room Change</label>
+        <locationX>248</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>myRule_6</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Room Change</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Room__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Room__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>TRUE_Room Change</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_6</name>
+        <label>Price Change</label>
+        <locationX>446</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>FALSE_Price Change</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_myRule_6</name>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Monthly_Price__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Monthly_Price__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.One_off_Discount__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_A1</targetReference>
+            </connector>
+            <label>TRUE_Price Change</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Opportunity Update process using multiple criteria.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formula_3_myRule_1_A1_6616295775</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Room__r.Price__c} * 6</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <name>formula_4_myRule_1_A1_9850662195</name>
+        <dataType>Currency</dataType>
+        <expression>{!$Record.Room__r.NetPrice__c} *1.5</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <name>formula_5_myRule_6_A1_1579613328</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!$Record.One_off_Discount__c} ),
+{!$Record.Monthly_Price__c} *6 ,
+{!$Record.Monthly_Price__c} *6 - {!$Record.One_off_Discount__c} 
+)</expression>
+        <scale>18</scale>
+    </formulas>
+    <label>Opportunity Update_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Set Prices</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Amount</field>
+            <value>
+                <elementReference>formula_3_myRule_1_A1_6616295775</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Deposit__c</field>
+            <value>
+                <elementReference>formula_4_myRule_1_A1_9850662195</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Monthly_Price__c</field>
+            <value>
+                <elementReference>$Record.Room__r.NetPrice__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>myRule_6_A1</name>
+        <label>Update amount and deposit</label>
+        <locationX>314</locationX>
+        <locationY>575</locationY>
+        <inputAssignments>
+            <field>Amount</field>
+            <value>
+                <elementReference>formula_5_myRule_6_A1_1579613328</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>City__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Hong Kong</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>City__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Singapore</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

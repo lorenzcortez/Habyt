@@ -1,0 +1,235 @@
+<template>
+
+    <lightning-card class="room-card" key={room.Id} data-id={room.Id} onclick={openPopupWindow}>
+        
+        <div class="tag-container">
+            <!-- TODO: Drive off CheckBoxFilters in roomVacanciesLWC -->
+            <template if:true={room.Property__r.isFeatured__c}>
+                <span class="bluetag">
+                    Featured
+                </span>
+            </template>
+        </div>
+        <div class="slds-grid slds-wrap custom-container">
+
+            <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+
+                <div class="slds-m-horizontal_medium">
+                    <template if:true={room.Property__c}>
+                        <div class="row">
+                            <div>
+                                <div class="customTitle">Property</div>
+                                <div>{room.Property__r.Name}</div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="row">
+                        <div>
+                            <div class="customTitle">Room</div>
+                            <div>{room.Name} 
+                                <template if:true={room.Square_Footage__c}>
+                                    ,<span class="sqft-label">{room.Square_Footage__c}sqft</span>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <template if:true={room.Property__r.X2_Day_Total_Hold_Amount__c}>
+                        <div class="row">
+                            <div class="customTitle">2 Day Hold Amount:</div>
+                            <div>
+                                <lightning-formatted-number format-style="currency" class="price" currency-code="USD"
+                                    value={room.Property__r.X2_Day_Total_Hold_Amount__c} maximum-fraction-digits="0">
+                                </lightning-formatted-number>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template if:true={room.Property__r.Application_Fee__c}>
+                        <div class="row">
+                            <div class="customTitle">Application Fee:</div>
+                            <div>
+                                <lightning-formatted-number format-style="currency" class="price" currency-code="USD"
+                                    value={room.Property__r.Application_Fee__c} maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template if:true={room.Property__r.Allowable_term_lengths__c}>
+                        <div class="row">
+                            <div class="customTitle">Allowable Term Lengths:</div>
+                            <div>{room.Property__r.Allowable_term_lengths__c}</div>
+                        </div>
+                    </template>
+                    
+                    <template if:true={room.ApartmentRef__c}>
+                        <div class="row room-card__extra-info">
+                            <div class="customTitle">Suite</div>
+                            <div>{room.ApartmentRef__r.Name}</div>
+                        </div>
+                    </template>
+                    
+                    <template lwc:if={room.ApartmentRef__c}>
+                        <div class="row room-card__extra-info">
+                            <div class="customTitle">Bedroom Count:</div>
+                            <div>{room.ApartmentRef__r.Bedroom__c}</div>
+                        </div>
+                    </template>
+                    
+                    <!--
+                    <template if:true={room.ApartmentRef__r.Matterport__c}>
+                        <div class="slds-form-element slds-form-element_readonly slds-hint-parent no-bottom-border">
+                            <label class="slds-form-element__label custom-title">Matterport</label>
+                            <div class="slds-form-element__control">
+                                <lightning-button 
+                                    variant="brand" 
+                                    label="Copy" 
+                                    title="Copy" 
+                                    id="copy-matterport-link-btn"
+                                    data-id="copy-matterport-link-btn" 
+                                    class="slds-button slds-button_brand"
+                                    onclick={copyUrlToClipboard}
+                                    data-url={room.ApartmentRef__r.Matterport__c}
+                                ></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                    -->
+
+
+                </div>
+            </div>
+
+
+            <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                <div class="slds-m-horizontal_medium">
+
+                    <div class="row slds-text-align_right">
+                        <div class="price">
+                            <template if:true={TwelveMonthPrice}>
+                                <lightning-formatted-number format-style="currency" currency-code="USD"
+                                    value={TwelveMonthPrice} maximum-fraction-digits="0">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={TwelveMonthPrice}>
+                                N/A
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="row slds-grid slds-grid_align-end">
+                        <div class="date-available">
+                            <template if:false={IsBeaconDateInPast}>
+                                <div class="date-available__day">
+                                    <lightning-formatted-date-time value={room.AvailableDateTrig__c}
+                                        day="2-digit" time-zone="UTC">
+                                    </lightning-formatted-date-time>
+                                </div>
+                                <div class="date-available__month">
+                                    <lightning-formatted-date-time value={room.AvailableDateTrig__c}
+                                        month="short" time-zone="UTC">
+                                    </lightning-formatted-date-time>
+                                </div>
+                            </template>
+                            <template if:true={IsBeaconDateInPast}>
+                                <div class="date-available__now">Now</div>
+                            </template>
+                        </div>
+                    </div>
+                    <template if:true={concessionDetails}>
+                        <div class="row">
+                            <div class="customTitle">Current Concession:</div>
+                            <div style="font-size: 11px !important;"><lightning-formatted-rich-text value={concessionDetails}></lightning-formatted-rich-text></div>
+                        </div>
+                    </template>
+                    <template if:true={room.Security_Deposit_New__c}>
+                        <div class="row">
+                            <div class="customTitle">Security Deposit:</div>
+                            <div>
+                                {room.Security_Deposit_New__c}
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <div class="row">
+                        <div class="customTitle">Obligo Home:</div>
+                        <template if:true={room.Property__r.Obligo_Home__c}>
+                            <div>Yes</div>
+                        </template>
+                        <template if:false={room.Property__r.Obligo_Home__c}>
+                            <div>No</div>
+                        </template>
+                    </div>
+                    
+                    <template if:true={room.Bathroom_Share_Room_Count__c}>
+                        <div class="row room-card__extra-info">
+                            <div class="customTitle">Sharing Bathroom</div>
+                            <div>{room.Bathroom_Share_Room_Count__c}</div>
+                        </div>
+                    </template>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="room-card__extra-info tag-container">
+            <!-- TODO: Drive off CheckBoxFilters in roomVacanciesLWC -->
+            
+            <template if:true={room.Property__r.Elevator__c}>
+                <span class="tag">
+                    Has Elevator
+                </span>
+            </template>
+            
+            <template if:true={room.Property__r.Amortized__c}>
+                <span class="tag">
+                    Amortized
+                </span>
+            </template>
+            
+            <template if:true={room.Affordable_Unit__c}>
+                <span class="tag">
+                    Affordable Unit
+                </span>
+            </template>
+            <!--
+            <template if:true={room.ApartmentRef__r.Able_to_tour_in_person__c}>
+                <span class="tag">
+                    Able to tour in person
+                </span>
+            </template>
+            -->
+            <template if:true={room.Loft__c}>
+                <span class="tag">
+                    Loft
+                </span>
+            </template>
+            <template if:true={room.Couple_Room__c}>
+                <span class="tag">
+                    Couple's Room
+                </span>
+            </template>
+            
+            <template if:true={room.Property__r.Wellness_Studio__c}>
+                <span class="tag">
+                    Wellness Studio
+                </span>
+            </template>
+            
+            <template if:true={room.En_suite_Bathroom__c}>
+                <span class="tag">
+                    En-suite Bathroom
+                </span> 
+            </template>
+             
+            <template if:true={room.ApartmentRef__r.ESA_in_Suite__c}>
+                <div class="tag">
+                    ESA in Suite
+                </div>
+            </template>
+           
+        </div>
+    </lightning-card>
+</template>

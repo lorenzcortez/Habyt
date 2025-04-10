@@ -1,0 +1,64 @@
+<template>
+    <section class={cssClass} onkeyup={innerKeyUpHandler} role="dialog" tabindex="-1">
+        <header class="slds-modal__header">
+            <h2 class="slds-text-heading_medium slds-hyphenate header-string">Send us a message</h2>
+        </header>
+        
+        <div class="slds-modal__content slds-var-p-around_medium">
+            <template if:false={successful}>
+                <lightning-record-edit-form object-api-name="Lead" density="comfy" class="contact-form" 
+                                            onsuccess={handleSuccess} onerror={handleError}>
+                    <lightning-layout horizontal-align="center" multiple-rows="true">
+                        <lightning-input-field disabled class="slds-hide" field-name="LeadSource" value="Booking Page"></lightning-input-field>
+                        <lightning-input-field disabled class="slds-hide" field-name="BrandPick__c" value={brand}></lightning-input-field>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="FirstName"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="LastName"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="Email"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="Phone"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="Country__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="City__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="Move_in_date__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field required field-name="Budget__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-input-field field-name="Description"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="10">
+                            <lightning-layout horizontal-align="spread">
+                                <div class="slds-button secondary" onclick={closeModal}>Cancel</div>
+                                <div class="slds-button" onclick={submitModal}>Continue</div>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-edit-form>
+            </template>
+            <template if:true={successful}>
+                <lightning-layout multiple-rows="true" vertical-align="stretch">
+                    <lightning-layout-item size="12" class="slds-var-p-bottom_large"><h1>Thank you!</h1></lightning-layout-item>
+                    <lightning-layout-item size="12" class="slds-var-p-bottom_large">Your application has been submitted.</lightning-layout-item>
+                    <lightning-layout-item size="12"><div class="slds-button secondary" onclick={closeModal}>Close</div></lightning-layout-item>
+                </lightning-layout>
+        </template>
+        </div>
+
+    </section>
+
+    <template if:true={isOpen}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

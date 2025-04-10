@@ -1,0 +1,57 @@
+.delete--icon{
+    --sds-c-icon-color-foreground-default: red;
+   --sds-c-icon-color-foreground: red;
+   cursor: pointer;
+} 
+
+.icon__wrapper {
+   margin: 0 12px;
+   min-width: 18px;
+}
+
+.create-invoice__wrapper {
+    position: relative;
+}
+
+.create-invoice__wrapper .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.invoice-form__footer {
+    text-align: right;
+}
+
+.item__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.line-items__wrapper .item__wrapper .item {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    column-gap: 14px;
+    width: 96%;
+}
+
+.invoice-form__footer button {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 3px 28px;
+    border: none;
+}
+
+.billing-type__wrapper input[type=radio]{
+    accent-color: #000000;
+}
+
+.spinner__wrapper {
+    min-height: 380px;
+}
+
+.month-and-year__wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    column-gap: 14px;
+}

@@ -1,0 +1,15 @@
+<apex:page standardController="Task" tabStyle="Task" recordSetVar="AllTasks" >
+    <apex:variable var="startUrl" value="{!$CurrentPage.parameters.startURL}" />
+    <!-- Add below each field you reference in your Flow -->   
+    <apex:repeat value="{!AllTasks}" var="row" rendered="false">
+        {!row.ownerid}
+    </apex:repeat>
+
+
+    <!-- Runs your Flow --> 
+      
+    <flow:interview name="Change_the_owner_Flow_for_task_list"
+       finishLocation="{!$CurrentPage.parameters.retURL}">
+        <apex:param name="Tasks" value="{!Selected}"/>
+    </flow:interview>
+</apex:page>

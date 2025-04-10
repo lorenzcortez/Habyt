@@ -1,0 +1,146 @@
+<aura:component controller="ChecklistItemController" implements="lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name="ChecklistItems" type="Sub_Task__c[]" />
+    <aura:attribute name="UploadedFiles" type="ContentDocument[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadcheckList}"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+	<aura:attribute  name= "TaskId" type="string" access="global" />
+    <aura:handler event="force:refreshView" action="{!c.loadcheckList}" />
+    <aura:attribute name ='damageDescription' type = "String[]"/>
+    <aura:attribute name = 'damages' type = 'decimal[]'/>
+    <aura:attribute name="taskRecord" type="Object"/>
+    <aura:attribute name="subTaskRecord" type = "Object"/>
+    
+    <!--contacts table part-->
+    <ui:scrollerWrapper class="slds-scrollable_y">
+        
+        <h3 class="slds-section__title">
+            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                <span class="slds-truncate" title="Open Tasks"><b>Open Tasks</b></span>
+            </button>
+        </h3>
+        <table class="slds-table slds-max-medium-table_stacked-horizontal slds-no-row-hover">
+            
+            <tbody>
+                <!-- <div class="slds-page-header"><p style="font-size: 16px;font-weight: bold;">Open Tasks</p></div> -->
+                <aura:iteration items="{!v.ChecklistItems}" var="item" indexVar = "index">
+                    <aura:if isTrue="{!!item.Is_Completed__c}">
+                        <tr>
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="{!item.Id}" >{!item.Name}</div> 
+                            </td>
+                            <aura:if isTrue="{!v.taskRecord.RecordType.DeveloperName == 'Move_Out_Inspection_Task'}">
+                            <td scope="row" class="slds-cell-wrap">
+                            <lightning:input  type="Number" value = '{!item.Damage_Charge__c}' formatter='Currency' name="Damages" label="Charges" />
+                            </td>
+                            <td scope="row" class="slds-cell-wrap">
+                            <lightning:input type="text" value = '{!item.Description__c}' name="damageDescription" label="Description" />
+                            </td>
+                            </aura:if>
+                            <td scope="row" class="slds-text-align_left slds-cell-wrap">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <button type="button" class="slds-button slds-button_brand" onclick="{!c.OnCompletedButtonClick}" id="{!item.Id +'||'+ item.Name +'||'+ item.Is_Photo_Required__c}">Mark Completed</button>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            
+                            <td scope="row" class="slds-cell-wrap"> 
+                                <lightning:fileUpload multiple = "true" label="Add Photo" name="fileUploader" recordId="{!item.Id}" onuploadfinished="{!c.handleUploadFinished}"/>
+                            </td>
+                            
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+        <h3 class="slds-section__title">
+            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                <span class="slds-truncate" title="Completed Tasks"><b>Completed Tasks</b></span>
+            </button>
+        </h3>
+        
+        <table class="slds-table slds-max-medium-table_stacked-horizontal slds-no-row-hover">
+            
+            <tbody>
+                <!-- <p style="font-size: 16px;font-weight: bold;">Completed Tasks</p> -->
+                <aura:iteration items="{!v.ChecklistItems}" var="item">
+                    <aura:if isTrue="{!item.Is_Completed__c}">
+                        <tr>
+                            <td scope="row" class="slds-cell-wrap">
+                                <div class="slds-truncate slds-cell-wrap" title="{!item.Id}"><a href="javascript:void(0)" id="{!item.Id}" onclick="{!c.openFileModel}">{!item.Name}</a></div>
+                            </td>
+                            <td scope="row" class="slds-cell-wrap">
+                            <aura:Text value = "{!'Charges: $' + item.Damage_Charge__c}"/>
+                            </td>
+                            <td scope="row" class="slds-cell-wrap">
+                            <aura:Text value = "{!'Description: ' + item.Description__c}"/>
+                            </td>
+                            <td scope="row" class="slds-text-align_left slds-cell-wrap">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <button type="button" class="slds-button slds-button_neutral" onclick="{!c.OnOpenButtonClick}" id="{!item.Id}">Re-open</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row" class="slds-cell-wrap"> 
+                                <lightning:fileUpload multiple = "true" label="Add Photo" name="fileUploader" recordId="{!item.Id}" onuploadfinished="{!c.handleUploadFinished}"/>
+                            </td>
+                            
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </ui:scrollerWrapper>
+    
+    <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpen}">
+            <ui:scrollerWrapper class="slds-scrollable">
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" >
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeFileModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Uploaded files</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        				<h3 class="slds-section__title">
+                            <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                                <span class="slds-truncate" title="Completed Tasks"><b>Files</b></span>
+                            </button>
+                        </h3>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            			<tbody>
+                            <aura:iteration items="{!v.UploadedFiles}" var="file">
+                                <tr>
+                                    <td scope="row" class="slds-cell-wrap">
+                                        <lightning:fileCard fileId="{!file.Id}" description="{!file.Title}"/>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>                
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeFileModel}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </ui:scrollerWrapper>
+     </aura:if>
+    
+</aura:component>

@@ -1,0 +1,43 @@
+<aura:component controller="IcxCommunityInterface" implements="forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="Contract" type="Object" />
+    <aura:attribute name="eversignDocUrl" type="String" />
+    <aura:attribute name="currentStep" type="String" />
+    <aura:attribute name="error" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:layout horizontalAlign="center" multipleRows="true">
+        <lightning:layoutItem padding="around-small" size="10">
+        <aura:if isTrue="{!v.error != null}">
+            <div class="slds-box slds-theme–alert-texture slds-theme-error">
+                <span class="slds-text-body–regular">
+                    <aura:unescapedHtml value="{!v.error}"/>
+                </span>
+            </div>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.currentStep == '0'}">
+                    <!--Call to another component to render the pdf with the button -->   
+                    <c:ContractAgreement contract="{!v.Contract}" pathStep="{!v.currentStep}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.currentStep == '1'}">
+                    <iframe aura:id="contractEverSign" class="eversignFrame" src="{!v.eversignDocUrl}"/>
+                    <lightning:spinner  alternativeText="Loading" size="large" aura:id="spinner" />        
+                </aura:if>
+                <aura:if isTrue="{!v.currentStep == '2'}">
+                    <c:IcxAddStripeSource AccountId="{!v.Contract.AccountId}" pathStep="{!v.currentStep}" Contract="{!v.Contract}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.currentStep == '3'}">
+                    <c:IcxSelfRegister Contract="{!v.Contract}" accountId="{!v.Contract.AccountId}" />
+                </aura:if>
+            </aura:set>
+        </aura:if>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="10">
+            <lightning:progressIndicator class="slds-m-top_small" currentStep="{!v.currentStep}" type="base" variant="base">
+                <lightning:progressStep label="Membership approval" value="0"/>
+                <lightning:progressStep label="Contract signature" value="1"/>
+                <lightning:progressStep label="Bank information" value="2"/>
+                <lightning:progressStep label="Create account" value="3"/>
+            </lightning:progressIndicator>        
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

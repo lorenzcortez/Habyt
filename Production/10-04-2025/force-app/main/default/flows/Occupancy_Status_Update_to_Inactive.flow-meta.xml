@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow is reponsible for updating occupancies to inactive if it&apos;s past their end date of occupancy.</description>
+    <environments>Default</environments>
+    <interviewLabel>Occupancy Status Update to Inactive {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Occupancy Status Update to Inactive</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Occupancy_Status_to_Inactive</name>
+        <label>Update Occupancy Status to Inactive</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filters>
+            <field>End_Date_of_Occupancy__c</field>
+            <operator>LessThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Current month-to-month</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Moving In</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Occupancy_Status__c</field>
+            <value>
+                <stringValue>Inactive</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Occupancy_Status_to_Inactive</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Current month-to-month</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Occupancy_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Moving In</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-10-27</startDate>
+            <startTime>23:20:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

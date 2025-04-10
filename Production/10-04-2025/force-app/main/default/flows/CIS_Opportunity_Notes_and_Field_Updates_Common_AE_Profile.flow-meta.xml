@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Opportunity_to_Update</name>
+        <label>Set Opportunity to Update</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Preferred_Move_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_is_your_preferred_move_date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Next_Follow_Up_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Follow_up_date</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Tour_Record</name>
+        <label>Set Tour Record</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>TourRecord.Application_Likelihood__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>How_likely_are_you_to_apply</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>TourRecord.Primary_Objection__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Primary_objection</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>TourRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TourSelectedId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Tour</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>BlankChoice</name>
+        <choiceText>{!NullValue}</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>JustBrowsing</name>
+        <choiceText>Just Browsing</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue> Just Browsing</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>JustStarted</name>
+        <choiceText>Just Started</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Just Started</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Size</name>
+        <choiceText>Size</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Size</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>VeryActive</name>
+        <choiceText>Very Active</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Very Active</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>If_Tour_Found</name>
+        <label>If Tour Found</label>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Success_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TourSelectedId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Tour_Record</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <description>Removed concession notes</description>
+    <dynamicChoiceSets>
+        <name>ApplicationLiklehoodChoices</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Application_Likelihood__c</picklistField>
+        <picklistObject>Tour__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>HouseHoldTypes</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Household_type__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>PrimaryObjectionChoices</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Primary_Objection__c</picklistField>
+        <picklistObject>Tour__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>TourRecordChoices</name>
+        <dataType>String</dataType>
+        <displayField>Tour_Friendly_Name__c</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Cancelled__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Tour_Scheduled_Date_Time__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>Last14Days</elementReference>
+            </value>
+        </filters>
+        <limit>100</limit>
+        <object>Tour__c</object>
+        <outputAssignments>
+            <assignToReference>TourSelectedId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>Last14Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 14</expression>
+    </formulas>
+    <formulas>
+        <name>NullValue</name>
+        <dataType>String</dataType>
+        <expression>&quot; &quot;</expression>
+    </formulas>
+    <interviewLabel>Common AE Profile {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Opportunity Notes and Field Updates - Common AE Profile</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Opportunity_Notes</name>
+        <label>Create Opportunity Notes</label>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Set_Opportunity_to_Update</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>OpportunityNotesTemplates</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity_Note__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_Opportunity_Info</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
+        <connector>
+            <targetReference>If_Tour_Found</targetReference>
+        </connector>
+        <inputReference>Get_Opportunity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Tour</name>
+        <label>Update Tour</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <inputReference>TourRecord</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Add_Opportunity_Info</name>
+        <label>Add Opportunity Info</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Opportunity_Notes</targetReference>
+        </connector>
+        <fields>
+            <name>Welcome_Screen_Display_Text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;ADD/UPDATE OPPORTUNITY NOTES&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Thoughts_on_the_home_you_toured</name>
+            <fieldText>Thoughts on the home you toured?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Primary_objection</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>PrimaryObjectionChoices</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Primary objection?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>What_is_your_preferred_move_date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Preferred_Move_Date__c</elementReference>
+            </defaultValue>
+            <fieldText>What is your preferred move date?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>When_are_you_looking_to_make_a_decision</name>
+            <dataType>Date</dataType>
+            <fieldText>When are you looking to make a decision?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Follow_up_date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Next_Follow_Up_Date__c</elementReference>
+            </defaultValue>
+            <fieldText>Follow-up date:</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Next_Steps</name>
+            <fieldText>Next Steps?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Do_you_have_any_questions_or_concerns_about_our_application_process_Remember_to</name>
+            <fieldText>Do you have any questions or concerns about our application process? (Remember to flag that full month’s rent is due upon lease signing and reference the pet application + affordable process if applicable)</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>How_likely_are_you_to_apply</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>ApplicationLiklehoodChoices</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>How likely are you to apply?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Additional_Notes</name>
+            <fieldText>Additional Notes:</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>182</locationX>
+        <locationY>1190</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(196, 86, 63); font-size: 18px;&quot;&gt;DONE!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;The fields you updated are now be reflected on the opportunity.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Note: the information you entered in the notes field will appear related to the opportunity in the &quot;Opportunity Notes&quot; section.  You can make further updates to those notes by modifying that record.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>TourSelectionScreen</name>
+        <label>TourSelectionScreen</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>Msg</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Tour Selection Screen&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Please_select_the_tour_to_save_the_notes</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>TourRecordChoices</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please select the tour to save the notes</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>TourSelectionScreen</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>OpportunityNotesTemplates</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Thoughts on the home you toured?
+{!Thoughts_on_the_home_you_toured}
+
+Primary objection?
+{!Primary_objection}
+
+What is your preferred move date?
+{!What_is_your_preferred_move_date}
+
+When are you looking to make a decision?
+{!When_are_you_looking_to_make_a_decision}
+
+Follow-up date:
+{!Follow_up_date}
+
+Next Steps?
+{!Next_Steps}
+
+Additional Notes?
+{!Additional_Notes}
+
+Do you have any questions or concerns about our application process?
+{!Do_you_have_any_questions_or_concerns_about_our_application_process_Remember_to}
+
+How likely are you to apply?
+{!How_likely_are_you_to_apply}</text>
+    </textTemplates>
+    <variables>
+        <name>OpportunityID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>TourRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Tour__c</objectType>
+    </variables>
+    <variables>
+        <name>TourSelectedId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
