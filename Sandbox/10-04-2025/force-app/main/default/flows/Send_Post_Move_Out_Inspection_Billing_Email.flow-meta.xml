@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>send_post_move_out_email_action</name>
+        <label>send post move out email action</label>
+        <locationX>176</locationX>
+        <locationY>566</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>create_email_message</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>get_opportunity.Email_Address__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <elementReference>FromEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>ConstantEmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>emailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <constants>
+        <name>ConstantEmailSubject</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Damages to Your Unit</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantResultsofYourInspection</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Results of Your Inspection</stringValue>
+        </value>
+    </constants>
+    <description>From Common</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaOppAcctName</name>
+        <dataType>String</dataType>
+        <expression>IF({!get_opportunity.Account.IsPersonAccount}, {!get_opportunity.Account.FirstName}, {!get_opportunity.Account.Name})</expression>
+    </formulas>
+    <formulas>
+        <name>FromEmail</name>
+        <dataType>String</dataType>
+        <expression>CASE({!get_opportunity.BrandRef__r.Name},
+&apos;common&apos;, &apos;members@common.com&apos;,
+&apos;noah&apos;, &apos;residents@noahapartments.com&apos;,
+&apos;kin&apos;, &apos;members@milyliving.com&apos;, 
+&apos;members@common.com&apos;)</expression>
+    </formulas>
+    <interviewLabel>Send Post Move Out Inspection Billing Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Post Move Out Inspection Billing Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>create_email_message</name>
+        <label>create email message</label>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
+        <inputAssignments>
+            <field>FromAddress</field>
+            <value>
+                <elementReference>FromEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MessageDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RelatedToId</field>
+            <value>
+                <elementReference>getAccount.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>ConstantResultsofYourInspection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TextBody</field>
+            <value>
+                <elementReference>emailBody</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ToAddress</field>
+            <value>
+                <elementReference>get_opportunity.Email_Address__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>EmailMessage</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Home</name>
+        <label>Get Home</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_user</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>get_opportunity.Home_Committed__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Property__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_opportunity</name>
+        <label>get opportunity</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Home</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>var_Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_user</name>
+        <label>get user</label>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>send_post_move_out_email_action</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Home.Accounts_Receivable_Coordinator__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getAccount</name>
+        <label>getAccount</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_opportunity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>var_Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>getAccount</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>emailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi {!FormulaOppAcctName},
+
+This email is to inform you that our team has completed a post-move-out inspection of your room and confirmed the following damages:
+
+{!var_Record.Description}
+
+The damage total is ${!var_Record.Suggested_Damage_Charge__c}, which you can expect to be withheld from your security deposit or added to your ledger for payment with any other outstanding charges. Please note that you will also receive a final statement at the time these charges are processed.
+
+Thank you for being a Common member, and please reach out if you have any questions.
+
+Best,
+{!get_user.Name}</text>
+    </textTemplates>
+    <variables>
+        <name>var_PriorRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>var_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>

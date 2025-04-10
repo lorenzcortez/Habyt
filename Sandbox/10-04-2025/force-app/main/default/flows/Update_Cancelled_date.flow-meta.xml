@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>check_RecordType</name>
+        <label>check RecordType</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>is_Rent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0121i000000YFBwAAO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_Opp</targetReference>
+            </connector>
+            <label>is Rent Contract</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the: Update Cancelled date workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Cancelled_dateFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <label>Update Cancelled date</label>
+    <migratedFromWorkflowRuleName>Update Cancelled date</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>check_RecordType</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Cancelled_date__c</field>
+            <value>
+                <elementReference>Cancelled_dateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_Opp</name>
+        <label>update Opp</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <elementReference>$Record.Reason_of_cancelation__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0121i000000YGYZAA4</stringValue>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>confirmation_email</name>
+        <label>confirmation email</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <actionName>Lead.Confirmation_email_for_lead_creation</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Lead.Confirmation_email_for_lead_creation</nameSegment>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>make_decision</name>
+        <label>make decision</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>has_contact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>confirmation_email</targetReference>
+            </connector>
+            <label>has contact</label>
+        </rules>
+    </decisions>
+    <description>Marketing Manager would like leads to get confirmation when they apply to us
+So that he|she can retain them better</description>
+    <interviewLabel>confirmation email for lead creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>confirmation email for lead creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>make_decision</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9) AND 10</filterLogic>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Badi</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Booking Page</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>fbAds</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>fb/insta Organic</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>gAds</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Google Organic</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Idealista</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Immobiliare</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>WG</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

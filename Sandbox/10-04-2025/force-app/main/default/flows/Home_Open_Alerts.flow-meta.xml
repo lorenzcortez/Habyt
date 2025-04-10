@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Home_Open_Alerts</name>
+        <label>Home Open Alerts</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>home-open-alerts@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>re@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>New Home Open</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Home_Open_Alert</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Updated to include new copy per Implementation.</description>
+    <environments>Default</environments>
+    <interviewLabel>Home Open Alerts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Home Open Alerts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Home_Open_Alerts</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Home Open</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Record_Type_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Common_Real_Estate</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Home_Open_Alert</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi Team,
+
+{!$Record.Name} is officially open as of {!$Record.Actual_Open_Date__c}. Property Transitions and Portfolio Management will be sending updates on any pending Onboarding items. Please reach out to with any questions.
+
+Thanks!</text>
+    </textTemplates>
+</Flow>

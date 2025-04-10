@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Is_New_Record</name>
+        <label>Is New Record?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Is_New_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FormulaIsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deposit_Type_Invoice</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaContactEndDate28Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} + 28</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} - 1</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate14Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} + 14</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate15Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} + 15</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate1Month</name>
+        <dataType>Date</dataType>
+        <expression>ADDMONTHS({!$Record.Contract__r.Contract_End_Date__c}, 1)</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate2Months</name>
+        <dataType>Date</dataType>
+        <expression>ADDMONTHS({!$Record.Contract__r.Contract_End_Date__c},2)</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate30Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} + 30</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaContractEndDate56Days</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.Contract__r.Contract_End_Date__c} + 56</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaIsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Set Deposit Received Date Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Set Deposit Received Date Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Deposit_Type_Invoice</name>
+        <label>Deposit Type Invoice</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Triggering_Deposit</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Deposit</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Deposit__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Invoice__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Triggering_Deposit</name>
+        <label>Update Triggering Deposit</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Received_Date__c</field>
+            <value>
+                <elementReference>Deposit_Type_Invoice.PaymentDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_New_Record</targetReference>
+        </connector>
+        <object>Deposit__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

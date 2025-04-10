@@ -1,0 +1,21 @@
+<template>
+    <div class="reissue-dispute__wrapper slds-p-around_large">
+        <template if:false={showSpinner}>
+            <div class="invoice-form__content slds-p-bottom_small">
+                <div class="title slds-p-bottom_small">Confirm Reissue</div>
+                <div class="message__wrapper">
+                    <span>Are you sure you want to reissue this Stripe Invoice?</span>
+                </div>
+            </div>
+            <div class="reissue-form__footer">
+                <button class="slds-button slds-button_brand slds-m-left_x-small cancel__button" type="button" onclick={handleCancel}>Cancel</button>
+                <button class="slds-button slds-button_brand slds-m-left_x-small custom__button" type="button" onclick={confirmReissue}>Confirm Reissue</button>
+            </div>
+        </template>
+        <template if:true={showSpinner}>
+            <div class="spinner__wrapper">
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+        </template>
+    </div>
+</template>

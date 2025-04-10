@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Referred_Lead</name>
+        <label>Referred Lead</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Referred_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>var_Record.Sub_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Referred Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Update_Opportunity_Based_on_Existing_Opportunities</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>From Common</description>
+    <environments>Default</environments>
+    <interviewLabel>CIS - Lead Qualification Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Lead Qualification Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Referred_Lead</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_Update_Opportunity_Based_on_Existing_Opportunities</name>
+        <label>Create/Update Opportunity Based on Existing Opportunities</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <flowName>CLP_Create_Update_Opportunity_Based_on_Existing_Opportunities</flowName>
+        <inputAssignments>
+            <name>var_PriorRecord</name>
+            <value>
+                <elementReference>var_PriorRecord</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>var_Record</name>
+            <value>
+                <elementReference>var_Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>var_PriorRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+    <variables>
+        <name>var_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+</Flow>

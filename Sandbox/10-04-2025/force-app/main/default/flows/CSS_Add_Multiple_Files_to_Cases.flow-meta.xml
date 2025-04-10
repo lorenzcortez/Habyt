@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This gets around a Salesforce limitation that doesn&apos;t allow a user to add multiple files at once to a case from the mobile app (https://help.salesforce.com/articleView?id=limits_mobile_sf1_files.htm&amp;type=5).</description>
+    <interviewLabel>CSS - Add Multiple Files to Cases {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CSS - Add Multiple Files to Cases</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>This gets the case based on the page that they click the action from.</description>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>214</locationX>
+        <locationY>74</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Upload_Files</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CaseNumber</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Completed_Screen</name>
+        <label>Completed Screen</label>
+        <locationX>532</locationX>
+        <locationY>138</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Completed</name>
+            <fieldText>&lt;p&gt;Success! You have added the files to the case. Please feel free to return back to the main case page. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Upload_Files</name>
+        <label>Upload Files</label>
+        <locationX>371</locationX>
+        <locationY>99</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Completed_Screen</targetReference>
+        </connector>
+        <fields>
+            <name>AddFiles</name>
+            <extensionName>forceContent:fileUpload</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <elementReference>FileUpload</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>multiple</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Case</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>FileUpload</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Files you upload here will be connected to this case! ({!Get_Case.CaseNumber})</text>
+    </textTemplates>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

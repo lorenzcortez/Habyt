@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Related Object : Cost</description>
+    <environments>Default</environments>
+    <interviewLabel>RTF- COST {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF- COST</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_the_cost</name>
+        <label>Update the cost</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Billing_Entity__c</field>
+            <value>
+                <elementReference>$Record.Apartment__r.PropertyRef__r.Billing_Entity__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Property__c</field>
+            <value>
+                <elementReference>$Record.Apartment__r.PropertyRef__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_the_cost</targetReference>
+        </connector>
+        <object>Cost__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

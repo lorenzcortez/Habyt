@@ -1,0 +1,64 @@
+<template>
+    
+<template if:true={room}>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+            <c-top-bar brand={brand}></c-top-bar>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-small" size="12" medium-device-size="8">
+            <p class="title" onclick={roomDetailPage}> {room.shareType} in {room.bedrooms}-Bedroom Unit</p>
+            <p class="smaller slds-var-p-top_small">{room.streetAddress} &bull; {room.district} &bull; {room.city}</p>
+            <p class="smaller slds-var-p-top_small">{room.area.formatted} &bull; {room.floor}</p>
+            <p class="smaller slds-var-p-top_small">{room.amenities}</p>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" medium-device-size="4"></lightning-layout-item>
+
+        <lightning-layout-item padding="around-small" size="12" medium-device-size="8">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <c-carousel items={carouselItems} options={carouselOptions} size="large"></c-carousel>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-var-p-bottom_small">
+                    <span class="smallest">This picture is representing a specific room type - you'll be getting this exact room or one very close to it.</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-var-p-bottom_small">
+                    <span class="smaller">Room Reference ID &bull; {room.referenceId}</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-var-p-bottom_small">
+                    <template for:each={room.descriptions} for:item="description">
+                        <div key={description.description} class="slds-var-p-bottom_medium">
+                            <p class="title">{description.type}</p>
+                            <lightning-formatted-rich-text value={description.description} class="smaller"></lightning-formatted-rich-text>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" medium-device-size="4">
+            <div class="booknow-box slds-var-m-bottom_small slds-var-p-around_small">
+                <lightning-layout horizontal-align="spread" class="slds-var-m-bottom_medium">
+                    <div>
+                        <p class="title">Monthly rent</p>
+                        <p class="smaller">incl. furniture, utilities and Wi-Fi</p>
+                    </div>
+                    <div>
+                        <p class="title">{room.rent.formatted}</p>
+                    </div>
+                </lightning-layout>
+                <div onclick={bookNow} class="booknow-button pointer slds-button slds-button_stretch">Book Now</div>
+            </div>
+            <span class={contactButtonClass} onclick={toggleContact}>GET IN TOUCH &nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="9">
+                  <path d="M 0 0 L 5.143 4.952 L 0 9.905" transform="translate(4.083 0.03) rotate(270 2.571 4.952)" 
+                        fill="transparent" stroke-width="2.48" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg></span>
+            <div class={showContactClass}>
+                <c-contact-us brand={brand}></c-contact-us>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
+
+</template>

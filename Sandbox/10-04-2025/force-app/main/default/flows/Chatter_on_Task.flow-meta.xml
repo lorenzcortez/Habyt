@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Chatter_on_task</name>
+        <label>Chatter on task</label>
+        <locationX>268</locationX>
+        <locationY>56</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>Test Chatter</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>Task.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <interviewLabel>Chatter on Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Chatter on Task</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Chatter_on_task</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <variables>
+        <name>Task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>

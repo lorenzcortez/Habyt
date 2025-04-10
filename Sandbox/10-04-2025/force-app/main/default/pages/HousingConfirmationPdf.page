@@ -1,0 +1,148 @@
+<apex:page standardController="Contract" extensions="HousingConfirmationPdfController" renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                margin: 1.5cm 2cm;
+                size: A4;
+            }
+
+            .content {
+                font-size: 16px;
+                font-family: sans-serif;
+            }
+
+            .block-space {
+                margin-top: 0.7cm;
+            }
+            .italic-text {
+                font-style: italic;
+            }
+            .bold-text {
+                font-weight: bold;
+            }
+
+            .name-table {
+                width: 100%;
+            }
+
+            .sign-image {
+                margin-top: 0.3cm;
+                margin-left: 0.4cm;
+            }
+
+            .footer-text {
+                font-size: 10px;
+            }
+
+            .big-margin {
+                margin-top: 1.2cm;
+            }
+        </style>
+    </head>
+    
+    <div class="content">
+        <div>
+             <!--<apex:image style="width:130px;height:auto" url="{!URLFOR($Resource.Brand, brand)}"/>-->
+			<apex:image width="50%" style="float:left;" url="{!$Resource.contractTitle}"/>
+        </div>
+
+        <div class="bold-text block-space">
+            Wohnungsgeberbestätigung gemäß § 19 Abs. 3 Bundesmeldegesetz (BMG)
+        </div>
+
+        <div class="italic-text">
+            - zur Vorlage bei der Meldebehörde
+        </div>
+
+        <div class="block-space">
+            <b>Angaben zum Wohnungsgeber</b> oder zu der vom Wohnungsgeber <b>beauftragten</b>
+            <span class="bold-text">Person:</span>
+        </div>
+
+        <div class="block-space">
+            <div>Familienname, Vorname bzw. Bezeichnung der juristischen Person:</div>
+            <div><apex:outputField value="{!contract.Billing_Entity__r.Name}"/></div>
+        </div>
+
+        <div class="block-space">
+            Straße, Haus-Nr.
+        </div>
+
+        <div>
+            <apex:outputField value="{!contract.Billing_Entity__r.Street__c}"/>
+        </div>
+
+        <div class="block-space">
+            <span>
+                PLZ &#160;<apex:outputField value="{!contract.Billing_Entity__r.Postal_Code__c}"/>
+            </span>&#160;&#160;
+            <span>
+                Ort &#160;<apex:outputField value="{!contract.Billing_Entity__r.City__c}"/>
+            </span>
+        </div>
+
+        <div class="big-margin">
+            Hiermit wird ein <b>Einzug</b> zu folgendem Datum&#160;<apex:outputField value="{!contract.StartDate}"/> bestätigt:
+        </div>
+
+        <div class="block-space">
+            Der Einzug bzw. Auszug bezieht sich auf folgende <b>Wohnung</b>:&#160;<apex:outputField value="{!contract.Room__r.Name}"/>
+        </div>
+        <div class="block-space">
+            <apex:outputField value="{!contract.Property__r.Name}"/>
+        </div>
+        <div>
+            <apex:outputField value="{!contract.Property__r.Street__c}"/>
+        </div>
+        <div>
+            <span>
+                <apex:outputField value="{!contract.Property__r.Postal_Code__c}"/>
+            </span>&#160;
+            <span>
+                <apex:outputField value="{!contract.Property__r.City__c}"/>
+            </span>
+        </div>
+        
+        <div class="block-space">
+            Folgende <b>Person/en</b> ist/sind in die angegebene Wohnung eingezogen bzw. aus ihr
+            ausgezogen:
+        </div>
+
+        <div class="block-space">
+            <table class="name-table">
+                <tr>
+                    <th width="40%">Familienname</th>
+                    <th width="60%">Vornamen</th>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputField value="{!contract.Opportunity__r.Account.LastName}"/>
+                    </td>
+                    <td>
+                        <apex:outputField value="{!contract.Opportunity__r.Account.FirstName}"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="sign-image">
+            <!--<apex:image style="width:260px;height:auto" url="{!URLFOR($Resource.Brands, stamp)}"/>-->
+            <apex:image width="50%" style="float:left;" url="{!$Resource.Stamp }"/></div>
+        <div class="block-space">Unterzeichner : Lasse Haarstark </div>
+        <div>Position : Geschäftsführerin Real Estate EMEA </div>
+        <div>Email  : hello@habyt.com </div>
+        <div>Datum  : <apex:outputField value="{!contract.StartDate}"/> </div>
+
+        <div class="big-margin">
+            <div>
+                <b>Hinweis:</b>
+                <span class="footer-text">
+                    Es ist verboten, eine Wohnanschrift für eine Anmeldung einem Dritten anzubieten oder zur Verfügung zu stellen, obwohl ein
+                    tatsächlicher Bezug der Wohnung durch diesen weder stattfindet noch beabsichtigt ist. Ein Verstoß gegen das Verbot stellt eine
+                    Ordnungswidrigkeit dar, ebenso wie die Ausstellung dieser Bestätigung ohne die dafür erforderliche Berechtigung (§ 54 i. V. m. § 19 BMG).
+                    Die Meldebehörde ist berechtigt, die Angaben zum Eigentümer der Wohnung zu prüfen.
+                </span>
+            </div>
+        </div>
+    </div>
+</apex:page>

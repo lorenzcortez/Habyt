@@ -1,0 +1,38 @@
+.logo {
+    max-width: 50%;
+}
+.logo img {
+    max-height: 4rem;
+    width: auto;
+    cursor: pointer;
+}
+
+a {
+    font-weight: bold;
+}
+
+.nav {
+    position: relative;
+    max-width: 50%;
+}
+
+.slds-button {
+    border: solid 1px var(--lwc-dxpGBrand);
+    border-radius: 100px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: .5rem .75rem;
+    max-height: 4rem;
+}
+
+.slds-button:hover {
+    color: white;
+    background-color: var(--lwc-dxpGBrand);
+}
+
+@media screen and (max-width: 400px) {
+    .slds-button {
+        font-size: .75rem;
+    }
+}

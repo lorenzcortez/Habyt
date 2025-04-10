@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow updates the Gross Rent field on the Invoice object from the related rent Invoice Item.</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Gross Rent Amount on Invoice {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Gross Rent Amount on Invoice</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Find_Invoice</name>
+        <label>Find Invoice</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Gross_Rent_Field</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Invoice__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Gross_Rent_Field</name>
+        <label>Update Gross Rent Field</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>null__NotFound</field>
+        </inputAssignments>
+        <object>Invoice__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Find_Invoice</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Amount__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Stripe_Plan_Id__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>InvoiceItem__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>InvalidDraft</status>
+</Flow>

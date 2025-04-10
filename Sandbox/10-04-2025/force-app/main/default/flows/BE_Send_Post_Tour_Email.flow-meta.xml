@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Coliving_w_Security_Deposit_Email</name>
+        <label>Coliving w/ Security Deposit Email</label>
+        <locationX>1370</locationX>
+        <locationY>1430</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentSD</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <elementReference>OpportunityOwner.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-678e5dfe4f7b40b1af5b32faf4f6d29a</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>TourRecord.Opportunity_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Colving_w_Move_In_Fees_Email</name>
+        <label>Colving w/ Move-In Fees Email</label>
+        <locationX>1106</locationX>
+        <locationY>1322</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentColivingMoving</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <elementReference>OpportunityOwner.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-fa6a4d3e289441358a0a0b938f73943b</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>TourRecord.Opportunity_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Admin_Group</name>
+        <label>Post to Admin Group</label>
+        <locationX>2162</locationX>
+        <locationY>458</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>{!TourRecord.Name} met the criteria for Post Tour email but the email was not sent because the Suite is blank on the record.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <stringValue>0F93u000000AlqNCAS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Admin_Group2</name>
+        <label>Post to Admin Group</label>
+        <locationX>1898</locationX>
+        <locationY>674</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>{!TourRecord.Name} met the criteria for Post Tour email but the email was not sent because the Room is blank on the record.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <stringValue>0F93u000000AlqNCAS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_Admin_Group3</name>
+        <label>Post to Admin Group</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <stringValue>{!TourRecord.Name} met the criteria for Post Tour email but the email was not sent because the Home OR Opportunity is blank on the record.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <stringValue>0F93u000000AlqNCAS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Mily_Brand_Email_0</name>
+        <label>Send Mily Brand Email</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentMily</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@milyliving.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Mily Leasing</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-8bc4d5fdfe7f420aa4ffde9c200e44b4</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>TourRecord.Opportunity__r.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_NOAH_Brand_Email</name>
+        <label>Send NOAH Brand Email</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentNoah</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>rentals@noahapartments.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <stringValue>Noah Leasing</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-7d02f7ccacd7491583fdcb746a45e386</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>TourRecord.Opportunity__r.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Traditional_Email</name>
+        <label>Traditional Email</label>
+        <locationX>842</locationX>
+        <locationY>1214</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContentTraditional</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <stringValue>admissions@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <elementReference>OpportunityOwner.Name</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <stringValue>d-8fd0cc6f78da4707af301769b8b57557</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>TourRecord.Opportunity_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Coliving_Move_In</name>
+        <label>Coliving - Move In</label>
+        <locationX>1304</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>Coliving_w_Security_Deposit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SuiteRecord.Product_type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Co-living</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TourRecord.Move_In_Fee__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TourRecord.Move_In_Fee__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>The Edge</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>National Landing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Colving_w_Move_In_Fees_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Coliving_w_Security_Deposit</name>
+        <label>Coliving w/ Security Deposit</label>
+        <locationX>1502</locationX>
+        <locationY>1322</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes1</name>
+            <conditionLogic>1 AND (2 OR 3) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>SuiteRecord.Product_type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Co-living</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TourRecord.Move_In_Fee__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TourRecord.Move_In_Fee__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>The Edge</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>National Landing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Coliving_w_Security_Deposit_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Home_OR_Opportunity_Blank</name>
+        <label>Home OR Opportunity Blank?</label>
+        <locationX>371</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>Opportunity_Brand_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes22</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>HomeRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TourRecord.Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_to_Admin_Group3</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Opportunity_Brand_Type</name>
+        <label>Opportunity Brand Type</label>
+        <locationX>693</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>OpportunityOwner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Common or blank</defaultConnectorLabel>
+        <rules>
+            <name>Brand_is_KIN</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TourRecord.Opportunity__r.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>kin</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Mily_Brand_Email_0</targetReference>
+            </connector>
+            <label>Brand is MILY</label>
+        </rules>
+        <rules>
+            <name>Brand_is_NOAH</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TourRecord.Opportunity__r.Brand__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>noah</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_NOAH_Brand_Email</targetReference>
+            </connector>
+            <label>Brand is NOAH</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Room_Found</name>
+        <label>Room Found?</label>
+        <locationX>1134</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Post_to_Admin_Group2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes11</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RoomRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>HomeRecord</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Suite_Found</name>
+        <label>Suite Found?</label>
+        <locationX>1648</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Post_to_Admin_Group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes00</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SuiteRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RoomRecord</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Traditional</name>
+        <label>Traditional</label>
+        <locationX>1073</locationX>
+        <locationY>1106</locationY>
+        <defaultConnector>
+            <targetReference>Coliving_Move_In</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SuiteRecord.Product_type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>traditional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>The Edge</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HomeRecord.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>National Landing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Traditional_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Updated the decision buttons at the end of the flow to not include The Edge in Post Tour emails (11.16.2021). Updated to not include National Landing in Post Tour emails.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ApplicationLinkFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( {!HomeRecord.Name} == &quot;The Edge&quot; || {!HomeRecord.Name} == &quot;Stella&quot;, {!RoomRecord.RentCafe_Application_Link__c}, {!TourRecord.Member_Application_Link__c} )</expression>
+    </formulas>
+    <formulas>
+        <name>AvailableFrom</name>
+        <dataType>String</dataType>
+        <expression>IF( AND(ISPICKVAL({!HomeRecord.Status__c}, &quot;Pre-Lease Up&quot;), !ISBLANK({!HomeRecord.Expected_Home_Open_Date__c})), TEXT({!HomeRecord.Expected_Home_Open_Date__c}),
+IF( OR(ISPICKVAL({!HomeRecord.Status__c}, &quot;Lease up&quot;), ISBLANK({!TourRecord.Date_Available__c})), &quot;Available Now&quot;,
+LPAD(TEXT(MONTH({!TourRecord.Date_Available__c})),2,&quot;0&quot;)&amp; &quot;-&quot; &amp; LPAD(TEXT(DAY ({!TourRecord.Date_Available__c})),2,&quot;0&quot;)&amp; &quot;-&quot; &amp;TEXT(YEAR({!TourRecord.Date_Available__c}))
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>SixMonthPrice</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!RoomRecord.X6_Month_Price__c}), &quot;N/A&quot;, &quot;$&quot;&amp;TEXT({!RoomRecord.X6_Month_Price__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>ThreeMonthPrice</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!RoomRecord.X3_Month_Price__c}), &quot;N/A&quot;, &quot;$&quot;&amp;TEXT({!RoomRecord.X3_Month_Price__c}))</expression>
+    </formulas>
+    <formulas>
+        <name>TwelceMonthPrice</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!RoomRecord.X12_Month_Price__c}), &quot;N/A&quot;, &quot;$&quot;&amp;TEXT({!RoomRecord.X12_Month_Price__c}))</expression>
+    </formulas>
+    <interviewLabel>BE  - Send Post Tour Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>BE  - Send Post Tour Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>HomeRecord</name>
+        <label>HomeRecord</label>
+        <locationX>371</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Home_OR_Opportunity_Blank</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TourRecord.Home__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Property__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>OpportunityOwner</name>
+        <label>OpportunityOwner</label>
+        <locationX>1073</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Traditional</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TourRecord.Opportunity__r.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>RoomRecord</name>
+        <label>RoomRecord</label>
+        <locationX>1134</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Room_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TourRecord.Room__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Room__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>SuiteRecord</name>
+        <label>SuiteRecord</label>
+        <locationX>1648</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Suite_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TourRecord.Suite__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Apartment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>TourRecord</name>
+        <label>TourRecord</label>
+        <locationX>1648</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SuiteRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TourID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Tour__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>1522</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>TourRecord</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>DynamicContentColivingMoving</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Home_Name&quot; : &quot;{!RoomRecord.Parent_Home__c}&quot;,
+&quot;Suite_Name&quot; : &quot;{!SuiteRecord.Name}&quot;,
+&quot;Room_Name&quot; : &quot;{!RoomRecord.Name}&quot;,
+&quot;Date_Available_Emails&quot; : &quot;{!AvailableFrom}&quot;,
+&quot;three_mo_price&quot; : &quot;{!ThreeMonthPrice}&quot;,
+&quot;six_mo_price&quot; : &quot;{!SixMonthPrice}&quot;,
+&quot;twelve_mo_price&quot; : &quot;{!TwelceMonthPrice}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!TourRecord.Security_Deposit__c}&quot;,
+&quot;application_fee&quot; : &quot;{!HomeRecord.Application_Fee__c}&quot;,
+&quot;income_requirement&quot; : &quot;{!HomeRecord.Income_Requirements__c}&quot;,
+&quot;guarantor_requirement&quot; : &quot;{!HomeRecord.Guarantor_Requirements__c}&quot;,
+&quot;Move_In_Fee&quot; : &quot;{!TourRecord.Move_In_Fee__c}&quot;,
+&quot;Marketing_Name__c&quot; : &quot;{!HomeRecord.Marketing_Name__c}&quot;,
+&quot;HomeApplicationLink&quot; : &quot;{!ApplicationLinkFormula}&quot;,
+&quot;Day_Total_Hold_Amount&quot; : &quot;{!HomeRecord.X2_Day_Total_Hold_Amount__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-fa6a4d3e289441358a0a0b938f73943b&quot;,
+&quot;Category_Unit_Type&quot; : &quot;Coliving&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentMily</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Home_Name&quot; : &quot;{!RoomRecord.Parent_Home__c}&quot;,
+&quot;Suite_Name&quot; : &quot;{!SuiteRecord.Name}&quot;,
+&quot;Room_Name&quot; : &quot;{!RoomRecord.Name}&quot;,
+&quot;Date_Available_Emails&quot; : &quot;{!AvailableFrom}&quot;,
+&quot;three_mo_price&quot; : &quot;{!ThreeMonthPrice}&quot;,
+&quot;six_mo_price&quot; : &quot;{!SixMonthPrice}&quot;,
+&quot;twelve_mo_price&quot; : &quot;{!TwelceMonthPrice}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!TourRecord.Security_Deposit__c}&quot;,
+&quot;application_fee&quot; : &quot;{!HomeRecord.Application_Fee__c}&quot;,
+&quot;income_requirement&quot; : &quot;{!HomeRecord.Income_Requirements__c}&quot;,
+&quot;guarantor_requirement&quot; : &quot;{!HomeRecord.Guarantor_Requirements__c}&quot;,
+&quot;Move_In_Fee&quot; : &quot;{!TourRecord.Move_In_Fee__c}&quot;,
+&quot;Marketing_Name__c&quot; : &quot;{!HomeRecord.Marketing_Name__c}&quot;,
+&quot;HomeApplicationLink&quot; : &quot;{!ApplicationLinkFormula}&quot;,
+&quot;Day_Total_Hold_Amount&quot; : &quot;{!HomeRecord.X2_Day_Total_Hold_Amount__c}&quot;,
+&quot;Category_Brand&quot; : &quot;kin&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-8bc4d5fdfe7f420aa4ffde9c200e44b4&quot;,
+&quot;Category_Unit_Type&quot; : &quot;Traditional&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentNoah</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Home_Name&quot; : &quot;{!RoomRecord.Parent_Home__c}&quot;,
+&quot;Suite_Name&quot; : &quot;{!SuiteRecord.Name}&quot;,
+&quot;Room_Name&quot; : &quot;{!RoomRecord.Name}&quot;,
+&quot;Date_Available_Emails&quot; : &quot;{!AvailableFrom}&quot;,
+&quot;three_mo_price&quot; : &quot;{!ThreeMonthPrice}&quot;,
+&quot;six_mo_price&quot; : &quot;{!SixMonthPrice}&quot;,
+&quot;twelve_mo_price&quot; : &quot;{!TwelceMonthPrice}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!TourRecord.Security_Deposit__c}&quot;,
+&quot;application_fee&quot; : &quot;{!HomeRecord.Application_Fee__c}&quot;,
+&quot;income_requirement&quot; : &quot;{!HomeRecord.Income_Requirements__c}&quot;,
+&quot;guarantor_requirement&quot; : &quot;{!HomeRecord.Guarantor_Requirements__c}&quot;,
+&quot;Move_In_Fee&quot; : &quot;{!TourRecord.Move_In_Fee__c}&quot;,
+&quot;Marketing_Name__c&quot; : &quot;{!HomeRecord.Marketing_Name__c}&quot;,
+&quot;HomeApplicationLink&quot; : &quot;{!ApplicationLinkFormula}&quot;,
+&quot;Day_Total_Hold_Amount&quot; : &quot;{!HomeRecord.X2_Day_Total_Hold_Amount__c}&quot;,
+&quot;Category_Brand&quot; : &quot;noah&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-7d02f7ccacd7491583fdcb746a45e386&quot;,
+&quot;Category_Unit_Type&quot; : &quot;Traditional&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentSD</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Home_Name&quot; : &quot;{!RoomRecord.Parent_Home__c}&quot;,
+&quot;Suite_Name&quot; : &quot;{!SuiteRecord.Name}&quot;,
+&quot;Room_Name&quot; : &quot;{!RoomRecord.Name}&quot;,
+&quot;Date_Available_Emails&quot; : &quot;{!AvailableFrom}&quot;,
+&quot;three_mo_price&quot; : &quot;{!ThreeMonthPrice}&quot;,
+&quot;six_mo_price&quot; : &quot;{!SixMonthPrice}&quot;,
+&quot;twelve_mo_price&quot; : &quot;{!TwelceMonthPrice}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!TourRecord.Security_Deposit__c}&quot;,
+&quot;application_fee&quot; : &quot;{!HomeRecord.Application_Fee__c}&quot;,
+&quot;income_requirement&quot; : &quot;{!HomeRecord.Income_Requirements__c}&quot;,
+&quot;guarantor_requirement&quot; : &quot;{!HomeRecord.Guarantor_Requirements__c}&quot;,
+&quot;Move_In_Fee&quot; : &quot;{!TourRecord.Move_In_Fee__c}&quot;,
+&quot;Marketing_Name__c&quot; : &quot;{!HomeRecord.Marketing_Name__c}&quot;,
+&quot;HomeApplicationLink&quot; : &quot;{!ApplicationLinkFormula}&quot;,
+&quot;Day_Total_Hold_Amount&quot; : &quot;{!HomeRecord.X2_Day_Total_Hold_Amount__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-678e5dfe4f7b40b1af5b32faf4f6d29a&quot;,
+&quot;Category_Unit_Type&quot; : &quot;Coliving&quot;
+}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DynamicContentTraditional</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;Home_Name&quot; : &quot;{!RoomRecord.Parent_Home__c}&quot;,
+&quot;Suite_Name&quot; : &quot;{!SuiteRecord.Name}&quot;,
+&quot;Room_Name&quot; : &quot;{!RoomRecord.Name}&quot;,
+&quot;Date_Available_Emails&quot; : &quot;{!AvailableFrom}&quot;,
+&quot;three_mo_price&quot; : &quot;{!ThreeMonthPrice}&quot;,
+&quot;six_mo_price&quot; : &quot;{!SixMonthPrice}&quot;,
+&quot;twelve_mo_price&quot; : &quot;{!TwelceMonthPrice}&quot;,
+&quot;Security_Deposit&quot; : &quot;{!TourRecord.Security_Deposit__c}&quot;,
+&quot;application_fee&quot; : &quot;{!HomeRecord.Application_Fee__c}&quot;,
+&quot;income_requirement&quot; : &quot;{!HomeRecord.Income_Requirements__c}&quot;,
+&quot;guarantor_requirement&quot; : &quot;{!HomeRecord.Guarantor_Requirements__c}&quot;,
+&quot;Move_In_Fee&quot; : &quot;{!TourRecord.Move_In_Fee__c}&quot;,
+&quot;Marketing_Name__c&quot; : &quot;{!HomeRecord.Marketing_Name__c}&quot;,
+&quot;HomeApplicationLink&quot; : &quot;{!ApplicationLinkFormula}&quot;,
+&quot;Day_Total_Hold_Amount&quot; : &quot;{!HomeRecord.X2_Day_Total_Hold_Amount__c}&quot;,
+&quot;Category_Brand&quot; : &quot;common&quot;,
+&quot;Category_Funnel&quot; : &quot;top&quot;,
+&quot;Category_Template_Id&quot; : &quot;d-8fd0cc6f78da4707af301769b8b57557&quot;,
+&quot;Category_Unit_Type&quot; : &quot;Traditional&quot;
+}</text>
+    </textTemplates>
+    <variables>
+        <name>TourID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

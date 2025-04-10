@@ -1,0 +1,57 @@
+<template>
+    <div class="slds-carousel">
+        <div class="slds-carousel__stage">
+
+            <!-- MAIN CONTENT -->
+            <div class="slds-carousel__panels" style="transform:translateX(-0%)">
+                <template if:true={components}>
+                    <template for:each={components} for:item="component">
+                        <div id={component.contentId} class={component.contentClass} role="tabpanel"
+                            aria-hidden={component.hidden} aria-labelledby={component.indicatorId}
+                            key={component.contentId}>
+                            <a class="slds-carousel__panel-action slds-text-link_reset"
+                                tabindex={component.tabindex}>
+                                <div class={imageClass}>
+                                    <img src={component.image} alt={component.header}/>
+                                </div>
+                            </a>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <!--INDICATORS -->
+            <ul class="slds-carousel__indicators" role="tablist">
+                <template if:true={components}>
+                    <template for:each={components} for:item="component">
+                        <li class="slds-carousel__indicator" role="presentation" key={component.indicatorId}>
+                            <a id={component.indicatorId} data-id={component.id} class={component.indicatorClass}
+                                role="tab" tabindex={component.tabindex} aria-selected={component.active}
+                                aria-controls={component.contentId} title={component.title} onclick={navigate}>
+                                <span class="slds-assistive-text">{component.title}</span>
+                            </a>
+                        </li>
+                    </template>
+                </template>
+            </ul>
+            <a class="carousel-control" style="left:0" onclick={prevImg}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" x="0" y="0" 
+                        viewBox="0 0 492.004 492.004" xml:space="preserve" style="transform:rotate(180deg)" aria-label="Arrow left">
+                    <g><g xmlns="http://www.w3.org/2000/svg"><g>
+                        <path d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12    c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028    c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265    c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z" 
+                                data-original="#000000" class=""></path>
+                    </g></g></g>
+                </svg>
+            </a>
+            <a class="carousel-control" style="right:0" onclick={nextImg}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" x="0" y="0" 
+                        viewBox="0 0 492.004 492.004" xml:space="preserve" style="" aria-label="Arrow right">
+                    <g><g xmlns="http://www.w3.org/2000/svg"><g>
+                        <path d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12    c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028    c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265    c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z" 
+                                data-original="#000000" class=""></path>
+                    </g></g></g>
+                </svg>
+            </a>
+        </div>
+    </div>
+</template>

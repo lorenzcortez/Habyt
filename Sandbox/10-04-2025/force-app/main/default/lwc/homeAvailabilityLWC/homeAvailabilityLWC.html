@@ -1,0 +1,505 @@
+<template>
+    <div class="slds-grid slds-gutters slds-wrap">
+        <div class="slds-col slds-size_5-of-5">
+            <lightning-card>
+                <div class="slds-m-horizontal_small">
+                    <div if:true={isLoading} class="cstm-spinner">
+                        <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                    </div>
+
+                    <div class="slds-form">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <!--
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Brand</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Status" name="Brand" placeholder="Select Brand"
+                                            options={BrandOptions} value={selectedBrand} variant="label-hidden"
+                                            onchange={handleBrandChange}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">City Name</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="City" name="City" placeholder="Select City"
+                                            options={CityOptions} value={selectedCity} variant="label-hidden"
+                                            onchange={handleCityChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Neighborhood</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Neighborhood" name="Neighborhood"
+                                            placeholder="Select Neighborhood" options={NeighborhoodOptions}
+                                            disabled={noNeighborhoodsFound} value={selectedNeighborhood}
+                                            variant="label-hidden" onchange={handleNeighborhoodChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Home</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Homes" name="Homes" placeholder="Select Home"
+                                            options={HomeOptions} value={selectedHome} disabled={noHomesFound}
+                                            variant="label-hidden" onchange={handleHomeChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Allowable Term Length</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Allowable Term Length" name="Allowable Term Length"
+                                            placeholder="Select Term Length" options={TermLengthOptions}
+                                            value={selectedTermLength} variant="label-hidden"
+                                            onchange={handleTermLengthChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Unit Type</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Unit Type" name="Unit Type"
+                                            placeholder="Select Term Length" options={UnitTypeOptions}
+                                            value={selectedUnitType} variant="label-hidden"
+                                            onchange={handleUnitTypeChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Affordable Unit</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Affordable Unit" name="AffordableUnit"
+                                            placeholder="Select Affordable Unit" options={AffordableUnitOptions}
+                                            value={selectedAffordableUnit} variant="label-hidden"
+                                            onchange={handleAffordableUnitChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Sort By</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Sort By" name="Sort By" placeholder="Sort By"
+                                            options={SortOptions} value={selectedSortOption} variant="label-hidden"
+                                            onchange={handleSortByChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <label class="slds-form-element__label custom-title">Sort Order</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-combobox label="Order" name="Order" placeholder="Order" 
+                                            options={OrderOptions} value={selectedOrderOption} variant="label-hidden" onchange={handleOrderChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-form-element__label custom-title">Max Bedroom Count</label>
+                                        <lightning-slider variant="label-hidden" label="Max Bedroom Count"
+                                            value={BedroomCount} step="1" min="-1" max="50"
+                                            onchange={handleBedRoomCountChange}></lightning-slider>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-5">
+                                <div class="slds-form-element slds-form-element_stacked">
+
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-form-element__label custom-title">Max Price</label>
+                                        <lightning-slider variant="label-hidden" label="Max Price" step="100" min="-1"
+                                            max="10000" value={selectedPrice} onchange={handlePriceChange}>
+                                        </lightning-slider>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-col slds-col slds-size_5-of-5">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control other-filters">
+                                        <lightning-checkbox-group name="Other filters" label="Other filters"
+                                            options={CheckBoxFilters} value={SelectedCheckboxFilters} onchange={handleChange}>
+                                        </lightning-checkbox-group>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="slds-col slds-col slds-size_5-of-5">
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__legend slds-form-element__label custom-title">
+                                        Other Filters</legend>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-checkbox_button-group">
+                                            <template for:each={CheckBoxFilters} for:item="filter">
+                                                <span key={filter.label} class="slds-button slds-checkbox_button">
+                                                    <input type="checkbox" aria-describedby={filter.label}
+                                                        id={filter.label} value={filter.value} name="Other filters 2"
+                                                        onchange={filter.changeHandler} />
+                                                    <label class="slds-checkbox_button__label" for={filter.label}>
+                                                        <span class="slds-checkbox_faux"
+                                                            id={filter.value}>{filter.label}</span>
+                                                    </label>
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="slds-col">
+                                <div class="slds-m-top_medium slds-text-align_right">
+                                    <lightning-button variant="brand" label="Search" title="Search" id="search-btn"
+                                        data-id="search-btn" class="slds-button slds-button_brand"
+                                        onclick={searchRooms}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <div class="slds-col slds-size_5-of-5 slds-m-top_x-small">
+            <lightning-card>
+                <div class="slds-p-around_medium lgc-bg">
+                    <div if:true={isLoading} class="cstm-spinner">
+                        <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                    </div>
+
+                    <!-- ERROR PANEL START-->
+                    <template if:true={error}>
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+                            role="alert">
+
+
+                            <span class="slds-assistive-text">error</span>
+                            <h1>
+                                <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                                    <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                        <use
+                                            xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#error">
+                                        </use>
+                                    </svg>
+                                </span>
+                                {errorTitle}:
+                            </h1>
+                            <div class="slds-p-around_small">
+                                <template if:true={errorMessages.length}>
+                                    <template for:each={errorMessages} for:item="message">
+                                        <h2 key={message}>{message}</h2>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- ERROR PANEL END-->
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-size_1-of-4">
+                            <lightning-card title={CurrentMonthName}>
+                                <lightning-layout multiple-rows vertical-align="start" class="slds-scrollable_y"
+                                    style="max-height:800px;">
+
+                                    <template for:each={CurrentMonthRooms} for:item="room" for:index="indx">
+
+                                        <lightning-layout-item padding="around-small" key={room.Id} flexibility="auto"
+                                            size="12" class="custom-box">
+                                            <div class="slds-text-align_right slds-p-horizontal_small">
+                                                <!--
+                                                <lightning-button data-room-id={room.Id} variant="base"
+                                                    label="Create Tour" title="Create Tour" icon-name="utility:add"
+                                                    class="slds-m-left_x-small" onclick={openCreateTourModal}>
+                                                </lightning-button> -->
+                                            </div>
+                                            
+                                            <template if:true={room.Property__r.isFeatured__c}>
+                                                <div class="slds-box slds-theme_info slds-theme_alert-texture">
+                                                    <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                    </c-room-card>
+                                                </div>
+                                            </template>
+                                            <template if:false={room.Property__r.isFeatured__c}>
+                                                <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                </c-room-card>
+                                            </template>
+                                            
+
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+
+
+                                <template if:true={noCurrentMonRoomsFound}>
+                                    <p class="slds-p-around_small slds-text-align_center">There are no rooms matching
+                                        your
+                                        current
+                                        selection.</p>
+                                </template>
+                            </lightning-card>
+                        </div>
+
+
+                        <div class="slds-size_1-of-4">
+                            <lightning-card title={NextMonthName}>
+                                <lightning-layout multiple-rows vertical-align="start" class="slds-scrollable_y"
+                                    style="max-height:800px;">
+
+                                    <template for:each={NextMonthRooms} for:item="room" for:index="indx">
+
+                                        <lightning-layout-item padding="around-small" key={room.Id} flexibility="auto"
+                                            size="12" class="custom-box">
+                                            <div class="slds-text-align_right slds-p-horizontal_small">
+                                                <!-- <lightning-button data-room-id={room.Id} variant="base"
+                                                    label="Create Tour" title="Create Tour" icon-name="utility:add"
+                                                    class="slds-m-left_x-small" onclick={openCreateTourModal}>
+                                                </lightning-button> -->
+                                            </div>
+                                            <template if:true={room.Property__r.isFeatured__c}>
+                                                <div class="slds-box slds-theme_info slds-theme_alert-texture">
+                                                    <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                    </c-room-card>
+                                                </div>
+                                            </template>
+                                            <template if:false={room.Property__r.isFeatured__c}>
+                                                <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                </c-room-card>
+                                            </template>
+
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+
+                                <template if:true={noNextMonRoomsFound}>
+                                    <p class="slds-p-around_small slds-text-align_center">There are no rooms matching
+                                        your
+                                        current
+                                        selection.</p>
+                                </template>
+                            </lightning-card>
+                        </div>
+
+
+                        <div class="slds-size_1-of-4">
+                            <lightning-card title={ThirdMonthName}>
+                                <lightning-layout multiple-rows vertical-align="start" class="slds-scrollable_y"
+                                    style="max-height:800px;">
+
+                                    <template for:each={ThirdMonthRooms} for:item="room" for:index="indx">
+
+                                        <lightning-layout-item padding="around-small" key={room.Id} flexibility="auto"
+                                            size="12" class="custom-box">
+                                            <div class="slds-text-align_right slds-p-horizontal_small">
+                                                <!-- <lightning-button data-room-id={room.Id} variant="base"
+                                                    label="Create Tour" title="Create Tour" icon-name="utility:add"
+                                                    class="slds-m-left_x-small" onclick={openCreateTourModal}>
+                                                </lightning-button> -->
+                                            </div>
+                                            
+                                            <template if:true={room.Property__r.isFeatured__c}>
+                                                <div class="slds-box slds-theme_info slds-theme_alert-texture">
+                                                    <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                    </c-room-card>
+                                                </div>
+                                            </template>
+                                            <template if:false={room.Property__r.isFeatured__c}>
+                                                <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                </c-room-card>
+                                            </template>
+
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+
+                                <template if:true={noThirdMonRoomsFound}>
+                                    <p class="slds-p-around_small slds-text-align_center">There are no rooms matching
+                                        your
+                                        current
+                                        selection.</p>
+                                </template>
+                            </lightning-card>
+                        </div>
+                        <div class="slds-size_1-of-4">
+                            <lightning-card title={FourthMonthName}>
+                                <lightning-layout multiple-rows vertical-align="start" class="slds-scrollable_y"
+                                    style="max-height:800px;">
+
+                                    <template for:each={FourthMonthRooms} for:item="room" for:index="indx">
+
+                                        <lightning-layout-item padding="around-small" key={room.Id} flexibility="auto"
+                                            size="12" class="custom-box">
+
+                                            <div class="slds-text-align_right slds-p-horizontal_small">
+                                                <!-- <lightning-button data-room-id={room.Id} variant="base"
+                                                    label="Create Tour" title="Create Tour" icon-name="utility:add"
+                                                    class="slds-m-left_x-small" onclick={openCreateTourModal}>
+                                                </lightning-button> -->
+                                            </div>
+                                            <template if:true={room.Property__r.isFeatured__c}>
+                                                <div class="slds-box slds-theme_info slds-theme_alert-texture">
+                                                    <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                    </c-room-card>
+                                                </div>
+                                            </template>
+                                            <template if:false={room.Property__r.isFeatured__c}>
+                                                <c-room-card room={room} onexpandbtnclick={handleNavigateToRecord}>
+                                                </c-room-card>
+                                            </template>
+
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+
+                                <template if:true={noFourthMonRoomsFound}>
+                                    <p class="slds-p-around_small slds-text-align_center">There are no rooms matching
+                                        your
+                                        current
+                                        selection.</p>
+                                </template>
+                            </lightning-card>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </lightning-card>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- MODAL POPUP START-->
+    <template if:true={showModalPopup}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-modal_medium slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header no-bottom-border">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"
+                            variant="inverse"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Room Details</h2> -->
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium limit-height" id="modal-content-id-1"
+                    style="height: 100%;">
+
+                    <div class="slds-grid slds-gutters main-container">
+                        <div class="slds-col slds-size_10-of-12 main-col">
+                            <div class="info-header">
+
+                                <c-room-detail-popup popup-home={popupHome} popup-room={popupRoom}
+                                    popup-suite={popupSuite}></c-room-detail-popup>
+
+                            </div>
+
+                        </div>
+                        <!-- End of main col -->
+                        <div class="slds-col slds-size_2-of-12 tag-col">
+                            <h2 class="custom-title">Tags</h2>
+                            <!-- TODO: Drive off CheckBoxFilters in roomVacanciesLWC -->
+                            <template if:true={popupRoom.Property__r.isFeatured__c}>
+                                <div class="bluetag">
+                                    Featured
+                                </div>
+                            </template>
+                            <template if:true={popupHome.Amortized__c}>
+                                <div class="tag">
+                                    Amortized
+                                </div>
+                            </template>
+                            <template if:true={popupHome.Elevator__c}>
+                                <div class="tag">
+                                    Has Elevator
+                                </div>
+                            </template>
+                            <template if:true={popupHome.Is_parking_available__c}>
+                                <div class="tag">
+                                    Parking Available?
+                                </div>
+                            </template>
+                            <template if:true={popupRoom.Affordable_Unit__c}>
+                                <div class="tag">
+                                    Affordable Unit
+                                </div>
+                            </template>
+                            <template if:true={popupRoom.Loft__c}>
+                                <div class="tag">
+                                    Loft
+                                </div>
+                            </template>
+                            <template if:true={popupRoom.Couple_Room__c}>
+                                <div class="tag">
+                                    Couple's Room
+                                </div>
+                            </template>
+                            <template if:true={popupHome.Wellness_Studio__c}>
+                                <div class="tag">
+                                    Wellness Studio
+                                </div>
+                            </template>
+                            <template if:true={popupRoom.En_suite_Bathroom__c}>
+                                <div class="tag">
+                                    En-suite Bathroom
+                                </div>
+                            </template>
+                            <template if:true={popupSuite.ESA_in_Suite__c}>
+                                <div class="tag">
+                                    ESA in Suite
+                                </div>
+                            </template>
+                            <template if:true={popupSuite.Couple_in_Suite__c}>
+                                <div class="tag">
+                                    Couple in Suite
+                                </div>
+                            </template>
+
+                            <template if:true={popupSuite.Obligo_Home__c}>
+                                <div class="tag">
+                                    Obligo Home
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- End of 2 col layout -->
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!--MODAL POPUP END-->
+
+    <template if:true={roomIdForCreatingTour}>
+        <iframe class="skedEditOpportunityModalIframe" width="100%" height="100%" frameborder="0"
+            allowtransparency="true" src={iframeSrc}></iframe>
+    </template>
+</template>

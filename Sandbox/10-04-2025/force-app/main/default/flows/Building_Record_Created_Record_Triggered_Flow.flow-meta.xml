@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Parent_Home_From_Common_Brand</name>
+        <label>Parent Home From Common Brand?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home__r.BrandRef__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Campaign</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>This flow runs whenever the Building record gets created</description>
+    <environments>Default</environments>
+    <interviewLabel>[Building] [Record Created] Record Triggered Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[Building] [Record Created] Record Triggered Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Parent_Home_From_Common_Brand</targetReference>
+        </connector>
+        <object>Building__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_Campaign</name>
+        <label>Create Campaign</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <flowName>Invocable_City_Home_Suite_Building_Add_Campaign</flowName>
+        <inputAssignments>
+            <name>BuildingId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

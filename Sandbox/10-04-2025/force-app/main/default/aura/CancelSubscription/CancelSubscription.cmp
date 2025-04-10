@@ -1,0 +1,29 @@
+<aura:component controller="IcxStripeInterface" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+    <aura:attribute name="CancelDate" type="Date" />
+    <aura:attribute name="OutDate" type="Date" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="Checkbox" type="Boolean" />
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    
+    <div class="slds-p-around_small">
+        <lightning:input value="{!v.CancelDate}" type="date" name="date" label="Contract end date:" min="{!v.today}"/>
+        <lightning:input value="{!v.OutDate}" type="date" name="date" label="Move out date:"/>
+        <lightning:input checked="{!v.Checkbox}" type="checkbox" name="box" label="Also cancel membership contract" class="slds-p-vertical_small"/>
+        <lightning:button variant="brand" label="Cancel Subscription" title="Cancel Subscription" onclick="{! c.CancelSubscriptionButton }" disabled="{!v.CancelDate == null}"/>
+    </div>
+</aura:component>

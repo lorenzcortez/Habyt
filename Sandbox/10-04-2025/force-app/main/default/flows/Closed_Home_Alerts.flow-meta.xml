@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Home_Closed_Alerts</name>
+        <label>Home_Closed_Alerts</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>home-closed-alerts@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>re@common.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Closed Home Alert</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Home_Close_Alert</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Closed Home Alerts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Closed Home Alerts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Home_Closed_Alerts</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Home (Exit)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Record_Type_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Common_Real_Estate</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Home_Close_Alert</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi Team,
+
+The stage for {!$Record.Name} has been updated to Closed Home (Exit).
+
+Class Code: {!$Record.Class_Code__c}
+Class ID: {!$Record.Class_ID__c}
+Closed Date: {!$Record.CloseDate}
+RE Partner: {!$Record.Account.Name}
+Agreement Type: {!$Record.Agreement_structure__c}
+
+Thanks!</text>
+    </textTemplates>
+</Flow>

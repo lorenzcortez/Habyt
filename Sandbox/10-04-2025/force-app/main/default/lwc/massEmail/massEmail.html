@@ -1,0 +1,63 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Send email to all active tenants">
+        <template if:true={contracts.data}>
+            <template if:false={error}>
+                <lightning-layout>
+
+                    <lightning-layout-item size="3" padding="around-small">
+                        <lightning-layout multiple-rows class="slds-box" style="flex-direction: column; height: 100%;">
+                            <lightning-layout-item size="12" class="slds-border_bottom slds-var-p-bottom_small">
+                                <lightning-input label="Select All/None" type="checkbox" checked="true"
+                                    onchange={handleCheckUncheckAll}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <div class="slds-scrollable slds-var-p-vertical_small">
+                                <div class="slds-text-longform">
+                                    <template for:each={contracts.data} for:item="iContract">
+                                        <lightning-layout-item size="12" key={iContract.Id} flexibility="grow"
+                                            class="slds-p-vertical_small">
+                                            <lightning-input label={iContract.Account.Name} type="checkbox"
+                                                data-id={iContract.Id} checked="true">
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                    </template>
+                                </div>
+                            </div>
+                        </lightning-layout>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="9" padding="around-small">
+                        <lightning-input label="Subject" value={subject} name="subjectInput" onchange={handleChange}>
+                        </lightning-input>
+
+                        <!-- Rich text editor -->
+                        <lightning-input-rich-text value={body} name="bodyInput" onchange={handleChange}
+                            class='slds-var-m-top_large'>
+                        </lightning-input-rich-text>
+                    </lightning-layout-item>
+
+                </lightning-layout>
+            </template>
+        </template>
+
+        <template if:true={contracts.error}>
+            <c-error-panel errors={contracts.error}></c-error-panel>
+        </template>
+
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
+
+        <div slot="footer">
+            <template if:true={error}>
+                <lightning-button variant="neutral" label="Back" onclick={handleBackAction}></lightning-button>
+            </template>
+            <template if:false={error}>
+                <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+                <lightning-button variant="brand" class="slds-m-left_x-small" label="Send email" type="submit"
+                    onclick={handleSendEmailAction} disabled={disabled}></lightning-button>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+</template>

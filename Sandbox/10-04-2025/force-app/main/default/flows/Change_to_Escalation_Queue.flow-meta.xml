@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <choices>
+        <name>NormalPriority</name>
+        <choiceText>Normal</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>CasePriority</elementReference>
+        </value>
+    </choices>
+    <constants>
+        <name>Manager</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Asked To Speak To Manager</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Check_if_time_based</name>
+        <label>Check if time based</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Queue_Member_Support_Escalations</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>is_time_based</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Time Based Auto Escalation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DontChooseTimeBasedScreen</targetReference>
+            </connector>
+            <label>is time based</label>
+        </rules>
+        <rules>
+            <name>comments_required_decision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Comments</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Communication Escalation - Need Update</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Comments_Required</targetReference>
+            </connector>
+            <label>comments required decision</label>
+        </rules>
+    </decisions>
+    <description>From Common
+
+Moves escalated Sourcefit cases to the correct queues based on the reason they selected.</description>
+    <dynamicChoiceSets>
+        <name>CasePriority</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Priority</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>escalationReasonPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Escalation_Reason__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>Change to Escalation Queue {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Change to Escalation Queue</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>get_case</name>
+        <label>get case</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Pick_Escalation_Reason</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Queue_Member_Support_Escalations</name>
+        <label>Queue - Member Support Escalations</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_the_case_to_the_escalation_queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Member_Support_Escalations</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_the_case_to_the_escalation_queue</name>
+        <label>Update the case to the escalation queue</label>
+        <locationX>578</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Finish_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Escalation_Reason__c</field>
+            <value>
+                <elementReference>escalationReasonPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsEscalated</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Queue_Member_Support_Escalations.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <elementReference>Priority</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sourcefit_Escalation_Notes__c</field>
+            <value>
+                <elementReference>Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Comments_Required</name>
+        <label>Comments Required</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Pick_Escalation_Reason</targetReference>
+        </connector>
+        <fields>
+            <name>CommentsREquiredText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Comments are required for this escalation type.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>DontChooseTimeBasedScreen</name>
+        <label>DontChooseTimeBasedScreen</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Pick_Escalation_Reason</targetReference>
+        </connector>
+        <fields>
+            <name>NoTimeBased</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;You cannot choose time based auto escalation manually.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Finish_Screen</name>
+        <label>Finish Screen</label>
+        <locationX>578</locationX>
+        <locationY>674</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>CaseEscalated</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60); font-size: 16px;&quot;&gt;This case has been escalated, please refresh the page.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>InsideSalesAndLeasingQueueText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 63, 63);&quot;&gt;Please make sure that this case has auto-assigned to someone on the Leasing Admin or Inside Sales Team and is NOT still assigned to you or Common Living.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Leasing Admin Queue (in application)</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Inside Sales Queue (not a member yet)</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Pick_Escalation_Reason</name>
+        <label>Pick Escalation Reason</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_if_time_based</targetReference>
+        </connector>
+        <fields>
+            <name>escalationReasonPicker</name>
+            <fieldText>&lt;p&gt;Please choose the reason for escalation&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>EscalationReasonPicklistScreen</name>
+            <choiceReferences>escalationReasonPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Escalation Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>EmergencyInfo</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(42, 42, 42); font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; font-size: 20px;&quot;&gt;Please review emergency resources below. Only use this button if this is an actual emergency. Please note: This will post in the MSS slack channel.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.google.com/url?q=https://docs.google.com/document/d/1kJZndTfw_nvwkDwcg2EGaelPvmMsUE9USwb9z_Jvydc/edit%23&amp;amp;sa=D&amp;amp;ust=1610125283000000&amp;amp;usg=AOvVaw3Tp0NbdpAZ-Mv6LyXqMHg5&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255); color: rgb(26, 115, 232); font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 20px;&quot;&gt;https://docs.google.com/document/d/1kJZndTfw_nvwkDwcg2EGaelPvmMsUE9USwb9z_Jvydc/edit#&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Emergency Escalation</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HelpFromHQText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Please only use this escalation reason if you do not understand the member, cannot send an initial reply, or do not know what to do.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Need help from HQ</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>InsideSalesChoiceText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Use this reason for messages/ calls from people that want to apply to live at Common, tour our homes, etc. Often people who have called the wrong number.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;DO NOT use for people who have yet to apply / tour. More info here: &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 149, 255); font-size: 20px;&quot;&gt;https://docs.google.com/document/d/1kJZndTfw_nvwkDwcg2EGaelPvmMsUE9USwb9z_Jvydc/edit#&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Inside Sales Queue (not a member yet)</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>LeasingQueueChoiceText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;Use this reason for messages/ calls from prospective members who want to know about the status of their application / have submitted a deposit + application.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;DO NOT use for people who haven’t toured or applied yet. More Info here: &lt;/span&gt;&lt;span style=&quot;color: rgb(65, 166, 255); font-size: 20px;&quot;&gt;https://docs.google.com/document/d/1kJZndTfw_nvwkDwcg2EGaelPvmMsUE9USwb9z_Jvydc/edit#&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EscalationReasonPicklistScreen</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Leasing Admin Queue (in application)</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Priority</name>
+            <choiceReferences>CasePriority</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Priority</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Comments</name>
+            <fieldText>Comments</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>get_case</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>feeditem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FeedItem</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>update Contract Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>update Contract Contact</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>update_its_contact</name>
+        <label>update its contact</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Activated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>update_its_contact</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>8001i000000s84BAAQ</stringValue>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <schedule>
+            <frequency>Once</frequency>
+            <startDate>2023-09-07</startDate>
+            <startTime>10:37:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,99 @@
+<aura:component controller="IcxOppInterface"  implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="opp" type="Object" />
+    <aura:attribute name="showUnavailable" type="Boolean" default="false"/>
+    <aura:attribute name="rooms" type="List" default="[]" />
+    <aura:attribute name="fields" type="String[]" default="['Start_Date__c','Country__c','City__c']" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="workspace" type="Object" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+    <lightning:recordForm recordId="{!v.recordId}" objectApiName="Opportunity" fields="{!v.fields}" mode="view" columns="3" onsuccess="{!c.doInit}" />
+    <aura:if isTrue="{!or(v.opp.Start_Date__c == null, v.opp.City__c == null, v.opp.Country__c == null)}">
+        Set a date and location criteria to see the available rooms
+    </aura:if>
+    
+    <lightning:input type="toggle" label="Show Unavailable Rooms" name="input1" checked="{!v.showUnavailable}"/>
+
+    <lightning:accordion aura:id="results" >
+        <aura:iteration items="{!v.rooms}" var="r">
+            <aura:if isTrue="{!not(and(r.status == 'error', v.showUnavailable == false)) }">
+                <lightning:accordionSection name="{!r.Name}" label="{!r.Name}" class="{!r.status}">
+                    <lightning:layout horizontalAlign="space" multipleRows="true">
+                        <aura:if isTrue="{!r.status != 'ok'}">
+                            <lightning:layoutItem size="12">
+                                <div class="{!'slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_'+r.status}" role="alert">
+                                    <h2>
+                                        <aura:if isTrue="{!r.status == 'warning'}">This room might not be available</aura:if>
+                                        <aura:if isTrue="{!r.status == 'error'}">This room is not available</aura:if>
+                                    </h2>
+                                </div>
+                                
+                                <ul class="slds-has-dividers_bottom-space">
+                                    <aura:iteration items="{!r.Contracts__r}" var="ct">
+                                        <li class="slds-item">
+                                            <lightning:tile  label="{!ct.ContractNumber}" class="warnList">
+                                                <aura:set attribute="media">
+                                                    <lightning:icon iconName="standard:contract" alternativeText="Contract" />
+                                                </aura:set>
+                                                <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                    <li class="slds-item liBtn"><lightning:button variant="base" label="Open" name="{!'Contract-'+ct.Id}" onclick="{! c.openItem }" class=""/></li>
+                                                    <li class="slds-item">Start:&nbsp;<ui:outputDate value="{!ct.StartDate}"/></li>
+                                                    <li class="slds-item">Move Out: &nbsp;<ui:outputDate value="{!ct.Move_out_date__c}"/></li>
+                                                </ul>
+                                            </lightning:tile>
+                                        </li>
+                                    </aura:iteration>
+                                    
+                                    <aura:iteration items="{!r.Opportunities__r}" var="o">
+                                        <li class="slds-item">
+                                            <lightning:tile  label="{!o.Name}" class="warnList">
+                                                <aura:set attribute="media">
+                                                    <lightning:icon iconName="standard:opportunity" alternativeText="Opp" />
+                                                </aura:set>
+                                                <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                    <li class="slds-item liBtn"><lightning:button variant="base" label="Open" name="{!'Opportunity-'+o.Id}" onclick="{! c.openItem }" class=""/></li>
+                                                    <li class="slds-item">Stage:&nbsp;<ui:outputText value="{!o.StageName}"/></li>
+                                                    <li class="slds-item">Date: &nbsp;<ui:outputDate value="{!o.Start_Date__c}"/></li>
+                                                </ul>
+                                            </lightning:tile>
+                                        </li>
+                                    </aura:iteration>
+                                </ul>
+                            </lightning:layoutItem>
+                        </aura:if>
+                        <lightning:layoutItem size="6">
+                            <div class="slds-tile__detail">
+                                <dl class="slds-list_horizontal slds-wrap">
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Room:</dt>
+                                    <dd class="slds-item_detail slds-truncate liBtn"><lightning:button variant="base" label="{!r.Name}" name="{!'Room__c-'+r.Id}" onclick="{! c.openItem }"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Price:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputCurrency value="{!r.Price__c}"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">HA:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputCurrency value="{!r.HA__c}"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Windows:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputNumber value="{!r.Number_of_windows__c}"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Description:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputNumber value="{!r.Description__c}"/></dd>
+                                </dl>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6">
+                            <div class="slds-tile__detail">
+                                <dl class="slds-list_horizontal slds-wrap">
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Property:</dt>
+                                    <dd class="slds-item_detail slds-truncate liBtn"><lightning:button variant="base" label="{!r.Property__r.Name}" name="{!'Room__c-'+r.Property__r.Id}" onclick="{! c.openItem }"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Area:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputText value="{!r.Property__r.Area__c}"/></dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">City:</dt>
+                                    <dd class="slds-item_detail slds-truncate"><ui:outputText value="{!r.Property__r.City__c}"/></dd>
+                                </dl>
+                            </div>
+                            <lightning:button class="slds-m-top_medium slds-float_right slds-button_brand" name ="{!r.Id}" label="Select" title="Select this room" onclick="{! c.selectThisRoom }" disabled="{!r.status == 'error'}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:accordionSection>
+            </aura:if>
+
+        </aura:iteration>
+    </lightning:accordion>
+</aura:component>

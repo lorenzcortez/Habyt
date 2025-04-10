@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <constants>
+        <name>ConstantJamesEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>james.pearce@bsg.ox.ac.uk</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantMahaEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>maha.toor@uga.edu</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantTalkDesk</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Talkdesk</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantWendellEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>wendell.adducul@lcnw.org</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Bypass_FALSE</name>
+        <label>Bypass = FALSE</label>
+        <locationX>627</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_BT</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.IsBypassFlows__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_New_Record</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</name>
+        <label>CIS - Lead with Existing Account Or Self Scheduled</label>
+        <locationX>248</locationX>
+        <locationY>947</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_CIS_Lead_with_Existing_Account_Or_Self_Scheduled</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantTalkDesk</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Duplicate Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Phone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CIS_Update_Lead_to_Duplicate</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Email_wendell_adducul_lcnw_org</name>
+        <label>Email = wendell.adducul@lcnw.org</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Lead_RT_is_Real_Estate_Leads</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Email_wendell_adducul_lcnw_org</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantWendellEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantJamesEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantMahaEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_New_Record</name>
+        <label>Is New Record?</label>
+        <locationX>347</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FormulaIsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_wendell_adducul_lcnw_org</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Lead_RT_is_Real_Estate_Leads</name>
+        <label>Lead RT is Real_Estate_Leads</label>
+        <locationX>248</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Lead_RT_is_Real_Estate_Leads</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Real_Estate_Leads</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RE_Populate_Account_and_Contact_on_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Lead flow that runs during After Insert/Update</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaIsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Original formula: 
+
+IF(
+NOT(ISPICKVAL([Lead].Budget__c , &quot;&quot;)),
+
+CASE([Lead].Budget__c,
+
+&quot;$1,200 - $1,500&quot;,1500,
+
+&quot;&lt; $750&quot;,750,
+
+&quot;$1000 - $1250&quot;,1250,
+
+&quot;$750 - $1000&quot;,1000,
+
+&quot;$1,200 to $1,500&quot;, 1500,
+
+&quot;$1,500 to $2,000&quot;, 2000,
+
+&quot;$2,000 to $2,500&quot;, 2500,
+
+&quot;$2,500 to $3,000&quot;,3000,
+
+&quot;Over $3,000&quot;, 3000,
+
+&quot;Less than $1,200&quot;, 1200,
+
+&quot;Less than $800&quot;, 800,
+
+&quot;Less than $1,400&quot;, 1400,
+
+&quot;Over $2,000&quot;, 2000,
+
+&quot;Over $2,300&quot;, 2300,
+
+&quot;Over $2,600&quot;, 2600,
+
+&quot;$1,200 to $1,600&quot;, 1600,
+
+&quot;$1,400 to $1,900&quot;, 1900,
+
+&quot;$1,400 to $1,800&quot;, 1800,
+
+&quot;$1,600 to $2,000&quot;, 2000,
+
+&quot;$1,800 to $2,200&quot;, 2200,
+
+&quot;$1,900 to $2,300&quot;, 2300,
+
+&quot;$2,200 to $2,600&quot;, 2600,
+
+&quot;$800 to $1,400&quot;, 1400,
+
+&quot;$800 to $1,200&quot;, 1200,
+
+&quot;Over $1,200&quot;, 1200,
+
+&quot;$1,000-$1,200&quot;, 1200,
+
+&quot;$800-$1,000&quot;, 1000,
+
+&quot;$600-800&quot;, 800,
+
+&quot;Under $600&quot;,600,
+
+[Lead].Max_Budget__c),
+
+[Lead].Max_Budget__c
+
+)</description>
+        <name>FormulaLeadMaxBudget</name>
+        <dataType>Currency</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Budget__c})),CASE({!$Record.Budget__c},&quot;$1,200 - $1,500&quot;,1500,&quot;&lt; $750&quot;,750,&quot;$1000 - $1250&quot;,1250,&quot;$750 - $1000&quot;,1000,&quot;$1,200 to $1,500&quot;, 1500,&quot;$1,500 to $2,000&quot;, 2000,&quot;$2,000 to $2,500&quot;, 2500,&quot;$2,500 to $3,000&quot;,3000,&quot;Over $3,000&quot;, 3000,&quot;Less than $1,200&quot;, 1200,&quot;Less than $800&quot;, 800,&quot;Less than $1,400&quot;, 1400,&quot;Over $2,000&quot;, 2000,&quot;Over $2,300&quot;, 2300,&quot;Over $2,600&quot;, 2600,&quot;$1,200 to $1,600&quot;, 1600,&quot;$1,400 to $1,900&quot;, 1900,&quot;$1,400 to $1,800&quot;, 1800,&quot;$1,600 to $2,000&quot;, 2000,&quot;$1,800 to $2,200&quot;, 2200,&quot;$1,900 to $2,300&quot;, 2300,&quot;$2,200 to $2,600&quot;, 2600,&quot;$800 to $1,400&quot;, 1400,&quot;$800 to $1,200&quot;, 1200,&quot;Over $1,200&quot;, 1200,&quot;$1,000-$1,200&quot;, 1200,&quot;$800-$1,000&quot;, 1000,&quot;$600-800&quot;, 800,&quot;Under $600&quot;,600,{!$Record.Max_Budget__c}),{!$Record.Max_Budget__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Original formula:
+
+IF(
+NOT(ISPICKVAL([Lead].Budget__c , &quot;&quot;)),
+CASE([Lead].Budget__c,
+
+&quot;$1,200 - $1,500&quot;,1200,
+
+&quot;&lt; $750&quot;,750,
+
+&quot;$1000 - $1250&quot;,1000,
+
+&quot;$750 - $1000&quot;,750,
+
+&quot;$1,200 to $1,500&quot;, 1200,
+
+&quot;$1,500 to $2,000&quot;, 1500,
+
+&quot;$2,000 to $2,500&quot;, 2000,
+
+&quot;$2,500 to $3,000&quot;,2500,
+
+&quot;Over $3,000&quot;, 3000,
+
+&quot;Less than $1,200&quot;, 0,
+
+&quot;Less than $800&quot;, 0,
+
+&quot;Less than $1,400&quot;, 0,
+
+&quot;Over $2,000&quot;, 2000,
+
+&quot;Over $2,300&quot;, 2300,
+
+&quot;Over $2,600&quot;, 2600,
+
+&quot;$1,200 to $1,600&quot;, 1200,
+
+&quot;$1,400 to $1,900&quot;, 1400,
+
+&quot;$1,400 to $1,800&quot;, 1400,
+
+&quot;$1,600 to $2,000&quot;, 1600,
+
+&quot;$1,800 to $2,200&quot;, 1800,
+
+&quot;$1,900 to $2,300&quot;, 1900,
+
+&quot;$2,200 to $2,600&quot;, 2200,
+
+&quot;$800 to $1,400&quot;, 800,
+
+&quot;$800 to $1,200&quot;, 800,
+
+&quot;Over $1,200&quot;, 1200,
+
+&quot;$1,000-$1,200&quot;, 1000,
+
+&quot;$800-$1,000&quot;, 800,
+
+&quot;$600-800&quot;, 600,
+
+&quot;Under $600&quot;,0,
+
+[Lead].Min_Budget__c),
+
+[Lead].Min_Budget__c
+
+)</description>
+        <name>FormulaLeadMinBudget</name>
+        <dataType>Currency</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Budget__c})),CASE({!$Record.Budget__c},&quot;$1,200 - $1,500&quot;,1200,&quot;&lt; $750&quot;,750,&quot;$1000 - $1250&quot;,1000,&quot;$750 - $1000&quot;,750,&quot;$1,200 to $1,500&quot;, 1200,&quot;$1,500 to $2,000&quot;, 1500,&quot;$2,000 to $2,500&quot;, 2000,&quot;$2,500 to $3,000&quot;,2500,&quot;Over $3,000&quot;, 3000,&quot;Less than $1,200&quot;, 0,&quot;Less than $800&quot;, 0,&quot;Less than $1,400&quot;, 0,&quot;Over $2,000&quot;, 2000,&quot;Over $2,300&quot;, 2300,&quot;Over $2,600&quot;, 2600,&quot;$1,200 to $1,600&quot;, 1200,&quot;$1,400 to $1,900&quot;, 1400,&quot;$1,400 to $1,800&quot;, 1400,&quot;$1,600 to $2,000&quot;, 1600,&quot;$1,800 to $2,200&quot;, 1800,&quot;$1,900 to $2,300&quot;, 1900,&quot;$2,200 to $2,600&quot;, 2200,&quot;$800 to $1,400&quot;, 800,&quot;$800 to $1,200&quot;, 800,&quot;Over $1,200&quot;, 1200,&quot;$1,000-$1,200&quot;, 1000,&quot;$800-$1,000&quot;, 800,&quot;$600-800&quot;, 600,&quot;Under $600&quot;,0,{!$Record.Min_Budget__c}),{!$Record.Min_Budget__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Lead (After Save) Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead (After Save) Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>501</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Bypass_FALSE</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0121i000000YGVzAAO</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0121i000000YGW4AAO</stringValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>CIS_Update_Lead_to_Duplicate</name>
+        <label>CIS - Update Lead to Duplicate</label>
+        <locationX>116</locationX>
+        <locationY>1055</locationY>
+        <connector>
+            <targetReference>Qualification_Flow</targetReference>
+        </connector>
+        <flowName>CIS_Update_Lead_to_Duplicate</flowName>
+        <inputAssignments>
+            <name>var_Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Qualification_Flow</name>
+        <label>Qualification Flow</label>
+        <locationX>116</locationX>
+        <locationY>1163</locationY>
+        <flowName>CIS_Lead_Qualification_Flow</flowName>
+        <inputAssignments>
+            <name>var_Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>RE_Populate_Account_and_Contact_on_Lead</name>
+        <label>RE - Populate Account and Contact on Lead</label>
+        <locationX>116</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</targetReference>
+        </connector>
+        <flowName>RE_Populate_Account_and_Contact_on_Lead</flowName>
+        <inputAssignments>
+            <name>var_Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

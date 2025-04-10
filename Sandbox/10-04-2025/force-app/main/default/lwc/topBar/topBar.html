@@ -1,0 +1,18 @@
+<template>
+    <lightning-layout horizontal-align="spread" vertical-align="center">
+        <div class="logo slds-var-p-horizontal_small">
+            <img src={logo_url} onclick={goHome}/>
+        </div>
+        <div class="nav slds-var-p-horizontal_small">
+            <!-- a class="slds-var-p-horizontal_large" href="#">FAQ</a -->
+            <span >
+                <div class="slds-button" onclick={togglePopup}>
+                    <span style="height:2rem;line-height:2rem">Get in touch</span>
+                </div>
+                <template if:true={popupVisible}>
+                    <c-contact-us mode="popup" brand={brand} onhide={hidePopup}></c-contact-us>
+                </template>
+            </span>
+        </div>
+    </lightning-layout>
+</template>

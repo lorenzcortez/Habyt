@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Opportunity_to_Update</name>
+        <label>Set Opportunity to Update</label>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Max_Budget__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_is_your_max_budget</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Who_are_you_moving_with__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Who_are_you_moving_with</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Couple__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MovingCoupleFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Pet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Do_you_have_any_pet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Preferred_Move_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_is_your_preferred_move_date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Opportunity.Length_of_Stay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_is_your_desired_lease_length</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>Amenities</name>
+        <choiceText>Amenities</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Amenities</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>BlankChoice</name>
+        <choiceText>{!NullValue}</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>Location</name>
+        <choiceText>Location</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Location</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Price</name>
+        <choiceText>Price</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Price</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Size</name>
+        <choiceText>Size</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Size</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <description>Removed concession notes from flow</description>
+    <dynamicChoiceSets>
+        <name>HouseHoldTypes</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Household_type__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Whoyouaremovingwith</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Who_are_you_moving_with__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>MovingCoupleFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+OR( 
+{!Who_are_you_moving_with}  == &apos;Roommate(s)&apos;, 
+{!Who_are_you_moving_with}  == &apos;Significant Other&apos;, 
+{!Who_are_you_moving_with}  == &apos;Family&apos;
+),
+True,
+False
+)</expression>
+    </formulas>
+    <formulas>
+        <name>NullValue</name>
+        <dataType>String</dataType>
+        <expression>&quot; &quot;</expression>
+    </formulas>
+    <interviewLabel>CIS - Opportunity Notes and Field Updates - Common SDR {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Opportunity Notes and Field Updates - Common SDR</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Opportunity_Notes</name>
+        <label>Create Opportunity Notes</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Set_Opportunity_to_Update</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>FaultScreen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>OpportunityNotesTemplates</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>Get_Opportunity.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity_Note__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_Opportunity_Info</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>FaultScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>176</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>FaultScreen</targetReference>
+        </faultConnector>
+        <inputReference>Get_Opportunity</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Add_Opportunity_Info</name>
+        <label>Add Opportunity Info</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Opportunity_Notes</targetReference>
+        </connector>
+        <fields>
+            <name>Welcome_Screen_Display_Text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;ADD/UPDATE OPPORTUNITY NOTES&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>What_is_your_preferred_move_date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Preferred_Move_Date__c</elementReference>
+            </defaultValue>
+            <fieldText>What is your preferred move date?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>What_is_your_max_budget</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Max_Budget__c</elementReference>
+            </defaultValue>
+            <fieldText>What is your max budget?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <scale>2</scale>
+        </fields>
+        <fields>
+            <name>What_is_your_desired_lease_length</name>
+            <defaultValue>
+                <stringValue>{!Get_Opportunity.Length_of_Stay__c}</stringValue>
+            </defaultValue>
+            <fieldText>What is your desired lease length?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Who_are_you_moving_with</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>Whoyouaremovingwith</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Who_are_you_moving_with__c</elementReference>
+            </defaultValue>
+            <fieldText>Who are you moving with?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Do_you_have_any_pet</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_Opportunity.Pet__c</elementReference>
+            </defaultValue>
+            <fieldText>Do you have any pets?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Will_you_need_parking</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>BlankChoice</defaultSelectedChoiceReference>
+            <fieldText>Will you need parking?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>What_is_your_top_priority_in_choosing_a_place_to_live</name>
+            <choiceReferences>BlankChoice</choiceReferences>
+            <choiceReferences>Amenities</choiceReferences>
+            <choiceReferences>Location</choiceReferences>
+            <choiceReferences>Price</choiceReferences>
+            <choiceReferences>Size</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>BlankChoice</defaultSelectedChoiceReference>
+            <fieldText>What is your top priority in choosing a place to live?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>How_familiar_are_you_with_the_neighborhood</name>
+            <fieldText>How familiar are you with the neighborhood?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Homes_Rooms_Discussed</name>
+            <fieldText>Homes/Rooms Discussed:</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>How_did_you_hear_about_us</name>
+            <fieldText>How did you hear about us?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>What_brings_you_to_Opportunity_City</name>
+            <fieldText>What brings you to {!Get_Opportunity.City_Lookup__r.Name}? *Note: If city does not populate here, it&apos;s missing from the opp*</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Additional_Notes</name>
+            <fieldText>Additional Notes:</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>FaultScreen</name>
+        <label>FaultScreen</label>
+        <locationX>440</locationX>
+        <locationY>674</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>FaultDt</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;OpportunityId: {!Get_Opportunity.Id}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(196, 86, 63); font-size: 18px;&quot;&gt;DONE!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;The fields you updated are now be reflected on the opportunity.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Note: the information you entered in the notes field will appear related to the opportunity in the &quot;Opportunity Notes&quot; section.  You can make further updates to those notes by modifying that record.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Opportunity</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>OpportunityNotesTemplates</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>What brings you to {!Get_Opportunity.City_Lookup__r.Name}?
+{!What_brings_you_to_Opportunity_City}
+
+How did you hear about us?
+{!How_did_you_hear_about_us}
+
+What is your max budget?
+{!What_is_your_max_budget}
+
+Who are you moving with?
+{!Who_are_you_moving_with}
+
+Do you have any pets?
+{!Do_you_have_any_pet}
+
+Will you need parking?
+{!Will_you_need_parking}
+
+What is your preferred move date?
+{!What_is_your_preferred_move_date}
+
+What is your desired lease length?
+{!What_is_your_desired_lease_length}
+
+What is your top priority in choosing a place to live?
+{!What_is_your_top_priority_in_choosing_a_place_to_live}
+
+Homes/Rooms Discussed:
+{!Homes_Rooms_Discussed}
+
+How familiar are you with the neighborhood?
+{!How_familiar_are_you_with_the_neighborhood}
+
+Additional Notes:
+{!Additional_Notes}</text>
+    </textTemplates>
+    <variables>
+        <name>OpportunityID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

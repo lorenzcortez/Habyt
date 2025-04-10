@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Post_to_chatter</name>
+        <label>Post to chatter</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>ChatterComments</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Submit_for_Approval</name>
+        <label>Submit for Approval</label>
+        <locationX>50</locationX>
+        <locationY>566</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <connector>
+            <targetReference>Set_Case_Item_Description</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>comment</name>
+            <value>
+                <elementReference>Submission_Comments_Long_Text</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>submit</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>53.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Case_Item_Description</name>
+        <label>Set Case Item Description</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Large_Item_Replacement_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Submission_Comments_Long_Text</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>NA_Steam_Selection</name>
+        <choiceText>N/A</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>N/A</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No_Steam_Selection</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NoChoiceSelectedRepairReplacement</name>
+        <choiceText>-- None Selected --</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>None_Selected_Steam_Selection</name>
+        <choiceText>-- None Selected --</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>Yes_Steam_Choice</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <decisions>
+        <name>Decision_Routing</name>
+        <label>Decision Routing</label>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Repair_Possible_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Replacement_Needed</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4) AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>Can_you_repair_or_retouch_the_item_and_avoid_a_replacement_altogether_picklist</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Can_you_repair_or_retouch_the_item_and_avoid_a_replacement_altogether_picklist</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>N/A</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>For_carpets_rugs_cushions_and_couches_can_we_rent_a_steam_cleaner_or_hire_a_prof</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>For_carpets_rugs_cushions_and_couches_can_we_rent_a_steam_cleaner_or_hire_a_prof</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>N/A</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>If_a_cushion_cover_is_stained_or_just_a_part_is_missing_can_we_replace_only_part</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>If_a_cushion_cover_is_stained_or_just_a_part_is_missing_can_we_replace_only_part</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>N/A</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Replacement_Needed_Screen</targetReference>
+            </connector>
+            <label>Replacement Needed</label>
+        </rules>
+    </decisions>
+    <description>Purpose: This flow details the process for replacing large items (rugs, carpets, couches, chairs, dining room tables, etc.) when flagged by a Common employee or a member.
+
+6/27 update: Added fault screen. - Girlene</description>
+    <dynamicChoiceSets>
+        <name>Yes_No_NA</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Yes_No_NA__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>ApprovalStepId</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE({!Submit_for_Approval.newWorkItemIds},&quot;[&quot;,&quot;&quot;),&quot;]&quot;,&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Can we clean or fix this item? {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CSS - Item Replacement</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>446</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Can_we_clean_or_fix_this_item</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <connector>
+            <targetReference>Post_to_chatter</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Can_we_clean_or_fix_this_item</name>
+        <label>Can we clean or fix this item?</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Decision_Routing</targetReference>
+        </connector>
+        <fields>
+            <name>LargeItemReplacementDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;ITEM REPLACEMENT EVALUATION:&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Can_you_repair_or_retouch_the_item_and_avoid_a_replacement_altogether_picklist</name>
+            <choiceReferences>Yes_No_NA</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Can you repair or retouch the item and avoid a replacement altogether?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>For_carpets_rugs_cushions_and_couches_can_we_rent_a_steam_cleaner_or_hire_a_prof</name>
+            <choiceReferences>Yes_No_NA</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>For carpets, rugs, cushions and couches - can we rent a steam cleaner or hire a professional carpet cleaner?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>If_a_cushion_cover_is_stained_or_just_a_part_is_missing_can_we_replace_only_part</name>
+            <choiceReferences>Yes_No_NA</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>If a cushion cover is stained or just a part is missing, can we replace only part of the item instead of the whole thing?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>PauseDisplayText</name>
+            <fieldText>&lt;p&gt;If you&apos;re not sure of the answers you can pause this flow and communicate with PS before continuing.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorEncountered</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Repair_Possible_Screen</name>
+        <label>Repair Possible</label>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>PleaseWorkWithPropertyServiceDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Please work with the local property tech to repair, clean, or replace part of the item. There is no need to get permission from management to replace the full item in this case. &lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Replacement_Needed_Screen</name>
+        <label>Replacement Needed</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Submit_for_Approval</targetReference>
+        </connector>
+        <fields>
+            <name>Replacement_Needed_Display_Text</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; font-size: 10pt;&quot;&gt;For a Small Item Request:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Consult the “Small Item Order List” tab of &lt;/span&gt;&lt;a href=&quot;https://docs.google.com/spreadsheets/d/1OSIdTd3EvpiHnFjgPkueeY1JtyxFf3Quh5jfMYzAEaE/edit#gid=2015050429&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: transparent; font-size: 10pt; color: rgb(17, 85, 204);&quot;&gt;&lt;u&gt;this reference doc&lt;/u&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; font-size: 10pt;&quot;&gt;For a Large Item Request:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Locate the “FF&amp;amp;E Replacement Schedule” link in the ops plan for the respective home (for homes open after March 2023) to identify the item for replacement.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;If the above cannot be located for the home or an item from the document is out of stock, please reference &lt;/span&gt;&lt;a href=&quot;https://docs.google.com/document/d/1F2UXlGhEVCvEhWZpKyWzvm9xMWA4cy3P_yBo5itBNvo/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: transparent; font-size: 10pt; color: rgb(17, 85, 204);&quot;&gt;&lt;u&gt;the SOP&lt;/u&gt;&lt;/a&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt; for how-to locate a replacement item.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SubmissionCommentDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; font-size: 10pt;&quot;&gt;Info to include in the “Submission Comments” below:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Is this specific to a member’s bedroom/private bathroom or a shared space?&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;What is the request / describe what you’d like to purchase:&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Link to the replacement item:&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Price of replacement item:&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;When is the member hoping/expecting to have this replaced by?&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; font-size: 10pt;&quot;&gt;Any other notes:&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Submission_Comments_Long_Text</name>
+            <defaultValue>
+                <stringValue>{!DefaultText}</stringValue>
+            </defaultValue>
+            <fieldText>Submission Comments</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Replacement_Needed_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Replacement_Needed_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Case</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ChatterComments</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>@{!Submit_for_Approval.actorIds}, You&apos;ve a new approval request.
+https://habyt.lightning.force.com/lightning/r/ProcessInstanceWorkitem/{!ApprovalStepId}/view
+
+
+{!Submission_Comments_Long_Text}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>DefaultText</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Is this specific to a member&apos;s bedroom/private bathroom or a shared space? 
+
+
+What is the request / describe what you&apos;d like to purchase:
+
+
+Link to the replacement item:
+
+
+Price of replacement item:
+
+
+When is the member hoping/expecting to have this replaced by?
+
+
+Any other notes:</text>
+    </textTemplates>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,8 @@
+::slotted(.slds-card__header-title) {
+    text-align: center;
+    width: 100%;
+}
+
+.slds-card__header-title {
+    text-align: center;
+}

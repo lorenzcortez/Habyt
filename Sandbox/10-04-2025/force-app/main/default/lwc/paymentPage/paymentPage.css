@@ -1,0 +1,91 @@
+.tab {
+    border-radius: 6px;
+    border: solid 1px rgb(212, 212, 212);
+    min-width: 33%;
+}
+
+.tab.selected {
+    background-color: rgba(255, 62, 106, 0.2);
+    border: none;
+}
+
+.tab .circle {
+    display: inline-block;
+    border-radius: 50%;
+    border: solid 1px lightgrey;
+    color: lightgrey;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.4rem;
+    text-align: center;
+}
+
+.tab.selected .circle {
+    background-color: rgb(27, 27, 27);
+    color: white;
+    border-color: rgb(27, 27, 27);
+}
+
+.slds-button {
+    padding: 9px 22px;
+    border-radius: 100px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: var(--lwc-dxpGBrand);
+    border: solid 2px var(--lwc-dxpGBrand);
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    text-transform: uppercase;
+}
+
+.slds-button.SecondaryButton {
+    color: var(--lwc-dxpGBrand);
+    background-color: white;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.main {
+    font-size: 1.25rem;
+}
+
+.smaller {
+    font-size: .8rem;
+}
+
+.ThankyouData {
+    display: flex;
+    height: calc(100vh);
+    justify-content: center;
+}
+
+.thankyou {
+    width: 20rem;
+    background-color: rgba(212, 212, 212, 0.2);
+    border-radius: .5rem;
+}
+
+.thankyou h1 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.thankyou .pointer {
+    font-weight: bold;
+    color: var(--lwc-dxpGBrand);
+    cursor: pointer;
+}
+
+.RightComponent {
+    background-color: rgba(212, 212, 212, 0.2);
+}
+
+.ApplicationFee {
+    background-color: rgba(255, 62, 106, 0.2);
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the Lead Post Convert process using Converted criteria.
+Fix standard mapping</description>
+    <environments>Default</environments>
+    <label>Lead Post Convert_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Update Contact</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Birthdate</field>
+            <value>
+                <elementReference>$Record.BirthDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.ConvertedContact</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>myRule_1_A2</name>
+        <label>Update Opportunity</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>$Record.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.ConvertedOpportunity</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsConverted</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0121i0000009OziAAE</stringValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

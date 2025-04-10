@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <dynamicChoiceSets>
+        <name>Status</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Status</picklistField>
+        <picklistObject>Task</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>RE subtask {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RE subtask dynamic form</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Home_Record</name>
+        <label>Home Record</label>
+        <locationX>334</locationX>
+        <locationY>51</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>TaskDetails</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Task_Record.Home__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Property__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Task_Record</name>
+        <label>Task Record</label>
+        <locationX>157</locationX>
+        <locationY>46</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Home_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>TaskDetails</name>
+        <label>TaskDetails</label>
+        <locationX>569</locationX>
+        <locationY>50</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>MemberHeadingDetails</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Depending on the task, please complete the sub-tasks below:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Pre-TSA-1&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Initial research&lt;/li&gt;&lt;li&gt;Back of the envelope&lt;/li&gt;&lt;li&gt;NDA agreement&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;TSA-1&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;LB and test fits&lt;/li&gt;&lt;li&gt;Underwriting&lt;/li&gt;&lt;li&gt;Proposal&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Post-TSA-1&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Draft LOI&lt;/li&gt;&lt;li&gt;Negotiate and sign LOI&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Post-LOI&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Prepare TSA 2/3&lt;/li&gt;&lt;li&gt;Follow-on research&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;TSA 2/3&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Negotiate and sign TSA 2/3&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Pre-MA&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Draft MA&lt;/li&gt;&lt;li&gt;Negotiate MA&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Post-MA&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Review&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Business Development&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Email campaign&lt;/li&gt;&lt;li&gt;Research&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Support Task&lt;/u&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;See specifics in Chatter&lt;/li&gt;&lt;/ol&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Task_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>HomeName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

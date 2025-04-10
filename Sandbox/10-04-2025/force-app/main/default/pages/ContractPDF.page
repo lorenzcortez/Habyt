@@ -1,0 +1,102 @@
+<apex:page standardController="Opportunity" renderAs="PDF">
+    
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.contractStyle}"/>
+            <style>
+                
+            </style>
+        </head>
+        <body style="margin:0;">
+            <!--
+<div style="position:absolute;width:130px;height:60px;top:533px;left:80px;border:1px solid black">
+
+</div>
+-->
+            <!--<div style="margin-bottom:10px;">
+                <apex:image width="100%" url="{!$Resource.contractTitle}"/>
+            </div>-->
+            <div style="margin-bottom:134px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                Rental Agreement between <strong>{!Opportunity.Room__r.Property__r.Billing_Entity__r.Name}</strong>, hereinafter referred to as "Habyt", and {!Opportunity.Account.Name}
+            </div>
+            <div style="width:100%;height:100px;">
+                <div style="width:50%;float:left">
+                    Date:
+                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                        <apex:param value="{!NOW()}" />
+                    </apex:outputText>
+                </div>
+                <div style="width:50%;float:right;text-align:right;">
+                    {!Opportunity.Room__r.Property__r.Billing_Entity__r.Name}<br/>
+                    {!Opportunity.Room__r.Property__r.Billing_Entity__r.Street__c}<br/>
+                    {!Opportunity.Room__r.Property__r.Billing_Entity__r.Postal_Code__c} {!Opportunity.Room__r.Property__r.Billing_Entity__r.City__c}<br/>
+                    {!Opportunity.Room__r.Property__r.Billing_Entity__r.Country__c}<br/>
+                </div>
+            </div>
+            <div style="width:99%;border:1px solid rgb(191,191,191)">
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th width="30%" class="centerTxtHoverGray">Description</th>
+                            <th class="centerTxtHoverGray">Property Address</th>
+                            <th class="centerTxtHoverGray">Room Number</th>
+                            <th class="centerTxtHoverGray">Monthly Price</th>
+                            <th class="centerTxtHoverGray">Start Date</th>
+                            <th class="centerTxtHoverGray">Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{!Opportunity.Contract_Description__c}</td>
+                            <td>{!Opportunity.Room__r.Property__r.Street__c}</td>
+                            <td>{!Opportunity.Room__r.Name}</td>
+                            <td>
+                                <apex:outputField value="{!Opportunity.Monthly_Price__c}" />                            
+                            </td>
+                            <td>
+                                <apex:outputField value="{!Opportunity.Start_Date__c}" />
+                            </td>
+                            <td>6</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align:center;padding:5px;">
+                    Payment terms: monthly, due 1 day before the 'start date' for the first month, and due on the 1st day, at the latest by the third
+                    business day of each month, for the following months. Deposit of 1 month rent and first month rent are due before the start date.
+                </div>
+            </div>
+            <div style="width:99%;border:1px solid rgb(191,191,191);margin-top:20px">
+                <div class="centerTxtHoverGray">
+                    Terms of Service
+                </div>
+                <div style="text-align:center;padding:5px;">
+                    This is the rental contract for your Habyt room. By signing, you acknowledge that you have read, understood and agree to the (1) Rental Agreement, (2) Terms and Condition of Internet Use, (3) House Rules and (4) Habyt Terms of Service which can
+                    be found at www.habyt.com/terms-of-service and is incorporated into this document by reference. Any other terms and conditions
+                    do not apply to this contract and are null and void.
+                </div>
+            </div>
+            <div style="width:100%">
+                <div style="width:50%;margin-top:20px;float:left;padding-top:43px;padding-left:20px">
+                    Signature ______________________
+                </div>
+                <div style="width:45%;border:1px solid rgb(191,191,191);margin-top:20px;float:right;">
+                    <div class="centerTxtHoverGray">
+                        Payment Information
+                    </div>
+                    <div style="text-align:center;padding:5px;">
+                        <!--Please transfer the amount due to the following account:<br/><br/>
+                        {!Opportunity.Room__r.Property__r.Billing_Entity__r.Name}<br/>
+                        IBAN: {!Opportunity.Room__r.Property__r.Billing_Entity__r.IBAN__c}<br/>
+                        BIC: {!Opportunity.Room__r.Property__r.Billing_Entity__r.BIC__c}-->
+                        Payment methods: SEPA or Credit Card
+                    </div>
+                </div>
+            </div>
+            <div style="page-break-before: always;"><apex:outputText value="{!Opportunity.Room__r.Property__r.Billing_Entity__r.RENTAL_CONTRACT__c}" escape="false"/></div>
+            <div style="page-break-before: always;"><apex:outputText value="{!Opportunity.Room__r.Property__r.Billing_Entity__r.TERMS_AND_CONDITIONS_FOR_INTERNET_USE__c}" escape="false"/></div>
+            <div style="page-break-before: always;"><apex:outputText value="{!Opportunity.Room__r.Property__r.Billing_Entity__r.HOUSE_RULES__c}" escape="false"/></div>
+        </body>
+    </html>
+</apex:page>

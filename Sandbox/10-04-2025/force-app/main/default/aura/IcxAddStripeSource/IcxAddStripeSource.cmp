@@ -1,0 +1,89 @@
+<aura:component controller="IcxStripeInterface" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="pathStep" type="Integer" />
+    <aura:attribute name="Contract" type="Contract" />
+    <aura:attribute name="AccountId" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="currency" type="String" />
+    <aura:attribute name="Account" type="Account" />
+    <aura:attribute name="sourceType" type="String" />
+    <aura:attribute name="error" type="String" />
+    <aura:attribute name="status" type="List" />
+    <aura:attribute name="progress" type="Integer" />
+    <aura:attribute name="reuseExistingSource" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds-is-expanded" aura:id="paymentInfo">  
+        <ui:inputText value="{!v.Account.Name}" label="Name" aura:id="name" required="true"/>
+        <ui:inputText value="{!v.Account.PersonEmail}" label="Email" aura:id="email" required="true"/>
+        
+        <fieldset class="slds-form--compound">
+            <legend class="slds-form-element__label slds-text-title--caps">Adress</legend>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="slds-form-element slds-size--1-of-1">
+                        <ui:inputText value="{!v.Account.BillingStreet}" label="Street" aura:id="line1" />
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <div class="slds-form-element slds-size--1-of-2">
+                        <ui:inputText value="{!v.Account.BillingPostalCode}" label="Postal Code" aura:id="postal_code" />
+                    </div>
+                    <div class="slds-form-element slds-size--1-of-2">
+                        <ui:inputText value="{!v.Account.BillingCity}" label="City" aura:id="city" />
+                    </div>
+                </div>
+                <div class="slds-form-element__row">
+                    <div class="slds-form-element slds-size--1-of-2">
+                        <ui:inputText value="{!v.Account.BillingCountry}" label="Country" aura:id="country" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        
+        <lightning:tabset >
+            <lightning:tab label="SEPA Direct Debit" id="sepa" onactive="{!c.initSepa}">
+                <ui:inputText label="IBAN" aura:id="IBAN" required="true"/>
+            </lightning:tab>
+
+            <lightning:tab label="Credit card" id="cc"  onactive="{!c.initCard}">
+                <ui:inputText label="Number" aura:id="number" required="true"/>
+                <fieldset class="slds-form--compound">
+                    <legend class="slds-form-element__label slds-text-title--caps">Expiration</legend>
+                    <div class="slds-form-element__group">
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <ui:inputText label="Month" aura:id="exp_month" required="true"/>
+                            </div>
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <ui:inputText label="Year" aura:id="exp_year" required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <ui:inputText label="CVC" aura:id="cvc" required="true"/>
+            </lightning:tab>
+
+        </lightning:tabset>
+        <div class="slds-clearfix">
+            <div class="slds-float_right" style="position:relative;display: inline-block;">
+                <aura:if isTrue="{!v.showSpinner}">
+                    
+                    <lightning:spinner alternativeText="Loading" size="small" />
+                </aura:if>
+                <lightning:button class="slds-float_right" variant="brand" label="Confirm" title="Confirm" onclick="{! c.addSource }" disabled="{!v.showSpinner}"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-is-collapsed" aura:id="processStatus">
+        <progress id="avancement" value="{!v.progress}" max="{!v.status.length}" style="width: 100%;"/>
+        <aura:iteration items="{!v.status}" var="s">
+            {!s.step} ==> {!s.result}<br/>
+        </aura:iteration>
+    </div>
+    
+    <ui:message title="Error" severity="error" closable="false" aura:id="message">
+        <b>Details: {!v.error}</b>        
+    </ui:message>
+</aura:component>

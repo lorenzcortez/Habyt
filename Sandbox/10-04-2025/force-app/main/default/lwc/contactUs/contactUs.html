@@ -1,0 +1,24 @@
+<template>
+    <div class={modeClass}>
+        <div class="inner">
+            <div class="slds-var-p-bottom_small slds-border_bottom">
+                <div class="box-title">Questions? Give us a call</div>
+                <div class="box-subtitle slds-var-p-top_small slds-var-p-bottom_medium">Our English speaking leasing agents are available weekdays 10:00 - 17:00 CET.</div>
+                <div><b>{contactPhone}</b></div>
+            </div>
+            <div class="slds-var-p-top_small">
+                <div class="box-title">Send us a message</div>
+                <div class="box-subtitle slds-var-p-top_small slds-var-p-bottom_medium">Fill our contact form and we'll email you back ASAP.</div>
+                <div class="slds-button" onclick={openModal}>SEND MESSAGE &#8594;</div>
+            </div>
+        </div>
+    </div>
+    <lightning-layout vertical-align="center" horizontal-align="center">
+        <lightning-layout-item size="8">
+            <c-contact-form brand={brand} onclosed={onModalClosed}></c-contact-form>
+        </lightning-layout-item>
+    </lightning-layout>
+    <template if:true={needBackdrop}>
+        <div class="slds-backdrop" onclick={clickedOutside} style="visibility:visible;z-index:7099"></div>
+    </template>
+</template>

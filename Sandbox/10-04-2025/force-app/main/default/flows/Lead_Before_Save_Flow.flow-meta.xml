@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_City_and_Country</name>
+        <label>Assign City and Country</label>
+        <locationX>778</locationX>
+        <locationY>5315</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__r.City_Picklist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Country__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__r.Country__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.City_Lookup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__r.City_object__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.City</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__r.City_object__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Country</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__r.Country__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Set_Status_and_Sub_Status_on_the_Lead</name>
+        <label>Set Status and Sub Status on the Lead</label>
+        <locationX>670</locationX>
+        <locationY>4295</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_Set_Status_and_Sub_Status_on_the_Lead</name>
+        <label>Set Status and Sub Status on the Lead</label>
+        <locationX>1198</locationX>
+        <locationY>4511</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_3_of_Set_Status_and_Sub_Status_on_the_Lead</name>
+        <label>Set Status and Sub Status on the Lead</label>
+        <locationX>934</locationX>
+        <locationY>4403</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Currency_to_USD</name>
+        <label>Set Currency to USD</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CurrencyIsoCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>USD</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>RE_Set_Lead_Company_If_Blank_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Lead_Company</name>
+        <label>Set Lead Company</label>
+        <locationX>50</locationX>
+        <locationY>911</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Company</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Provided</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Stamp_Home_Committed_Text_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Lead_to_Qualified</name>
+        <label>Set Lead to Qualified</label>
+        <locationX>142</locationX>
+        <locationY>4079</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Status_and_Sub_Status_on_the_Lead</name>
+        <label>Set Status and Sub Status on the Lead</label>
+        <locationX>406</locationX>
+        <locationY>4187</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sub_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting Action</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_City_to_Seattle</name>
+        <label>Update City to Seattle</label>
+        <locationX>265</locationX>
+        <locationY>2987</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.City__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Seattle</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>RE_Lead_Type_Blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Home_Committed_Text</name>
+        <label>Update Home Committed Text</label>
+        <locationX>50</locationX>
+        <locationY>1211</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Home_Committed_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Committed__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Lead_Status_to_Waitlist_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Lead_Status_to_Waitlist</name>
+        <label>Update Lead Status to Waitlist</label>
+        <locationX>50</locationX>
+        <locationY>1511</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Waitlist</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Email_wendell_adducul_lcnw_org</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Min_and_Max_Budget_field</name>
+        <label>Update Min and Max Budget field</label>
+        <locationX>265</locationX>
+        <locationY>2687</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Max_Budget__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FormulaLeadMaxBudget</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Min_Budget__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FormulaLeadMinBudget</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Lead_Created_By_Portal_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Owner_to_Assigned</name>
+        <label>Update Owner to Assigned</label>
+        <locationX>265</locationX>
+        <locationY>3395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RE_Unassigned_Lead_Queue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CIS_Talkdesk_Lead</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>ConstantJamesEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>james.pearce@bsg.ox.ac.uk</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantMahaEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>maha.toor@uga.edu</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantTalkDesk</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Talkdesk</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ConstantWendellEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>wendell.adducul@lcnw.org</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Budget_Added</name>
+        <label>Budget Added</label>
+        <locationX>397</locationX>
+        <locationY>2579</locationY>
+        <defaultConnector>
+            <targetReference>Lead_Created_By_Portal_User</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Budget_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Budget__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Min_and_Max_Budget_field</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bypass_TRUE</name>
+        <label>Bypass = FALSE</label>
+        <locationX>1362</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_BT</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.IsBypassFlows__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_New_Record</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>CHI_PHI_Budget_Added</name>
+        <label>CHI/PHI Budget Added</label>
+        <locationX>397</locationX>
+        <locationY>2003</locationY>
+        <defaultConnector>
+            <targetReference>SEA_Budget_Added</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_CHI_PHI_Budget_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SEA_Budget_Added</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</name>
+        <label>CIS - Lead with Existing Account Or Self Scheduled</label>
+        <locationX>397</locationX>
+        <locationY>3779</locationY>
+        <defaultConnector>
+            <targetReference>Referred_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_CIS_Lead_with_Existing_Account_Or_Self_Scheduled</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantTalkDesk</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Duplicate Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Phone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Referred_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>CIS_Talkdesk_Lead</name>
+        <label>CIS - Talkdesk Lead</label>
+        <locationX>397</locationX>
+        <locationY>3587</locationY>
+        <defaultConnector>
+            <targetReference>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_CIS_Talkdesk_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantTalkDesk</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CIS_Lead_with_Existing_Account_Or_Self_Scheduled</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Email_wendell_adducul_lcnw_org</name>
+        <label>Email = wendell.adducul@lcnw.org</label>
+        <locationX>182</locationX>
+        <locationY>1703</locationY>
+        <defaultConnector>
+            <targetReference>Ft_Lauderdale_LA_NY_Budget_Added</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Email_wendell_adducul_lcnw_org</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantWendellEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantJamesEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ConstantMahaEmail</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Ft_Lauderdale_LA_NY_Budget_Added</name>
+        <label>Ft/Lauderdale/LA/NY Budget Added</label>
+        <locationX>397</locationX>
+        <locationY>1811</locationY>
+        <defaultConnector>
+            <targetReference>CHI_PHI_Budget_Added</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Ft_Lauderdale_LA_NY_Budget_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CHI_PHI_Budget_Added</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Common_RecordType</name>
+        <label>If Common RecordType</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>RE_Set_Lead_Company_If_Blank_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_If_Common_RecordType</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Common</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Currency_to_USD</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Common_Lead_and_Home_Committed_is_Changed</name>
+        <label>Is Common Lead and Home Committed is Changed?</label>
+        <locationX>910</locationX>
+        <locationY>5207</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Is_Common_Lead_and_Home_Committed_is_Changed</name>
+            <conditionLogic>1 OR (1 AND 2) AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Committed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Committed__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Real_Estate_Leads</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_City_and_Country</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_New_Record</name>
+        <label>Is New Record?</label>
+        <locationX>910</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FormulaIsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>If_Common_RecordType</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>LA_Budget_Added</name>
+        <label>LA Budget Added</label>
+        <locationX>397</locationX>
+        <locationY>2387</locationY>
+        <defaultConnector>
+            <targetReference>Budget_Added</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_LA_Budget_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Budget_Added</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>Lead_Created_By_Portal_User</name>
+        <label>Lead Created By Portal User</label>
+        <locationX>397</locationX>
+        <locationY>2879</locationY>
+        <defaultConnector>
+            <targetReference>RE_Lead_Type_Blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Lead_Created_By_Portal_User</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Label.Lead_Portal_Profile_Name</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_City_to_Seattle</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From CIS - Lead Qualification Flow</description>
+        <name>Pet_Drift</name>
+        <label>Pet Drift</label>
+        <locationX>653</locationX>
+        <locationY>4079</locationY>
+        <defaultConnector>
+            <targetReference>Price_Cannot_Afford</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Pet_Drift</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Pet__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Status_and_Sub_Status_on_the_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From CIS - Lead Qualification Flow</description>
+        <name>Price_Cannot_Afford</name>
+        <label>Price Cannot Afford</label>
+        <locationX>901</locationX>
+        <locationY>4187</locationY>
+        <defaultConnector>
+            <targetReference>Waitlist_Availability</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Price_Cannot_Afford</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Max_Budget__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.City_Lookup__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Set_Status_and_Sub_Status_on_the_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>RE_Lead_Type_Blank</name>
+        <label>RE - Lead Type Blank</label>
+        <locationX>397</locationX>
+        <locationY>3179</locationY>
+        <defaultConnector>
+            <targetReference>CIS_Talkdesk_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_RE_Lead_Type_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Real_Estate_Leads</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Lead_Type__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Company</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RE_Unassigned_Lead_Queue</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From RE - Set Lead Company If Blank flow</description>
+        <name>RE_Set_Lead_Company_If_Blank_Check</name>
+        <label>RE - Set Lead Company If Blank Check</label>
+        <locationX>182</locationX>
+        <locationY>803</locationY>
+        <defaultConnector>
+            <targetReference>Stamp_Home_Committed_Text_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_RE_Set_Lead_Company_If_Blank_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Company</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Real_Estate_Leads</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Lead_Company</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From CIS - Lead Qualification Flow</description>
+        <name>Referred_Lead</name>
+        <label>Referred Lead</label>
+        <locationX>397</locationX>
+        <locationY>3971</locationY>
+        <defaultConnector>
+            <targetReference>Pet_Drift</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Referred_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Sub_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Referred Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Lead_to_Qualified</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From ALL - New Lead Created - Master Process PB</description>
+        <name>SEA_Budget_Added</name>
+        <label>SEA Budget Added</label>
+        <locationX>397</locationX>
+        <locationY>2195</locationY>
+        <defaultConnector>
+            <targetReference>LA_Budget_Added</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_SEA_Budget_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common_Inside_Sales_Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>LA_Budget_Added</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From &quot;Stamp Home Committed Text&quot; flow</description>
+        <name>Stamp_Home_Committed_Text_Check</name>
+        <label>Stamp Home Committed Text Check</label>
+        <locationX>182</locationX>
+        <locationY>1103</locationY>
+        <defaultConnector>
+            <targetReference>Update_Lead_Status_to_Waitlist_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Stamp_Home_Committed_Text_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Committed__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Home_Committed_Text</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Lead_Status_to_Waitlist_Check</name>
+        <label>Update Lead Status to Waitlist Check</label>
+        <locationX>182</locationX>
+        <locationY>1403</locationY>
+        <defaultConnector>
+            <targetReference>Email_wendell_adducul_lcnw_org</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Lead_Status_to_Waitlist_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Committed__r.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pre-Lease Up</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Lead_Status_to_Waitlist</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From CIS - Lead Qualification Flow</description>
+        <name>Waitlist_Availability</name>
+        <label>Waitlist - Availability</label>
+        <locationX>1132</locationX>
+        <locationY>4295</locationY>
+        <defaultConnector>
+            <targetReference>Waitlist_FMD</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Waitlist_Availability</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.City_Lookup__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_3_of_Set_Status_and_Sub_Status_on_the_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>From CIS - Lead Qualification Flow</description>
+        <name>Waitlist_FMD</name>
+        <label>Waitlist - FMD</label>
+        <locationX>1330</locationX>
+        <locationY>4403</locationY>
+        <defaultConnector>
+            <targetReference>Is_Common_Lead_and_Home_Committed_is_Changed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Waitlist_FMD</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.City_Lookup__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Set_Status_and_Sub_Status_on_the_Lead</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Lead flow that runs during Before Insert/Update</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaIsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <description>Original formula: 
+
+IF(
+NOT(ISPICKVAL([Lead].Budget__c , &quot;&quot;)),
+
+CASE([Lead].Budget__c,
+
+&quot;$1,200 - $1,500&quot;,1500,
+
+&quot;&lt; $750&quot;,750,
+
+&quot;$1000 - $1250&quot;,1250,
+
+&quot;$750 - $1000&quot;,1000,
+
+&quot;$1,200 to $1,500&quot;, 1500,
+
+&quot;$1,500 to $2,000&quot;, 2000,
+
+&quot;$2,000 to $2,500&quot;, 2500,
+
+&quot;$2,500 to $3,000&quot;,3000,
+
+&quot;Over $3,000&quot;, 3000,
+
+&quot;Less than $1,200&quot;, 1200,
+
+&quot;Less than $800&quot;, 800,
+
+&quot;Less than $1,400&quot;, 1400,
+
+&quot;Over $2,000&quot;, 2000,
+
+&quot;Over $2,300&quot;, 2300,
+
+&quot;Over $2,600&quot;, 2600,
+
+&quot;$1,200 to $1,600&quot;, 1600,
+
+&quot;$1,400 to $1,900&quot;, 1900,
+
+&quot;$1,400 to $1,800&quot;, 1800,
+
+&quot;$1,600 to $2,000&quot;, 2000,
+
+&quot;$1,800 to $2,200&quot;, 2200,
+
+&quot;$1,900 to $2,300&quot;, 2300,
+
+&quot;$2,200 to $2,600&quot;, 2600,
+
+&quot;$800 to $1,400&quot;, 1400,
+
+&quot;$800 to $1,200&quot;, 1200,
+
+&quot;Over $1,200&quot;, 1200,
+
+&quot;$1,000-$1,200&quot;, 1200,
+
+&quot;$800-$1,000&quot;, 1000,
+
+&quot;$600-800&quot;, 800,
+
+&quot;Under $600&quot;,600,
+
+[Lead].Max_Budget__c),
+
+[Lead].Max_Budget__c
+
+)</description>
+        <name>FormulaLeadMaxBudget</name>
+        <dataType>Currency</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Budget__c})),CASE({!$Record.Budget__c},&quot;$1,200 - $1,500&quot;,1500,&quot;&lt; $750&quot;,750,&quot;$1000 - $1250&quot;,1250,&quot;$750 - $1000&quot;,1000,&quot;$1,200 to $1,500&quot;, 1500,&quot;$1,500 to $2,000&quot;, 2000,&quot;$2,000 to $2,500&quot;, 2500,&quot;$2,500 to $3,000&quot;,3000,&quot;Over $3,000&quot;, 3000,&quot;Less than $1,200&quot;, 1200,&quot;Less than $800&quot;, 800,&quot;Less than $1,400&quot;, 1400,&quot;Over $2,000&quot;, 2000,&quot;Over $2,300&quot;, 2300,&quot;Over $2,600&quot;, 2600,&quot;$1,200 to $1,600&quot;, 1600,&quot;$1,400 to $1,900&quot;, 1900,&quot;$1,400 to $1,800&quot;, 1800,&quot;$1,600 to $2,000&quot;, 2000,&quot;$1,800 to $2,200&quot;, 2200,&quot;$1,900 to $2,300&quot;, 2300,&quot;$2,200 to $2,600&quot;, 2600,&quot;$800 to $1,400&quot;, 1400,&quot;$800 to $1,200&quot;, 1200,&quot;Over $1,200&quot;, 1200,&quot;$1,000-$1,200&quot;, 1200,&quot;$800-$1,000&quot;, 1000,&quot;$600-800&quot;, 800,&quot;Under $600&quot;,600,{!$Record.Max_Budget__c}),{!$Record.Max_Budget__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Original formula:
+
+IF(
+NOT(ISPICKVAL([Lead].Budget__c , &quot;&quot;)),
+CASE([Lead].Budget__c,
+
+&quot;$1,200 - $1,500&quot;,1200,
+
+&quot;&lt; $750&quot;,750,
+
+&quot;$1000 - $1250&quot;,1000,
+
+&quot;$750 - $1000&quot;,750,
+
+&quot;$1,200 to $1,500&quot;, 1200,
+
+&quot;$1,500 to $2,000&quot;, 1500,
+
+&quot;$2,000 to $2,500&quot;, 2000,
+
+&quot;$2,500 to $3,000&quot;,2500,
+
+&quot;Over $3,000&quot;, 3000,
+
+&quot;Less than $1,200&quot;, 0,
+
+&quot;Less than $800&quot;, 0,
+
+&quot;Less than $1,400&quot;, 0,
+
+&quot;Over $2,000&quot;, 2000,
+
+&quot;Over $2,300&quot;, 2300,
+
+&quot;Over $2,600&quot;, 2600,
+
+&quot;$1,200 to $1,600&quot;, 1200,
+
+&quot;$1,400 to $1,900&quot;, 1400,
+
+&quot;$1,400 to $1,800&quot;, 1400,
+
+&quot;$1,600 to $2,000&quot;, 1600,
+
+&quot;$1,800 to $2,200&quot;, 1800,
+
+&quot;$1,900 to $2,300&quot;, 1900,
+
+&quot;$2,200 to $2,600&quot;, 2200,
+
+&quot;$800 to $1,400&quot;, 800,
+
+&quot;$800 to $1,200&quot;, 800,
+
+&quot;Over $1,200&quot;, 1200,
+
+&quot;$1,000-$1,200&quot;, 1000,
+
+&quot;$800-$1,000&quot;, 800,
+
+&quot;$600-800&quot;, 600,
+
+&quot;Under $600&quot;,0,
+
+[Lead].Min_Budget__c),
+
+[Lead].Min_Budget__c
+
+)</description>
+        <name>FormulaLeadMinBudget</name>
+        <dataType>Currency</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Budget__c})),CASE({!$Record.Budget__c},&quot;$1,200 - $1,500&quot;,1200,&quot;&lt; $750&quot;,750,&quot;$1000 - $1250&quot;,1000,&quot;$750 - $1000&quot;,750,&quot;$1,200 to $1,500&quot;, 1200,&quot;$1,500 to $2,000&quot;, 1500,&quot;$2,000 to $2,500&quot;, 2000,&quot;$2,500 to $3,000&quot;,2500,&quot;Over $3,000&quot;, 3000,&quot;Less than $1,200&quot;, 0,&quot;Less than $800&quot;, 0,&quot;Less than $1,400&quot;, 0,&quot;Over $2,000&quot;, 2000,&quot;Over $2,300&quot;, 2300,&quot;Over $2,600&quot;, 2600,&quot;$1,200 to $1,600&quot;, 1200,&quot;$1,400 to $1,900&quot;, 1400,&quot;$1,400 to $1,800&quot;, 1400,&quot;$1,600 to $2,000&quot;, 1600,&quot;$1,800 to $2,200&quot;, 1800,&quot;$1,900 to $2,300&quot;, 1900,&quot;$2,200 to $2,600&quot;, 2200,&quot;$800 to $1,400&quot;, 800,&quot;$800 to $1,200&quot;, 800,&quot;Over $1,200&quot;, 1200,&quot;$1,000-$1,200&quot;, 1000,&quot;$800-$1,000&quot;, 800,&quot;$600-800&quot;, 600,&quot;Under $600&quot;,0,{!$Record.Min_Budget__c}),{!$Record.Min_Budget__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Lead (Before Save) Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead (Before Save) Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>RE_Unassigned_Lead_Queue</name>
+        <label>RE - Unassigned Lead Queue</label>
+        <locationX>265</locationX>
+        <locationY>3287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Owner_to_Assigned</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>RE_Unassigned_Lead_Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>1236</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Bypass_TRUE</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

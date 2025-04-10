@@ -1,0 +1,33 @@
+.menuPointer{
+    cursor: pointer; 
+}
+
+.roomEntry {
+    border-bottom: solid 2px lightgrey;
+    padding: 2rem 0;
+}
+
+.roomEntry:last-of-type {
+    border-bottom: none;
+}
+
+.slds-button {
+    padding: 9px 22px;
+    border-radius: 100px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: solid 2px var(--lwc-dxpGBrand);
+    background-color: var(--lwc-dxpGBrand);
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    text-transform: uppercase;
+}
+
+.spinnerHolder {
+    position: relative;
+    height: 4rem;
+    width: 100%;
+}

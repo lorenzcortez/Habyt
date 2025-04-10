@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email_Via_Sendgrid</name>
+        <label>Send Email Via Sendgrid</label>
+        <locationX>706</locationX>
+        <locationY>68</locationY>
+        <actionName>SendGrid</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccEmails</name>
+            <value>
+                <elementReference>OwnerEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>dynamicContent</name>
+            <value>
+                <elementReference>DynamicContent</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromEmail</name>
+            <value>
+                <elementReference>FromEmailFormula</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FromName</name>
+            <value>
+                <elementReference>FromNameFormula</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>RecordId</name>
+            <value>
+                <elementReference>RecordID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>TemplateId</name>
+            <value>
+                <elementReference>SGTemplateID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>toEmail</name>
+            <value>
+                <elementReference>Get_Opportunity.Account.PersonEmail</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SendGrid</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Updated send from email for Kin from residents to leasing</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FromEmailFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+TEXT({!Get_Opportunity.Brand__c}) == &apos;noah&apos;, 
+&quot;leasing@noahapartments.com&quot;, 
+IF( TEXT({!Get_Opportunity.Brand__c}) == &apos;kin&apos;, 
+&quot;leasing@milyfamilies.com&quot;, 
+&quot;leasing@common.com&quot;
+))</expression>
+    </formulas>
+    <formulas>
+        <name>FromNameFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+TEXT({!Get_Opportunity.Brand__c}) == &apos;noah&apos;, 
+&quot;Noah Leasing Team&quot;,
+IF( 
+TEXT({!Get_Opportunity.Brand__c}) == &apos;kin&apos;, 
+&quot;Mily Leasing Team&quot;,
+ &quot;Common Leasing Administrator&quot;
+))</expression>
+    </formulas>
+    <interviewLabel>CIS - Lease Application Emails {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Lease Application Emails</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>474</locationX>
+        <locationY>69</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Send_Email_Via_Sendgrid</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Opportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>DynamicContent</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{&lt;/p&gt;&lt;p&gt;&quot;AccountFirstName&quot; : &quot;{!Get_Opportunity.Account.FirstName}&quot;,&lt;/p&gt;&lt;p&gt;&quot;LeasingAdministrator&quot; :  &quot;{!Get_Opportunity.Leasing_Administrator_First_Named__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;OnboardingURL&quot; : &quot;{!Get_Opportunity.Onboarding_Link__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;MarketingHomeName&quot; : &quot;{!Get_Opportunity.Home_Committed__r.Marketing_Name__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;Renters_Insurance_Link__c&quot; : &quot;{!Get_Opportunity.Renters_Insurance_Link__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;HomeIncomeRequirements&quot; : &quot;{!Get_Opportunity.Home_Committed__r.Income_Requirements__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;HomeGuarantorRequirements&quot;: &quot;{!Get_Opportunity.Home_Committed__r.Guarantor_Requirements__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;Start_Date_of_Occupancy&quot; : &quot;{!Get_Opportunity.Start_Date_of_Occupancy__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;Account_First_Name&quot; : &quot;{!Get_Opportunity.Account.FirstName}&quot;,&lt;/p&gt;&lt;p&gt;&quot;Leasing_Administrator_First_Name&quot; : &quot;{!Get_Opportunity.Leasing_Administrator_First_Named__c}&quot;,&lt;/p&gt;&lt;p&gt;&quot;Home_Marketing_Name&quot; : &quot;{!Get_Opportunity.Home_Committed__r.Marketing_Name__c}&quot;&lt;/p&gt;&lt;p&gt;}&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>OwnerEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RecordID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SGTemplateID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

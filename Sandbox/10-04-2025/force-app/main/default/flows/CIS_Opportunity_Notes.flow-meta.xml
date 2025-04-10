@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Profile_Type_Evaluation</name>
+        <label>Profile Type Evaluation</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>CIS_Opportunity_Notes_and_Field_Updates_Common_SDR</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>SDR or Default Profile</defaultConnectorLabel>
+        <rules>
+            <name>Common_AE</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common AE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CIS_Opportunity_Notes_and_Field_Updates_Common_AE_Profile</targetReference>
+            </connector>
+            <label>Common AE</label>
+        </rules>
+        <rules>
+            <name>Common_Leasing_Specialist</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common Community Manager</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Common Member Experience</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CIS_Opportunity_Notes_and_Field_Updates_Common_Leasing_Specialist_Profile</targetReference>
+            </connector>
+            <label>Common Leasing Specialist</label>
+        </rules>
+    </decisions>
+    <description>Updated to include Common Member Experience and Common Community Manager in the Leasing Specialist decision node because RSCs and CMs are holding tours</description>
+    <environments>Default</environments>
+    <interviewLabel>CIS - Opportunity Notes {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CIS - Opportunity Notes and Field Updates - Master Process</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Profile_Type_Evaluation</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>CIS_Opportunity_Notes_and_Field_Updates_Common_AE_Profile</name>
+        <label>CIS - Opportunity Notes and Field Updates - Common AE Profile</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <flowName>CIS_Opportunity_Notes_and_Field_Updates_Common_AE_Profile</flowName>
+        <inputAssignments>
+            <name>OpportunityID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>CIS_Opportunity_Notes_and_Field_Updates_Common_Leasing_Specialist_Profile</name>
+        <label>CIS - Opportunity Notes and Field Updates - Common Leasing Specialist Profile</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <flowName>CIS_Opportunity_Notes_and_Field_Updates_Common_Leasing_Specialist_Profile</flowName>
+        <inputAssignments>
+            <name>OpportunityID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>CIS_Opportunity_Notes_and_Field_Updates_Common_SDR</name>
+        <label>CIS - Opportunity Notes and Field Update - Common SDR</label>
+        <locationX>578</locationX>
+        <locationY>242</locationY>
+        <flowName>CIS_Opportunity_Notes_and_Field_Updates_Common_SDR</flowName>
+        <inputAssignments>
+            <name>OpportunityID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

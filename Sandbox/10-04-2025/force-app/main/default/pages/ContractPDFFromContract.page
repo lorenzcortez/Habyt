@@ -1,0 +1,192 @@
+<apex:page renderAs="pdf" controller="ContractPDFFromContractController">
+    
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.contractStyle}"/>
+            <style>
+                
+            </style>
+        </head>
+        <body style="margin:0;">
+            <table style="border:none;margin-top:15px;" width="100%">              
+                <tr style="border:none;"> 
+                    <td style="border:none;" align="left">      
+                        <div style="{! IF(contract.RecordType.DeveloperName != 'Rent', 'display:none', '')}">
+                            <!--<apex:image width="50%" style="float:left;" url="{!URLFOR($Resource.Brand, brand)}"/>-->
+                            <apex:image width="50%" style="float:left;" url="{!$Resource.contractTitle}"/>
+                        </div>
+                    </td>
+                    <td style="border:none;" align="right" valign="bottom" width="50%">
+                        <div style="float:right;text-align:right;">
+                            {!contract.Billing_Entity__r.Name}<br/>
+                            {!contract.Billing_Entity__r.Street__c}<br/>
+                            {!contract.Billing_Entity__r.Postal_Code__c} {!contract.Billing_Entity__r.City__c}<br/>
+                            {!contract.Billing_Entity__r.Country__c}<br/>
+                        </div>
+                           
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-bottom:10px; margin-top:40px;">
+                <p>
+                <span style="{! IF(contract.RecordType.DeveloperName != 'Rent', 'display:none', '')}">{!$Label.Rental_Agreement_Part1}</span> 
+                <span style="{! IF(contract.RecordType.DeveloperName == 'Rent', 'display:none', '')}">{!$Label.Membership_Agreement_Part_1}</span> 
+                <strong>{!contract.Billing_Entity__r.Name}</strong>, {!$Label.Rental_Agreement_Part2} <strong>{!contract.Billing_Entity__r.LessorName__c}</strong>, </p>
+                <p>{!$Label.Rental_Agreement_Part3} {!contract.Account.FirstName} {!contract.Account.LastName}, {!$Label.Rental_Agreement_Part4}
+                    {!contract.Account.UserId__c} <span style="display:{!IF(contract.Fiscal_code__c != null , '', 'None')}">( {!$Label.Fiscal_code} <strong>{!contract.Fiscal_code__c} </strong> )</span> {!$Label.Rental_Agreement_Part5} <strong>{!contract.Billing_Entity__r.LesseeName__c}</strong>,</p>
+                <p>{!$Label.Currently_Address} {!contract.Account.PersonMailingStreet}, {!contract.Account.PersonMailingPostalCode} {!contract.Account.PersonMailingCity}, {!contract.Account.PersonMailingCountry}</p>
+                <p>&nbsp;</p>
+                <p>{!$Label.Date}
+                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                        <apex:param value="{!contract.CreatedDate}" />
+                    </apex:outputText>
+                </p>
+            </div>
+
+            <h3 style="{!IF(contract.RecordType.DeveloperName != 'Rent', 'display:None', '')}">
+                This is your permanent rent for the Room {!contract.Room__r.Name}
+            </h3>
+
+            <div style="border:1px solid rgb(191,191,191)">
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th width="30%" class="centerTxtHoverGray">{!$Label.Product}</th>
+                            <th class="centerTxtHoverGray">{!$Label.Address}</th>
+                            <th style="display:{!IF(contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}" class="centerTxtHoverGray">{!$Label.Room_Size}</th>
+                            <th class="centerTxtHoverGray">{!$Label.Amount}</th>
+                            <th class="centerTxtHoverGray">{!$Label.Start_Date}</th>
+                            <th class="centerTxtHoverGray">{!$Label.Description}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!contractItemsGeneral}" var="iContractItem">
+                            <tr>
+                                <!--We'll show a different format for "Rent" products -->
+                                <td>{!iContractItem.Description__c}</td>
+
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' , '', 'None')}">{!iContractItem.RoomRef__r.Property__r.Street__c}, {!iContractItem.RoomRef__r.Property__r.Postal_Code__c} {!iContractItem.RoomRef__r.Property__r.City__c}</td>
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' , '', 'None')}">-</td>
+
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' && contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}">{!iContractItem.RoomRef__r.SizeNumber__c} {!iContractItem.RoomRef__r.UnitSizePick__c} </td>
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' && contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}">-</td>
+                                
+                                <td>{!iContractItem.PriceTrig__c}  </td>
+
+
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' , '', 'None')}">
+                                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                        <apex:param value="{!iContractItem.ContractRef__r.StartDate}" />
+                                    </apex:outputText> 
+                                </td>
+                                <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' , '', 'None')}">-</td>
+
+                                <td >{!iContractItem.ProductRef__r.Description}  </td>               
+                            </tr>
+                        </apex:repeat>
+                        <!-- Balance -->
+                        <tr>
+                            <td style="font-weight:bold"> {!$Label.Balance}  </td>
+                            <td > - </td> 
+                            <td style="display:{!IF(contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}"> - </td> 
+                            <td style="font-weight:bold"> {!generalBalance} </td>
+                            <td > - </td> 
+                            <td >  </td> 
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align:center;padding:5px;{!IF(contract.RecordType.DeveloperName != 'Rent', 'display:None', '')}">
+                    {!$Label.Payment_Terms}
+                </div>
+                <div style="text-align:center;padding:5px;{!IF(contract.RecordType.DeveloperName != 'MembershipFee', 'display:None', '')}">
+                    {!$Label.Payment_Terms_Membership}
+                </div>
+            </div>
+            
+            <div style="width:100%">
+                
+                <div style="width:30%;border:1px solid rgb(191,191,191);margin-top:20px;float:left;{!IF(contract.RecordType.DeveloperName != 'Rent', 'display:None', '')}">
+                    <div class="centerTxtHoverGray">
+                        {!$Label.Deposit}
+                    </div>
+                    <div style="text-align:center;padding:5px;">
+                        {!depositAmount}
+                    </div>
+                </div>
+                <div style="width:60%;border:1px solid rgb(191,191,191);margin-top:20px;float:right;">
+                    <div class="centerTxtHoverGray">
+                        {!$Label.Terms_of_Service} 
+                    </div>
+                    <div style="text-align:center;padding:5px;">
+                        {!$Label.Agreement_P1} {!contract.Billing_Entity__r.Name}, {!$Label.Agreement_P2} {!contract.RecordType.Name} {!$Label.Agreement_P3}
+                    </div>
+                </div>
+            </div>
+            <div style="width:50%;margin-top:20px;float:left;padding-top:43px;padding-left:20px;{!IF(contract.RecordType.DeveloperName != 'Rent', 'display:None', '')}">
+                {!$Label.Signature}
+            </div>
+
+            <div style="margin-top: 5.5cm;">
+                <apex:outputPanel rendered="{!NOT(showOneTable)}">
+                    <h3>
+                        This is your rent for the Room {!contract.Room__r.Name} for the first {!months} Month(s)
+                    </h3>
+                    <div style="border:1px solid rgb(191,191,191)">
+                        <table style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="30%" class="centerTxtHoverGray">{!$Label.Product}</th>
+                                    <th class="centerTxtHoverGray">{!$Label.Address}</th>
+                                    <th style="display:{!IF(contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}" class="centerTxtHoverGray">{!$Label.Room_Size}</th>
+                                    <th class="centerTxtHoverGray">{!$Label.Amount}</th>
+                                    <th class="centerTxtHoverGray">{!$Label.Start_Date}</th>
+                                    <th class="centerTxtHoverGray">{!$Label.Description}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!allContractItems}" var="iContractItem">
+                                    <tr>
+                                        <td>{!iContractItem.Description__c}</td>
+        
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' , '', 'None')}">{!iContractItem.RoomRef__r.Property__r.Street__c}, {!iContractItem.RoomRef__r.Property__r.Postal_Code__c} {!iContractItem.RoomRef__r.Property__r.City__c}</td>
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' , '', 'None')}">-</td>
+        
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' && contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}">{!iContractItem.RoomRef__r.SizeNumber__c} {!iContractItem.RoomRef__r.UnitSizePick__c} </td>
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' && contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}">-</td>
+                                        
+                                        <td>{!iContractItem.PriceTrig__c}  </td>
+        
+        
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name == 'Rent' , '', 'None')}">
+                                            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                                <apex:param value="{!iContractItem.ContractRef__r.StartDate}" />
+                                            </apex:outputText> 
+                                        </td>
+                                        <td style="display:{!IF(iContractItem.ProductRef__r.Name != 'Rent' , '', 'None')}">-</td>
+        
+                                        <td >{!iContractItem.ProductRef__r.Description}  </td>             
+                                    </tr>
+                                </apex:repeat>
+
+                                <!-- Balance -->
+                                <tr>
+                                    <td style="font-weight:bold"> {!$Label.Balance}  </td>
+                                    <td > - </td> 
+                                    <td style="display:{!IF(contract.Billing_Entity__r.Country__c == 'Germany' , '', 'None')}"> - </td> 
+                                    <td style="font-weight:bold"> {!totalAmount} </td>
+                                    <td > - </td> 
+                                    <td >  </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+            <div style="page-break-before: always;"><apex:outputText value="{!curatedRentalContract}" escape="false"/></div>
+            <div style="page-break-before: always;"><apex:outputText value="{!curatedInternetUse}" escape="false"/></div>
+            <div style="page-break-before: always;"><apex:outputText value="{!curatedHouseRules}" escape="false"/></div>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow populates the property&apos;s Calendly URL on the Opportunity based on the Home Committed.</description>
+    <environments>Default</environments>
+    <interviewLabel>Update Calendly URL on Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Calendly URL on Opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Calendly_URL_Field</name>
+        <label>Update Calendly URL Field</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0121i0000009OznAAE</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Home_Committed_Calendly_URL__c</field>
+            <value>
+                <elementReference>$Record.Home_Committed__r.Calendly_URL_Internal__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Calendly_URL_Field</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

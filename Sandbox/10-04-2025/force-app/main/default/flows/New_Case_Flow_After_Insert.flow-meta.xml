@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Criteria_Evaluation</name>
+        <label>Criteria Evaluation</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Collection_Cases</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>var_Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Finance_Collections</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>var_Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Noah_Delinquent_Payments</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Collection_Cases_Set_Case_Owner_Invocable</targetReference>
+            </connector>
+            <label>Collection Cases</label>
+        </rules>
+    </decisions>
+    <description>From Common</description>
+    <environments>Default</environments>
+    <interviewLabel>New Case Flow - After Insert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>New Case Flow - After Insert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Criteria_Evaluation</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Collection_Cases_Set_Case_Owner_Invocable</name>
+        <label>Collection Cases - Set Case Owner - Invocable</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <flowName>Collection_Cases_Set_Case_Owner_Invocable</flowName>
+        <inputAssignments>
+            <name>CaseId</name>
+            <value>
+                <elementReference>var_Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ContactId</name>
+            <value>
+                <elementReference>var_Record.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>var_PriorRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>var_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

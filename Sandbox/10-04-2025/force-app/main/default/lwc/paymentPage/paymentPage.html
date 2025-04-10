@@ -1,0 +1,251 @@
+<template>
+
+<template if:true={allDataRendered}>
+    <div class={MainPage}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="12">
+                <c-top-bar brand={brand}></c-top-bar>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" medium-device-size="8" padding="around-small">
+                <div class="progressIndicatorClass">
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" medium-device-size="5" padding="around-small">
+                            <div class={tabClassStep1}>
+                                <lightning-layout>
+                                    <lightning-layout-item><div class="circle slds-var-m-right_x-small">1</div></lightning-layout-item>
+                                    <lightning-layout-item style="line-height:1.5rem">Contact Information</lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" medium-device-size="5" padding="around-small">
+                            <div class={tabClassStep2}>
+                                <lightning-layout>
+                                    <lightning-layout-item><div class="circle slds-var-m-right_x-small">2</div></lightning-layout-item>
+                                    <lightning-layout-item style="line-height:1.5rem">Personal Details</lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                 </div>
+                 <div data-step={selectedStep} class="slds-var-p-top_large">
+                    <div class={divClassStep1}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input required onchange={handleEmail} label="E-Mail address" value={UserData.email} type="email" class="validate"
+                                  message-when-pattern-mismatch="Invalid email address"></lightning-input>
+                            </lightning-layout-item>
+            
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_4-of-12">
+                                        <lightning-combobox
+                                            name="phoneCodes"
+                                            label="Phone Code"
+                                            value={selectedPhoneCode}
+                                            options={phonePickList}
+                                            onchange={handlePhoneCode}
+                                            class="validate"
+                                            required
+                                        ></lightning-combobox> 
+                                    </div>
+
+                                    <div class="slds-size_8-of-12 slds-p-left_medium">
+                                        <lightning-input 
+                                            required 
+                                            onchange={handlePhone} 
+                                            label="Phone number" 
+                                            value={UserData.phone} 
+                                            type="tel" 
+                                            class="validate"
+                                            pattern="^([1-9][0-9]*)$"
+                                            message-when-pattern-mismatch={messagePatternMismatch}
+                                        ></lightning-input>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+    
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input required onchange={handleFirstName} label="First Legal Name" value={UserData.firstName} class="validate"></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input required onchange={handleLastName} label="Last Legal Name" value={UserData.lastName} class="validate"></lightning-input>
+                            </lightning-layout-item>
+          
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <label class="slds-form-element__label">Consent to data processing
+                                    (<a href={policyUrl} target="_blank">Privacy Policy</a>)
+                                </label>
+                                <lightning-input required type="checkbox" id="privacy-policy" class="validate"
+                                    label="I consent to Habyt storing and processing my data on accordance with the Privacy Policy"
+                                ></lightning-input>
+                            </lightning-layout-item>
+
+                          <lightning-layout-item size="12" medium-device-size="10" padding="around-small" class="slds-var-p-top_medium">
+                            <lightning-layout horizontal-align="spread" class="slds-var-m-top_large">
+                              <div class="slds-button MainButton" onclick={selectedStep2}>Continue</div>
+                            </lightning-layout>
+                          </lightning-layout-item>
+
+                        </lightning-layout>
+                    </div>
+                    <div class={divClassStep2}>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input required onchange={handleBirthday} type="date" value={UserData.birthday} label="Date of Birth" class="validate"></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-combobox required class="validate"
+                                    name="selected-gender"
+                                    value={gender}
+                                    options={genderPicklist}
+                                    label="Gender"
+                                    onchange={handleGender}
+                                ></lightning-combobox>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input required onchange={handleAddressLine1} value={UserData.addressLine1} type="text" label="Current Address" class="validate"></lightning-input>
+                                <lightning-input variant="label-hidden" onchange={handleAddressLine2} value={UserData.addressLine2} type="text" class="validate" style="padding-top:4px"></lightning-input>
+                                <lightning-input variant="label-hidden" onchange={handleAddressLine3} value={UserData.addressLine3} type="text" class="validate" style="padding-top:4px"></lightning-input>
+                                <lightning-input required onchange={handlePostalCode} value={UserData.postalCode} type="text" label="Postal Code" class="validate"></lightning-input>
+                                <lightning-input required onchange={handleCity} value={UserData.city}  type="text" label="City" class="validate"></lightning-input>
+                                <!-- lightning-input required onchange={handleState} value={UserData.state}  type="text" label="State" class="validate"></lightning-input -->
+                                <lightning-input required onchange={handleCountryCode} value={UserData.countryCode} type="text" label="Country" class="validate"></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-combobox required class="validate"
+                                    name="selected-nationality"
+                                    value={UserData.nationality}
+                                    options={nationalityPicklist}
+                                    label="Nationality"
+                                    onchange={handleNationality}
+                                ></lightning-combobox>
+                                <lightning-input required onchange={handleIdNumber} type="text" value={UserData.idNumber} label="Id Number" class="validate slds-var-p-bottom_small"></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-combobox required class="validate"
+                                    name="selected-occupation"
+                                    value={UserData.occupation}
+                                    options={occupationPicklist}
+                                    label="Employment Status"
+                                    onchange={handleOccupation}
+                                ></lightning-combobox>
+                                <lightning-combobox required class="validate"
+                                    name="selected-income"
+                                    value={UserData.incomeLevel}
+                                    options={incomePicklist}
+                                    label="Monthly Income"
+                                    onchange={handleIncomeLevel}
+                                ></lightning-combobox>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small">
+                                <lightning-input class="validate"
+                                    onchange={onDateSelected} 
+                                    value={earliestDate} 
+                                    label="Move-in date" 
+                                    type="date" 
+                                    min={minDate}
+                                    max={maxDate}
+                                    message-when-range-underflow={calendarMessageUnderflow}
+                                    message-when-range-overflow={calendarMessageOverflow}
+                                ></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" medium-device-size="10" padding="around-small" class="slds-var-p-top_medium">
+                                <lightning-layout horizontal-align="spread" class="slds-var-m-top_large" multiple-rows="true">
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                                        <div class="slds-button SecondaryButton" onclick={selectedStep1}>Back</div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                                        <div class="slds-button" onclick={Submit}>Submit application</div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                 </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" medium-device-size="4" padding="around-small">
+                <div class="RightComponent slds-var-p-around_small">
+                    <p class="title"> {room.shareType} in {room.bedrooms}-Bedroom Unit</p>
+                    <p class="smaller slds-var-p-top_small">{room.streetAddress} &bull; {room.district} &bull; {room.city}</p>
+                    <p class="smaller slds-var-p-top_small">Room Reference ID &bull; {room.referenceId}</p>
+                    <p class="smaller slds-var-p-top_small">{room.area.formatted} &bull; {room.floor}</p>
+                    <p class="smaller slds-var-p-top_small">{room.amenities}</p>
+                    
+                    <lightning-layout class="slds-var-p-vertical_small">
+                        <lightning-layout-item size="12">
+                            <c-carousel items={carouselItems} options={carouselOptions} size="small"></c-carousel>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-var-p-top_medium">
+                        <div>
+                            <p class="main">Monthly rent</p>
+                        </div>
+                        <div>{room.rent.formatted}</div>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-border_bottom slds-var-p-bottom_medium">
+                        <p class="smaller">Incl. furniture, utilities and Wi-Fi</p>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-var-p-top_medium">
+                        <div>
+                            <p class="main">Deposit</p>
+                        </div>
+                        <div>{room.deposit.formatted}</div>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-var-p-bottom_medium">
+                        <p class="smaller">charged only at the signature of the contract</p>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-var-p-top_medium">
+                        <div>
+                            <p class="main">First rent</p>
+                        </div>
+                        <div>{firstRent.formatted}</div>
+                    </lightning-layout>
+                    <lightning-layout horizontal-align="spread" class="feeEntry slds-var-p-bottom_medium">
+                        <p class="smaller">(from <span style="white-space: nowrap;">{earliestDateStr})</span></p>
+                    </lightning-layout>
+                </div>
+                <!-- Fee section-->
+                <template if:true={room.fees}>
+                    <div class="ApplicationFee slds-var-m-top_xx-small slds-var-p-around_small">
+                        <template for:each={room.fees} for:item="fee">
+                            <lightning-layout horizontal-align="spread" class="feeEntry" key={fee.name}>
+                                <div>
+                                    <p class="main">{fee.name}</p>
+                                </div>
+                                <div>{fee.formatted}</div>
+                            </lightning-layout>
+                            
+                            <lightning-layout horizontal-align="spread" class="feeEntry" key={fee.name}>
+                                <p class="smaller">{fee.description}</p>
+                            </lightning-layout>
+                        </template>
+                    </div>
+                </template>
+                <!-- END Fee section-->
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <div class={LoadingPage}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </div>
+    <div class={ThankyouPage}>
+        <lightning-layout horizontal-align="center" vertical-align="center">
+            <div class="thankyou slds-var-p-around_medium">
+                <lightning-layout multiple-rows="true" vertical-align="end">
+                    <lightning-layout-item size="12" class="slds-var-p-bottom_large"><h1>Thank you!</h1></lightning-layout-item>
+                    <lightning-layout-item size="12" class="slds-var-p-bottom_large">We have successfully received your request, check your inbox for the next steps.</lightning-layout-item>
+                    <lightning-layout-item size="12"><div class="pointer" onclick={GoHome}>&#8592;&nbsp;&nbsp;BACK TO HOMEPAGE</div></lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-layout>
+    </div>
+</template>
+
+ </template>

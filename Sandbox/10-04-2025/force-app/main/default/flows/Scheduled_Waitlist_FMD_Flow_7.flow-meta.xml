@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Scheduled Waitlist FMD Flow 7 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Scheduled Waitlist FMD Flow 7</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>48</locationX>
+        <locationY>52</locationY>
+        <connector>
+            <targetReference>Waitlist_FMD_flow</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2020-11-15</startDate>
+            <startTime>16:30:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Waitlist_FMD_flow</name>
+        <label>Waitlist FMD flow</label>
+        <locationX>641</locationX>
+        <locationY>99</locationY>
+        <flowName>Waitlist_FMD_Flow</flowName>
+    </subflows>
+</Flow>

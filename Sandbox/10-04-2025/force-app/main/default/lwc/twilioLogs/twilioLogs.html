@@ -1,0 +1,170 @@
+<template>
+
+    <lightning-card>
+
+        <!-- ERROR PANEL START-->
+        <template if:true={error}>
+            <div class="slds-var-m-vertical_small">
+                <span class="slds-text-color_destructive">
+                    {errorTitle}.
+                </span>
+                <template if:true={errorMessages.length}>
+                    <template for:each={errorMessages} for:item="message">
+                        <p class="slds-text-body_regular" key={message}>
+                            {message}
+                        </p>
+                    </template>
+                </template>
+            </div>
+        </template>
+        <!-- ERROR PANEL END-->
+
+        <template if:false={error}>
+            <div
+                style="display: flex;justify-content: space-between;align-items: baseline;  padding: 0 25px 10px 10px;font-family: inherit;">
+                <div>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <div>
+                            <lightning-icon icon-name="standard:call_history" size="medium"></lightning-icon>
+                        </div>
+                        <div>
+                            <h3 slot="title"  style="font-size: 17px;font-weight: bold;">
+                                &nbsp; Twilio Logs
+                            </h3>
+                            <p style="margin-left: 10px;"><lightning-formatted-text value="This component displays the most recent 200 activities of user." ></lightning-formatted-text></p>
+                        </div>
+                    </div>
+                    
+               
+                </div>
+                <div>
+                    <span>{customerPhoneFormatted}</span>
+                </div>
+            </div>
+
+            <div class="slds-border_top"></div>
+            <div class="slds-scrollable_y" data-id="messageContainer" style={outerDivStyle}>
+
+
+
+                <template if:false={isLoaded}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </template>
+
+                <template if:true={isLoaded}>
+
+                    <lightning-tabset active-tab-value="all">
+
+                        <lightning-tab label="All Calls" value="all">
+
+                            <template if:true={allCallsError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={allCallsError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={allCallsError}>
+                                <lightning-datatable key-field="sid" data={allCalls} columns={columns}
+                                    show-row-number-column hide-checkbox-column onrowaction={handleRowAction} >
+                                </lightning-datatable>
+                            </template>
+                        </lightning-tab>
+
+                        <lightning-tab label="Inbound Calls" value="from">
+                            <template if:true={fromCallsError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={fromCallsError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={fromCallsError}>
+                                <lightning-datatable key-field="sid" data={fromCalls} columns={columns}
+                                    show-row-number-column hide-checkbox-column  onrowaction={handleRowAction}>
+                                </lightning-datatable>
+                            </template>
+                        </lightning-tab>
+
+                        <lightning-tab label="Outbound Calls" title="Outbound Calls" value="to">
+
+                            <template if:true={toCallsError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={toCallsError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={toCallsError}>
+                                <lightning-datatable key-field="sid" data={toCalls} columns={columns}
+                                    show-row-number-column hide-checkbox-column  onrowaction={handleRowAction}>
+                                </lightning-datatable>
+                            </template>
+
+                        </lightning-tab>
+                        <!-- All Messages -->
+                        <lightning-tab label="All Messages" value="allMessage">
+
+                            <template if:true={allMessageError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={allMessageError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={allMessageError}>
+                                <lightning-datatable key-field="sid" data={allMessages} columns={messageColumns}
+                                    show-row-number-column hide-checkbox-column  >
+                                </lightning-datatable>
+                            </template>
+                        </lightning-tab>
+
+                        <!-- To Message Tab = Outbound 
+                        <lightning-tab label="Outbound Messages" title="Outbound Messages" value="messageTo">
+
+                            <template if:true={toMessagesError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={toMessagesError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={toMessagesError}>
+                                <lightning-datatable key-field="sid" data={toMessages} columns={messageColumns}
+                                    show-row-number-column hide-checkbox-column  >
+                                </lightning-datatable>
+                            </template>
+
+                        </lightning-tab>
+                        -->
+                        <!-- From Message Tab = Inbound
+                        <lightning-tab label="Inbound Messages" title="Inbound Messages" value="messageFrom">
+
+                            <template if:true={fromMessagesError}>
+                                <p class="slds-text-body_regular">
+                                    <lightning-formatted-rich-text value={fromMessagesError}>
+                                    </lightning-formatted-rich-text>
+                                </p>
+                            </template>
+
+                            <template if:false={fromMessagesError}>
+                                <lightning-datatable key-field="sid" data={fromMessages} columns={messageColumns}
+                                    show-row-number-column hide-checkbox-column  >
+                                </lightning-datatable>
+                            </template>
+
+                        </lightning-tab>
+                         -->
+
+                    </lightning-tabset>
+
+                </template>
+            </div>
+
+        </template>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

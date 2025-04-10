@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Concession_Gift</name>
+        <label>Send Concession Gift</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <actionName>ConcessionGiftHelper</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Oppids</name>
+            <value>
+                <elementReference>OpportunityId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>ConcessionGiftHelper</nameSegment>
+    </actionCalls>
+    <apiVersion>52.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>This flow will invoke the apex class which connecting to tremendous API to send gifts. Will allow user to invoke API directly from the flow simply by taking opportunity id.</description>
+    <interviewLabel>Send Concessions Gift to Opportunity - On Demand {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Concessions Gift to Opportunity - On Demand</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Concession_Gift</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>OpportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

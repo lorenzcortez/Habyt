@@ -1,0 +1,71 @@
+<template >
+    
+<lightning-layout multiple-rows="true">
+    <lightning-layout-item padding="around-small" size="12">
+        <c-top-bar brand={brand}></c-top-bar>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-small" size="12">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="12" medium-device-size="6" large-device-size="3">
+                <template if:true={typesLoaded}>
+                    <lightning-combobox
+                        name="selected-type"
+                        value={shareType}
+                        options={typesPicklist}
+                        label="Looking for"
+                        onchange={OnTypeSelected}
+                    ></lightning-combobox>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" medium-device-size="6" large-device-size="3">
+                <template if:true={citiesLoaded}>
+                    <lightning-combobox
+                        name="selected-city"
+                        value={city}
+                        options={citiesPicklist}
+                        label="In"
+                        onchange={OnCitySelected}
+                    ></lightning-combobox>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" medium-device-size="6" large-device-size="3">
+                <template if:true={districtsLoaded}>
+                    <lightning-combobox
+                        name="selected-district"
+                        value={district}
+                        options={districtsPicklist}
+                        label="Around"
+                        onchange={OnDistrictSelected}
+                    ></lightning-combobox>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" medium-device-size="6" large-device-size="3">
+                <lightning-input onchange={OnDateSelected} value={earliestDate} label="Move-in date" type="date" min={minDate}
+                    message-when-range-underflow="Move-in date must be at least 3 days in the future"></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-layout-item>
+
+    <lightning-layout-item padding="around-small" size="12">
+        <div class="page-section page-main">
+            <template for:each={rooms} for:item="room">
+                <div key={room.referenceId} class="roomEntry menuPointer">
+                    <c-selected-room pictures-number={picturesNumber} room={room} earliest-date={earliestDate}></c-selected-room>
+                </div>
+            </template>
+        </div>
+    </lightning-layout-item>
+
+    <lightning-layout-item padding="around-small" size="12">
+        <lightning-layout horizontal-align="center">
+            <template if:true={loading}>
+                <div class="spinnerHolder"><lightning-spinner></lightning-spinner></div>
+            </template>
+            <template if:true={showMore}>
+                <div class="slds-button load-more" onclick={LoadMore}>Load more</div>
+            </template>
+        </lightning-layout>
+    </lightning-layout-item>
+</lightning-layout>
+
+</template>

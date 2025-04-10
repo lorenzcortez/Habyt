@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <interviewLabel>SCF - Deposit set status to be processed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SCF - Deposit Set Status To Be Processed</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Deposit</name>
+        <label>Update Deposit</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>To be processed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Deposit</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>IsMoveOutDateReached__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In tenancy</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Dormant</stringValue>
+            </value>
+        </filters>
+        <object>Deposit__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2022-05-06</startDate>
+            <startTime>07:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

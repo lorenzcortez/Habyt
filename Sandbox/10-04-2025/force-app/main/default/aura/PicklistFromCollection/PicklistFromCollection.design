@@ -1,0 +1,6 @@
+<design:component>
+	<design:attribute name = "PicklistFromCollection" label = "PickListFromCollection">
+    	</design:attribute>
+        <design:attribute name = "ProductID" label = "ProductId">
+    	</design:attribute>
+</design:component>

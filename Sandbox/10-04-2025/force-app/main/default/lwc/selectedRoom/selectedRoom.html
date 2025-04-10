@@ -1,0 +1,38 @@
+<template>
+    <lightning-layout vertical-align="stretch" multiple-rows=true>
+        <lightning-layout-item size="12" medium-device-size="4" padding="around-small">
+            <c-carousel items={carouselItems} options={carouselOptions} size="small"></c-carousel>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" medium-device-size="8" padding="around-small">
+            <lightning-layout multiple-rows="true" vertical-align="stretch">
+                <lightning-layout-item size="12" onclick={roomDetailPage}>
+                    <lightning-layout horizontal-align="spread" multiple-rows="true">
+                        <lightning-layout-item padding="around-small" size="12" medium-device-size="9" large-device-size="10">
+                            <p class="title">{roomTitle}</p>
+                            <p class="smaller slds-var-p-top_small">{room.streetAddress} &bull; {room.district} &bull; {room.city}</p>
+                            <p class="smaller slds-var-p-top_small">{room.area.formatted} &bull; {room.floor}</p>
+                            <p class="smaller slds-var-p-top_small">{room.amenities}</p>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item padding="around-small" size="12" medium-device-size="3" large-device-size="2">
+                            <p class="title">{room.rent.formatted}</p>
+                            <p class="slds-var-p-top_small">per month</p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-layout horizontal-align="spread">
+                        <lightning-layout-item padding="around-small">
+                            <span class="smaller">Available from </span>
+                            <span class="smaller" style="white-space: nowrap;">{room.availableDate}</span>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <div class="book-button" onclick={bookNow}>Book Now &#8594;</div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+    
+</template>

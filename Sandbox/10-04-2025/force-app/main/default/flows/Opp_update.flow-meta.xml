@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_discount</name>
+        <label>Check_discount</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>There_is_a_discount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Room__r.Discount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Room__r.Discount__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_permanent_discount_product</targetReference>
+            </connector>
+            <label>There is a discount</label>
+        </rules>
+    </decisions>
+    <description>https://quarters.atlassian.net/browse/SF-482</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Deposit_Formula</name>
+        <dataType>Currency</dataType>
+        <expression>IF( 
+OR (TEXT ({!$Record.Property__r.Country__c})= &quot;Singapore&quot;, TEXT({!$Record.Property__r.Country__c})= &quot;Hong Kong&quot;),
+CASE(
+TEXT({!$Record.Room__r.Property__r.ConditionRef__r.DepositRule__c}),
+&apos;Multiplier&apos;, {!$Record.Room__r.Price__c} * {!$Record.PieceDepositMultiplierAuto__c},
+&apos;Absolute&apos;, {!$Record.Room__r.Property__r.ConditionRef__r.AbsoluteDepositAmount__c},
+&apos;MultiplierPlusAbsolute&apos;, ({!$Record.Room__r.Price__c} * {!$Record.PieceDepositMultiplierAuto__c}) + {!$Record.Room__r.Property__r.ConditionRef__r.AbsoluteDepositAmount__c},
+null
+),
+CASE(
+TEXT({!$Record.Room__r.Property__r.ConditionRef__r.DepositRule__c}),
+&apos;Multiplier&apos;, {!$Record.Room__r.NetPrice__c} * {!$Record.PieceDepositMultiplierAuto__c},
+&apos;Absolute&apos;, {!$Record.Room__r.Property__r.ConditionRef__r.AbsoluteDepositAmount__c},
+&apos;MultiplierPlusAbsolute&apos;, ({!$Record.Room__r.NetPrice__c} * {!$Record.PieceDepositMultiplierAuto__c}) + {!$Record.Room__r.Property__r.ConditionRef__r.AbsoluteDepositAmount__c},
+null)
+)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Totalprice</name>
+        <dataType>Currency</dataType>
+        <expression>-{!$Record.Room__r.Discount__c}</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Opp_update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opp_update_monthly_price</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_permanent_discount</name>
+        <label>Create permanent discount</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <elementReference>Get_permanent_discount_product.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RoomRef__c</field>
+            <value>
+                <elementReference>$Record.Room__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>Totalprice</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_permanent_discount_product</name>
+        <label>Get permanent discount product</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_permanent_discount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Recurring Item</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrencyIsoCode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CurrencyIsoCode</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PricebookEntry</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>update_Opp</name>
+        <label>update Opp</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Check_discount</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>$Record.Room__r.CurrencyIsoCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Deposit__c</field>
+            <value>
+                <elementReference>Deposit_Formula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Monthly_Price__c</field>
+            <value>
+                <elementReference>$Record.Room__r.NetPrice__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>update_Opp</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0121i0000009OznAAE</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

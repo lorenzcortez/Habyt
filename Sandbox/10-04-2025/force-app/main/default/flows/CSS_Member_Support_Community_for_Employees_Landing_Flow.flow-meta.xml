@@ -1,0 +1,2293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Activate_Session_based_permission</name>
+        <label>Activate Session based permission</label>
+        <locationX>374</locationX>
+        <locationY>1706</locationY>
+        <actionName>activateSessionPermSet</actionName>
+        <actionType>activateSessionPermSet</actionType>
+        <connector>
+            <targetReference>If_To_get_access_to_a_suite_home</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>PermSetName</name>
+            <value>
+                <stringValue>Case_And_Home_Session_Based_Permission</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>activateSessionPermSet</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Deactivate_Session_based_permission</name>
+        <label>Deactivate Session based permission</label>
+        <locationX>297</locationX>
+        <locationY>3590</locationY>
+        <actionName>deactivateSessionPermSet</actionName>
+        <actionType>deactivateSessionPermSet</actionType>
+        <connector>
+            <targetReference>SuccessScreen</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>PermSetName</name>
+            <value>
+                <stringValue>Case_And_Home_Session_Based_Permission</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>deactivateSessionPermSet</nameSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_PermissionSetAssigned_to_True</name>
+        <label>Assign PermissionSetAssigned to True</label>
+        <locationX>374</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>PermissionSetAssigned</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Activate_Session_based_permission</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Case_Owner_to_Member_Services</name>
+        <label>Set Case Owner to Member Services</label>
+        <locationX>429</locationX>
+        <locationY>3266</locationY>
+        <assignmentItems>
+            <assignToReference>Case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Member_Services_Queue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Report_Issue_Case</name>
+        <label>Set Report Issue Case</label>
+        <locationX>578</locationX>
+        <locationY>2498</locationY>
+        <assignmentItems>
+            <assignToReference>Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0121i000000YGYTAA4</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Case_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReportIssueDescriptionTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SuppliedName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_s_your_full_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Web</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Issue_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Property Issue</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Sub_Issue_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Please_select_the_issue_type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Send_CSAT_Survey__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Home__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseSubject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Maintenance_Tech__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Maintenance_Tech__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Porter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Porter__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Item_Replacement_Product_Id_Emp_Form__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Please_select_the_item_that_you_need_from_the_list_below</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Services_Queue</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Request_from_Member_Case</name>
+        <label>Set Request from Member Case</label>
+        <locationX>842</locationX>
+        <locationY>2606</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Case_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RequestFromMemberDescriptionTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SuppliedName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_s_your_full_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Web</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0121i000000YGYTAA4</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RequestFromMemberOwnerIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Issue_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IssueTypeFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Send_CSAT_Survey__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Home__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseSubject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Maintenance_Tech__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Maintenance_Tech__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Porter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Porter__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Services_Queue</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Send_Notice_Case</name>
+        <label>Set Send Notice Case</label>
+        <locationX>1106</locationX>
+        <locationY>2714</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Case_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SendNoticeDescriptionTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0121i000000YGYTAA4</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SuppliedName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_s_your_full_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Web</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SendNoticeOwnerIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Send_CSAT_Survey__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Issue_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IssueTypeFormulaNotifySuite</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseSubject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Home__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Maintenance_Tech__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Maintenance_Tech__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Porter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Porter__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Services_Queue</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Suite_Access_Case</name>
+        <label>Set Suite Access Case</label>
+        <locationX>314</locationX>
+        <locationY>2390</locationY>
+        <assignmentItems>
+            <assignToReference>Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0121i000000YGYTAA4</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Case_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SuiteAccessDescriptionTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SuppliedName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>What_s_your_full_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Web</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseOwnerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Issue_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Lease and Billing Inquiries</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Send_CSAT_Survey__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Home__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseSubject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Maintenance_Tech__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Maintenance_Tech__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Porter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedHome.Porter__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Member_Services_Queue</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>CommonBrand</name>
+        <choiceText>common</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>common</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ConstructionStudioSpaceOption</name>
+        <choiceText>Construction/Studio/Space</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Construction/Studio/Space</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Finance</name>
+        <choiceText>Finance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Finance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>LeasingInsideSalesOption</name>
+        <choiceText>Leasing/Inside Sales</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Leasing/Inside Sales</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Legal</name>
+        <choiceText>Legal</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Legal</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>MarketingPress</name>
+        <choiceText>Marketing/Press</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>MarketingPress</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>MemberExperienceOption</name>
+        <choiceText>Member Experience</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Member Experience</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NoahBrand</name>
+        <choiceText>noah</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>noah</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NoChoiceSelected</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!NullFormula}&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>Other</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>Other</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>PropertyServicesOption</name>
+        <choiceText>Property Services</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Property Services</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RealEstateOption</name>
+        <choiceText>Real Estate</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Real Estate</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueAppliance</name>
+        <choiceText>Appliance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Appliance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueClothesdryer</name>
+        <choiceText>Clothes dryer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Clothes dryer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueClotheswasher</name>
+        <choiceText>Clothes washer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Clothes washer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueCoffeemaker</name>
+        <choiceText>Coffee maker</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Coffee maker</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueDishwasher</name>
+        <choiceText>Dishwasher</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Dishwasher</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueElectricalandlighting</name>
+        <choiceText>Electrical and lighting</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Electrical and lighting</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueFloorsandCarpentry</name>
+        <choiceText>Floors and Carpentry</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Floors Carpentry</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueFreezer</name>
+        <choiceText>Freezer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Freezer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueGarbagedisposal</name>
+        <choiceText>Garbage disposal</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Garbage disposal</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueHeatingandAirConditioning</name>
+        <choiceText>Heating and Air Conditioning</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Heating and Air Conditioning</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueHomeImprovements</name>
+        <choiceText>Home Improvements</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Home Improvements</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueItemRequestsandReplacements</name>
+        <choiceText>Item Requests and Replacements</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Item Requests and Replacements</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueLocksKeysandSecurity</name>
+        <choiceText>Locks, Keys, and Security</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Locks Keys and Security</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueMicrowave</name>
+        <choiceText>Microwave</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Microwave</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueMorethanaweekago</name>
+        <choiceText>More than a week ago</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>More than a week ago</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueOtherappliance</name>
+        <choiceText>Other appliance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other appliance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueOutdoorMaintenance</name>
+        <choiceText>Outdoor Maintenance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Outdoor Maintenance</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>reportIssueOven</name>
+        <choiceText>Oven</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Oven</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssuePests</name>
+        <choiceText>Pests</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Pests</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssuePlumbingandLeaks</name>
+        <choiceText>Plumbing and Leaks</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Plumbing and Leaks</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueRefrigerator</name>
+        <choiceText>Refrigerator</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>ReportIssueSafetyEquipment</name>
+        <choiceText>Safety Equipment</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Safety Equipment</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueSonossystem</name>
+        <choiceText>Sonos system</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sonos system</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueStovetop</name>
+        <choiceText>Stovetop</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Stovetop</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueTelevision</name>
+        <choiceText>Television</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Television</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueToaster</name>
+        <choiceText>Toaster</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Toaster</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueVacuum</name>
+        <choiceText>Vacuum</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Vacuum</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueWiFiissue</name>
+        <choiceText>WiFi issue</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WiFi issue</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueWithinthelast24hours</name>
+        <choiceText>Within the last 24 hours</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Within the last 24 hours</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ReportIssueWithinthelastweek</name>
+        <choiceText>Within the last week</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Within the last week</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RequestFromMemberEventsCommunitySuitemateIssues</name>
+        <choiceText>Events/Community/Suitemate Issues</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Events/Community/Suitemate Issues</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RequestFromMemberLeasingBillingInquiries</name>
+        <choiceText>Leasing/Billing Inquiries</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Leasing/Billing Inquiries</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RequestfromMemberPropertyIssues</name>
+        <choiceText>Property Issues</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Property Issues</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RequestFromMemberSharedGoodsCleaning</name>
+        <choiceText>Shared Goods/Cleaning</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Shared Goods/Cleaning</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessAninspectorneedstoinspectaroomorsuite</name>
+        <choiceText>An inspector needs to inspect a room or suite</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>An inspector needs to inspect a room or suite</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessGhostingWeneedtoconfirmwhetheramemberhasvacatedtheirbedroom</name>
+        <choiceText>Ghosting - We need to confirm whether a member has vacated their bedroom</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Ghosting - We need to confirm whether a member has vacated their bedroom</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessInternalPSVisit</name>
+        <choiceText>Internal PS Visit</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Internal PS Visit</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessLegalInsuranceInspection</name>
+        <choiceText>Legal/Insurance Inspection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Legal/Insurance Inspection</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessOtherReason</name>
+        <choiceText>Other reason</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other reason</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessOverstayingAmembersleasehasended</name>
+        <choiceText>Overstaying - A member&apos;s lease has ended and we need to check if they&apos;re still living there</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Overstaying - A member&apos;s lease has ended and we need to check if they&apos;re still living there</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessVendorVisit</name>
+        <choiceText>Vendor Visit</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Vendor Visit</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SuiteAccessWeneedtoaccessaroomtotakephotos</name>
+        <choiceText>We need to access a room to take photos</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>We need to access a room to take photos</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TogetaccesstoasuitehomeOption</name>
+        <choiceText>To get access to a suite/home</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To get access to a suite/home</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TopassalonginformationaboutorarequestfromamemberOption</name>
+        <choiceText>To give info about/request from member</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To give info about/request from member</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ToreportapropertyissueOption</name>
+        <choiceText>To report a property issue</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To report a property issue</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>TosendanoticetoasuitehomeorcityOption</name>
+        <choiceText>To send a notice to a suite, home or city</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To send a notice to a suite, home or city</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>If_To_get_access_to_a_suite_home</name>
+        <label>If To get access to a suite/home</label>
+        <locationX>429</locationX>
+        <locationY>2066</locationY>
+        <defaultConnector>
+            <targetReference>If_To_report_a_property_issue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>Real_Estate_Access_to_Home</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Which_team_are_you_on</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>RealEstateOption</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TogetaccesstoasuitehomeOption</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AccesstoSuiteHomeScreen_0</targetReference>
+            </connector>
+            <label>Real Estate Access to Home</label>
+        </rules>
+        <rules>
+            <name>Access_to_Suite_or_Home</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TogetaccesstoasuitehomeOption</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AccesstoSuiteHomeScreen</targetReference>
+            </connector>
+            <label>Access to Suite or Home</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_To_pass_along_information_about_or_a_request_from_a_member</name>
+        <label>If To pass along information about, or a request from a member</label>
+        <locationX>1040</locationX>
+        <locationY>2282</locationY>
+        <defaultConnector>
+            <targetReference>If_To_send_a_notice_to_a_suite_home_or_city</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>To give info about/request from member</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RequestFromMemberScreen</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_To_report_a_property_issue</name>
+        <label>If To report a property issue</label>
+        <locationX>809</locationX>
+        <locationY>2174</locationY>
+        <defaultConnector>
+            <targetReference>If_To_pass_along_information_about_or_a_request_from_a_member</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>To report a property issue</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ReportIssueScreen</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_To_send_a_notice_to_a_suite_home_or_city</name>
+        <label>If To send a notice to a suite, home or city</label>
+        <locationX>1238</locationX>
+        <locationY>2390</locationY>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>To send a notice to a suite, home or city</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SendNoticeScreen</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Guest_User</name>
+        <label>Is Guest User?</label>
+        <locationX>429</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>MasterScreenDetails</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserLastName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Site Guest User</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Password_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Guest_user2</name>
+        <label>Is Guest user?</label>
+        <locationX>429</locationX>
+        <locationY>1058</locationY>
+        <defaultConnector>
+            <targetReference>PermissionSet</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes2112</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserLastName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Site Guest User</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>If_To_get_access_to_a_suite_home</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Password_Correct</name>
+        <label>Is Password Correct?</label>
+        <locationX>253</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Incorrect_Password</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Please_Enter_password_to_continue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Porchlight2020</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>MasterScreenDetails</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Permission_Set_Assigned</name>
+        <label>Permission Set Assigned</label>
+        <locationX>506</locationX>
+        <locationY>1490</locationY>
+        <defaultConnector>
+            <targetReference>If_To_get_access_to_a_suite_home</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes111</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PermissionSetAssignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_PermissionSetAssigned_to_True</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Permission_Set_Assigned2</name>
+        <label>Permission Set Assigned?</label>
+        <locationX>429</locationX>
+        <locationY>3482</locationY>
+        <defaultConnector>
+            <targetReference>SuccessScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes222</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PermissionSetAssigned</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deactivate_Session_based_permission</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Permission_Set_Found</name>
+        <label>Permission Set Found?</label>
+        <locationX>660</locationX>
+        <locationY>1274</locationY>
+        <defaultConnector>
+            <targetReference>If_To_get_access_to_a_suite_home</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes11</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PermissionSet</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>PermissionSetAssignment</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Updated to include Mily</description>
+    <dynamicChoiceSets>
+        <name>Itemreplacementchoices</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Family</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OSE Kitchen</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Family</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OSE Bathroom</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Family</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OSE Suites</stringValue>
+            </value>
+        </filters>
+        <object>Product2</object>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>CaseOwnerFormula</name>
+        <dataType>String</dataType>
+        <expression>/* IF( SelectedHome.BrandRef__r.Name= &quot;noah&quot;, &quot;0053u000003Q6mhAAC&quot;, &quot;00G3u000002O6HhEAK&quot;) */
+&quot;0051i000004i3ikAAA&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>CurrentUserId</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
+    <formulas>
+        <name>HomeIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!UserProfile} = &quot;Property Services Technicians Partners&quot;,
+{!CityGardenHome.Id},
+{!SelectedHomeID}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IssueTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Property Issues&quot;,&quot;Property Issue&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Shared Goods/Cleaning&quot;,&quot;Shared Goods + Cleaning&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Leasing/Billing Inquiries&quot;,&quot;Lease and Billing Inquiries&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Events/Community/Suitemate Issues&quot;,&quot;Events Community and Suitemate Issues&quot;,
+null
+))))</expression>
+    </formulas>
+    <formulas>
+        <name>IssueTypeFormulaNotifySuite</name>
+        <dataType>String</dataType>
+        <expression>IF({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Property Issues&quot;,&quot;Property Issue&quot;,
+IF({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Shared Goods/Cleaning&quot;,&quot;Shared Goods + Cleaning&quot;,
+IF({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Leasing/Billing Inquiries&quot;,&quot;Lease and Billing Inquiries&quot;,
+IF({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Events/Community/Suitemate Issues&quot;,&quot;Events Community and Suitemate Issues&quot;,
+null
+))))</expression>
+    </formulas>
+    <formulas>
+        <name>NullFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot; &quot;</expression>
+    </formulas>
+    <formulas>
+        <name>PropertyIssueRecordTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;, &quot;0123u000000BVGUAA4&quot;,
+IF({!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;, &quot;0123u000000BVMIAA4&quot;,
+&quot;0121i000000YGYTAA4&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>RequestFromMemberOwnerIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;, &quot;0053u000003Q6mhAAC&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Property Issues&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Shared Goods/Cleaning&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Leasing/Billing Inquiries&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Events/Community/Suitemate Issues&quot;,&quot;00G3u000002O6HhEAK&quot;,
+null
+)))))</expression>
+    </formulas>
+    <formulas>
+        <name>RequestFromMemberRecordTypeIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Property Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGUAA4&quot;,
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Property Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMIAA4&quot;,
+IF( {!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Property Issues&quot;, &quot;0123u000000FQMU&quot;,
+
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Shared Goods/Cleaning&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGUAA4&quot;,
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Shared Goods/Cleaning&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMIAA4&quot;,
+IF( {!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Shared Goods/Cleaning&quot;, &quot;0123u000000FQMZ&quot;,
+
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Leasing/Billing Inquiries&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGZAA4&quot;,
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Leasing/Billing Inquiries&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMDAA4&quot;,
+IF( {!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Leasing/Billing Inquiries&quot;, &quot;0123u000000FQMe&quot;,
+
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;), &quot;0123u000000BVGZAA4&quot;,
+IF(AND({!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;), &quot;0123u000000TNV4AAO&quot;,
+IF( {!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, &quot;0123u000000FQMj&quot;,
+
+null
+))))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>SendNoticeOwnerIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;, &quot;0053u000003Q6mhAAC&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Property Issues&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Shared Goods/Cleaning&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Leasing/Billing Inquiries&quot;,&quot;00G3u000002O6HhEAK&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Events/Community/Suitemate Issues&quot;,&quot;00G3u000002O6HhEAK&quot;,
+null
+)))))</expression>
+    </formulas>
+    <formulas>
+        <name>SendNoticeRecordTypeIDFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Property Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGUAA4&quot;,
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Property Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMIAA4&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Property Issues&quot;, &quot;0123u000000FQMU&quot;,
+
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Shared Goods/Cleaning&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGUAA4&quot;,
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Shared Goods/Cleaning&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMIAA4&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Shared Goods/Cleaning&quot;, &quot;0123u000000FQMZ&quot;,
+
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Leasing/Billing Inquiries&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGZAA4&quot;,
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Leasing/Billing Inquiries&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000BVMDAA4&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Leasing/Billing Inquiries&quot;, &quot;0123u000000FQMe&quot;,
+
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;noah&quot;),&quot;0123u000000BVGZAA4&quot;,
+IF( AND({!Which_category_does_the_notice_most_closely_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, {!SelectedHome.BrandRef__r.Name}= &quot;kin&quot;),&quot;0123u000000TNV4AAO&quot;,
+IF( {!Which_category_does_the_notice_most_closely_relate_to} = &quot;Events/Community/Suitemate Issues&quot;, &quot;0123u000000FQMj&quot;,
+
+null
+))))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>UserFullName</name>
+        <dataType>String</dataType>
+        <expression>{!$User.FirstName} + &quot; &quot; + {!$User.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>UserLastName</name>
+        <dataType>String</dataType>
+        <expression>{!$User.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>UserProfile</name>
+        <dataType>String</dataType>
+        <expression>{!$Profile.Name}</expression>
+    </formulas>
+    <interviewLabel>CSS - Member Support Community for Employees Landing Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CSS - Member Support Community for Employees Landing Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Case</name>
+        <label>Create Case</label>
+        <locationX>429</locationX>
+        <locationY>3374</locationY>
+        <connector>
+            <targetReference>Permission_Set_Assigned2</targetReference>
+        </connector>
+        <inputReference>Case</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <name>CityGardenHome</name>
+        <label>CityGardenHome</label>
+        <locationX>429</locationX>
+        <locationY>950</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Guest_user2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>City Gardens</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Property__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Selected_Home1</name>
+        <label>Get Selected Home1</label>
+        <locationX>314</locationX>
+        <locationY>2282</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Suite_Access_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </filters>
+        <object>Property__c</object>
+        <outputReference>SelectedHome</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>BrandRef__c</queriedFields>
+        <queriedFields>Maintenance_Tech__c</queriedFields>
+        <queriedFields>Porter__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Selected_Home2</name>
+        <label>Get Selected Home2</label>
+        <locationX>578</locationX>
+        <locationY>2390</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Report_Issue_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </filters>
+        <object>Property__c</object>
+        <outputReference>SelectedHome</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>BrandRef__c</queriedFields>
+        <queriedFields>Maintenance_Tech__c</queriedFields>
+        <queriedFields>Porter__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Selected_Home3</name>
+        <label>Get Selected Home3</label>
+        <locationX>842</locationX>
+        <locationY>2498</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Request_from_Member_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </filters>
+        <object>Property__c</object>
+        <outputReference>SelectedHome</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>BrandRef__c</queriedFields>
+        <queriedFields>Maintenance_Tech__c</queriedFields>
+        <queriedFields>Porter__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Selected_Home4</name>
+        <label>Get Selected Home4</label>
+        <locationX>1106</locationX>
+        <locationY>2606</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Send_Notice_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HomeIDFormula</elementReference>
+            </value>
+        </filters>
+        <object>Property__c</object>
+        <outputReference>SelectedHome</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>BrandRef__c</queriedFields>
+        <queriedFields>Maintenance_Tech__c</queriedFields>
+        <queriedFields>Porter__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Member_Services_Queue</name>
+        <label>Member Services Queue</label>
+        <locationX>429</locationX>
+        <locationY>3158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Case_Owner_to_Member_Services</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>MSS_Agents</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>PermissionSet</name>
+        <label>PermissionSet</label>
+        <locationX>660</locationX>
+        <locationY>1166</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Permission_Set_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case_And_Home_Session_Based_Permission</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>PermissionSetAssignment</name>
+        <label>PermissionSetAssignment</label>
+        <locationX>506</locationX>
+        <locationY>1382</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Permission_Set_Assigned</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CurrentUserId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>PermissionSet.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>AccesstoSuiteHomeScreen</name>
+        <label>AccesstoSuiteHomeScreen</label>
+        <locationX>314</locationX>
+        <locationY>2174</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Selected_Home1</targetReference>
+        </connector>
+        <fields>
+            <name>CaseHome</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Home__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Which home do you need access to?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedHomeID</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedHomeName</assignToReference>
+                <name>recordName</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>UserProfile</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Property Services Technicians Partners</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Which_suite_suites_do_you_need_access_to</name>
+            <dataType>String</dataType>
+            <fieldText>Which suite/suites do you need access to?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>When_would_you_like_to_be_able_to_access_the_home_suite_Please_give_72_hours_not</name>
+            <dataType>String</dataType>
+            <fieldText>When would you like to be able to access the home/suite? (Please give 72 hours notice for anything other than an emergency)</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Why_do_you_need_access_to_the_home_suite</name>
+            <choiceReferences>NoChoiceSelected</choiceReferences>
+            <choiceReferences>SuiteAccessVendorVisit</choiceReferences>
+            <choiceReferences>SuiteAccessInternalPSVisit</choiceReferences>
+            <choiceReferences>SuiteAccessLegalInsuranceInspection</choiceReferences>
+            <choiceReferences>SuiteAccessOtherReason</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NoChoiceSelected</defaultSelectedChoiceReference>
+            <fieldText>Why do you need access to the home/suite?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Tell_us_more_about_the_Legal_Insurance_Inspection</name>
+            <choiceReferences>SuiteAccessWeneedtoaccessaroomtotakephotos</choiceReferences>
+            <choiceReferences>SuiteAccessAninspectorneedstoinspectaroomorsuite</choiceReferences>
+            <choiceReferences>SuiteAccessGhostingWeneedtoconfirmwhetheramemberhasvacatedtheirbedroom</choiceReferences>
+            <choiceReferences>SuiteAccessOverstayingAmembersleasehasended</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Tell us more about the Legal/Insurance Inspection</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Why_do_you_need_access_to_the_home_suite</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Legal/Insurance Inspection</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Please_add_detailed_notes_here</name>
+            <fieldText>Please add detailed notes here:</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>AccesstoSuiteHomeScreen_0</name>
+        <label>AccessToHomeSuiteRealEstateAccess</label>
+        <locationX>50</locationX>
+        <locationY>2174</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>AccesstoSuiteDisplaytext_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 22px;&quot;&gt;If you are on the Real Estate Team looking to gain access to a suite for a tour, please follow &lt;/span&gt;&lt;a href=&quot;https://docs.google.com/document/d/1S_-fXAnU31VZ4I14FQzfuVQW9JGxJQiQy14yXRPEb2E/edit#&quot; target=&quot;_blank&quot; style=&quot;background-color: rgb(255, 255, 255); font-size: 22px;&quot;&gt;this process&lt;/a&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 22px;&quot;&gt; instead of continuing with this form.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Why_are_you_getting_in_touch</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>TogetaccesstoasuitehomeOption</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Which_team_are_you_on</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RealEstateOption</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Incorrect_Password</name>
+        <label>Incorrect Password</label>
+        <locationX>341</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Incorrect_password_message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; color: rgb(196, 86, 63);&quot;&gt;OOPS! &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;The password you entered is not correct. Please note: this is the internal Common employee support form. If you have gotten here by mistake please &lt;a href=&quot;https://www.common.com/&quot; target=&quot;_blank&quot;&gt;click here&lt;/a&gt; to return to the home page.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you&apos;re an employee, please reach out to your manager who can share the password with you.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>MasterScreenDetails</name>
+        <label>MasterScreenDetails</label>
+        <locationX>429</locationX>
+        <locationY>842</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>CityGardenHome</targetReference>
+        </connector>
+        <fields>
+            <name>What_s_your_full_name</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>UserFullName</elementReference>
+            </defaultValue>
+            <fieldText>What&apos;s your full name?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>WhatsYourEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>What is your email?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabled</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>youremail@common.com</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>$User.Email</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>Case.SuppliedEmail</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>Subject</name>
+            <extensionName>c:CaseDeflectionForVisualFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CaseSubject</assignToReference>
+                <name>Subject</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>Which_team_are_you_on</name>
+            <choiceReferences>MemberExperienceOption</choiceReferences>
+            <choiceReferences>PropertyServicesOption</choiceReferences>
+            <choiceReferences>LeasingInsideSalesOption</choiceReferences>
+            <choiceReferences>RealEstateOption</choiceReferences>
+            <choiceReferences>ConstructionStudioSpaceOption</choiceReferences>
+            <choiceReferences>Legal</choiceReferences>
+            <choiceReferences>Finance</choiceReferences>
+            <choiceReferences>MarketingPress</choiceReferences>
+            <choiceReferences>Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Which team are you on?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Why_are_you_getting_in_touch</name>
+            <choiceReferences>TogetaccesstoasuitehomeOption</choiceReferences>
+            <choiceReferences>ToreportapropertyissueOption</choiceReferences>
+            <choiceReferences>TopassalonginformationaboutorarequestfromamemberOption</choiceReferences>
+            <choiceReferences>TosendanoticetoasuitehomeorcityOption</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Why are you getting in touch?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Password_Screen</name>
+        <label>Password Screen</label>
+        <locationX>253</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Is_Password_Correct</targetReference>
+        </connector>
+        <fields>
+            <name>Please_Enter_password_to_continue</name>
+            <dataType>String</dataType>
+            <fieldText>Please enter password to continue</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ReportIssueScreen</name>
+        <label>ReportIssueScreen</label>
+        <locationX>578</locationX>
+        <locationY>2282</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Selected_Home2</targetReference>
+        </connector>
+        <fields>
+            <name>Issue_Reporting_Home</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Home__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>In which home is the issue you&apos;re reporting?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedHomeID</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedHomeName</assignToReference>
+                <name>recordName</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>UserProfile</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Property Services Technicians Partners</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>In_which_suite_or_shared_space</name>
+            <dataType>String</dataType>
+            <fieldText>In which suite or shared space?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Please_select_the_issue_type</name>
+            <choiceReferences>NoChoiceSelected</choiceReferences>
+            <choiceReferences>ReportIssueAppliance</choiceReferences>
+            <choiceReferences>ReportIssueElectricalandlighting</choiceReferences>
+            <choiceReferences>ReportIssueFloorsandCarpentry</choiceReferences>
+            <choiceReferences>ReportIssueHeatingandAirConditioning</choiceReferences>
+            <choiceReferences>ReportIssueHomeImprovements</choiceReferences>
+            <choiceReferences>ReportIssueItemRequestsandReplacements</choiceReferences>
+            <choiceReferences>ReportIssueLocksKeysandSecurity</choiceReferences>
+            <choiceReferences>ReportIssueOutdoorMaintenance</choiceReferences>
+            <choiceReferences>ReportIssuePests</choiceReferences>
+            <choiceReferences>ReportIssuePlumbingandLeaks</choiceReferences>
+            <choiceReferences>ReportIssueSafetyEquipment</choiceReferences>
+            <choiceReferences>ReportIssueWiFiissue</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NoChoiceSelected</defaultSelectedChoiceReference>
+            <fieldText>Please select the issue type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Please_select_the_item_that_you_need_from_the_list_below</name>
+            <choiceReferences>NoChoiceSelected</choiceReferences>
+            <choiceReferences>Itemreplacementchoices</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please select the item that you need from the list below.</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Please_select_the_issue_type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ReportIssueItemRequestsandReplacements</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Which_appliance_is_having_an_issue_If_more_than_one_please_submit_multiple_reque</name>
+            <choiceReferences>NoChoiceSelected</choiceReferences>
+            <choiceReferences>ReportIssueSonossystem</choiceReferences>
+            <choiceReferences>ReportIssueClothesdryer</choiceReferences>
+            <choiceReferences>ReportIssueClotheswasher</choiceReferences>
+            <choiceReferences>ReportIssueStovetop</choiceReferences>
+            <choiceReferences>ReportIssueDishwasher</choiceReferences>
+            <choiceReferences>ReportIssueGarbagedisposal</choiceReferences>
+            <choiceReferences>ReportIssueFreezer</choiceReferences>
+            <choiceReferences>ReportIssueMicrowave</choiceReferences>
+            <choiceReferences>ReportIssueRefrigerator</choiceReferences>
+            <choiceReferences>ReportIssueToaster</choiceReferences>
+            <choiceReferences>ReportIssueVacuum</choiceReferences>
+            <choiceReferences>reportIssueOven</choiceReferences>
+            <choiceReferences>ReportIssueTelevision</choiceReferences>
+            <choiceReferences>ReportIssueCoffeemaker</choiceReferences>
+            <choiceReferences>ReportIssueOtherappliance</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NoChoiceSelected</defaultSelectedChoiceReference>
+            <fieldText>Which appliance is having an issue? (If more than one, please submit multiple requests)</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Please_select_the_issue_type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Appliance</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Please_describe_the_issue_in_detail</name>
+            <dataType>String</dataType>
+            <fieldText>Please describe the issue in detail.</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>When_did_you_first_notice_the_issue</name>
+            <choiceReferences>ReportIssueWithinthelast24hours</choiceReferences>
+            <choiceReferences>ReportIssueWithinthelastweek</choiceReferences>
+            <choiceReferences>ReportIssueMorethanaweekago</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>When did you first notice the issue?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>What_potential_solutions_have_you_already_tried_if_any</name>
+            <dataType>String</dataType>
+            <fieldText>What potential solutions have you already tried? (if any)</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>RequestFromMemberScreen</name>
+        <label>RequestFromMemberScreen</label>
+        <locationX>842</locationX>
+        <locationY>2390</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Selected_Home3</targetReference>
+        </connector>
+        <fields>
+            <name>What_is_the_first_and_last_name_of_the_member</name>
+            <dataType>String</dataType>
+            <fieldText>What is the first and last name of the member?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>HomeMemberLive</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Home__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Which home does the member live in?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedHomeID</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedHomeName</assignToReference>
+                <name>recordName</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>UserProfile</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Property Services Technicians Partners</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to</name>
+            <choiceReferences>RequestfromMemberPropertyIssues</choiceReferences>
+            <choiceReferences>RequestFromMemberSharedGoodsCleaning</choiceReferences>
+            <choiceReferences>RequestFromMemberLeasingBillingInquiries</choiceReferences>
+            <choiceReferences>RequestFromMemberEventsCommunitySuitemateIssues</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Which category does the member&apos;s request or info about the member most relate to:</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Please_add_details_here_pass_along</name>
+            <fieldText>Please add details here</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>SendNoticeScreen</name>
+        <label>SendNoticeScreen</label>
+        <locationX>1106</locationX>
+        <locationY>2498</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Selected_Home4</targetReference>
+        </connector>
+        <fields>
+            <name>CaseHome4</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Which home would you like to notify?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Home__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedHomeID</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedHomeName</assignToReference>
+                <name>recordName</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>Which_suite_city_would_you_like_to_notify</name>
+            <dataType>String</dataType>
+            <fieldText>Which suite/suites do you need access to?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Which_category_does_the_notice_most_closely_relate_to</name>
+            <choiceReferences>RequestfromMemberPropertyIssues</choiceReferences>
+            <choiceReferences>RequestFromMemberSharedGoodsCleaning</choiceReferences>
+            <choiceReferences>RequestFromMemberLeasingBillingInquiries</choiceReferences>
+            <choiceReferences>RequestFromMemberEventsCommunitySuitemateIssues</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Which category does the notice most closely relate to?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Please_describe_the_notice_you_d_like_us_to_send_including_any_relevant_dates2</name>
+            <fieldText>Please describe the notice you&apos;d like us to send, including any relevant dates, times or details.</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Anything_else_we_should_know2</name>
+            <fieldText>Anything else we should know?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>SuccessScreen</name>
+        <label>SuccessScreen</label>
+        <locationX>429</locationX>
+        <locationY>3782</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Thanks for submitting your request!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Our team will respond as soon as possible.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You can submit another request by refreshing your screen.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>303</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Guest_User</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ReportIssueDescriptionTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which team are you on?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_team_are_you_on}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;Why are you getting in touch?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Why_are_you_getting_in_touch}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;In which home is the issue you are reporting?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!SelectedHomeName}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;In which suite or shared space?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!In_which_suite_or_shared_space}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;What is the issue type?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Please_select_the_issue_type}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which appliance is having an issue?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_appliance_is_having_an_issue_If_more_than_one_please_submit_multiple_reque}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Issue Details?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Please_describe_the_issue_in_detail}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;When did you first noticed the issue?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!When_did_you_first_notice_the_issue}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;What potential solution have you already tried?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!What_potential_solutions_have_you_already_tried_if_any}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RequestFromMemberDescriptionTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Which team are you on?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_team_are_you_on}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Why are you getting in touch?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Why_are_you_getting_in_touch}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;What is the first and last name of the member?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!What_is_the_first_and_last_name_of_the_member}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which home does the member live in?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!SelectedHomeName}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif;&quot;&gt;Which category does the member&apos;s request or info about the member most relate to?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_category_does_the_member_s_request_or_info_about_the_member_most_relate_to}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Details&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Please_add_details_here_pass_along}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SendNoticeDescriptionTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Which team are you on?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_team_are_you_on}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Why are you getting in touch?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Why_are_you_getting_in_touch}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;Which suite/suites do you need access to?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_suite_city_would_you_like_to_notify}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which category does the notice most closely relate to?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_category_does_the_notice_most_closely_relate_to}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Please describe the notice you&apos;d like us to send, including any relevant dates, times or details ?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Please_describe_the_notice_you_d_like_us_to_send_including_any_relevant_dates2}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);&quot;&gt;Anything else we should know?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Anything_else_we_should_know2}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>SuiteAccessDescriptionTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which team are you on?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_team_are_you_on}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;Why are you getting in touch?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Why_are_you_getting_in_touch}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 15px; background-color: rgb(255, 255, 255); font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Which home do you need access to?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!SelectedHomeName}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(240, 16, 16); font-family: Slack-Lato, appleLogo, sans-serif; background-color: rgb(255, 255, 255); font-size: 15px;&quot;&gt;Which suite/suites do you need access to?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Which_suite_suites_do_you_need_access_to}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;When would you like to be able to access the home/suite?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!When_would_you_like_to_be_able_to_access_the_home_suite_Please_give_72_hours_not}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Why do you need access to the home/suite?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Why_do_you_need_access_to_the_home_suite}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Tell us more about the Legal/Insurance Inspection&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Tell_us_more_about_the_Legal_Insurance_Inspection}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: Slack-Lato, appleLogo, sans-serif; color: rgb(240, 16, 16);&quot;&gt;Detailed notes&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Please_add_detailed_notes_here}&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>Case</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>CaseSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PermissionSetAssigned</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>SelectedHome</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Property__c</objectType>
+    </variables>
+    <variables>
+        <name>SelectedHomeID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedHomeName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,21 @@
+.THIS {
+}
+
+.THIS .RoomItem:hover, .THIS .reload-box:hover {
+    cursor:pointer;
+}
+
+.THIS .reload-box {
+	padding: .25rem;
+    border-radius: .25rem;
+    border: 1px solid rgb(221, 219, 218);
+}
+
+.THIS .opp-item {
+    color:rgb(21, 137, 238);
+    text-decoration: underline;
+}
+
+.THIS .opp-item:hover {
+    cursor:pointer;
+}
